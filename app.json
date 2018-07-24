@@ -9,6 +9,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "facebookScheme" : "fb1704319859617231",
+    "facebookAppId" : "1704319859617231",
+    "facebookDisplayName" : "Cheff",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -22,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+  
+
   }
 }
