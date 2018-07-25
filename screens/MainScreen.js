@@ -11,12 +11,11 @@ import HomeScreen from '../screens/HomeScreen';
 
 class MainScreen extends Component {
 	static navigationOptions = {
-    header : { visible : false }
+    header : null
     };
 	render (){
 		return (
 			<View style = {styles.container}>
-
 				<View style = {styles.header}>
 				    <View style = {{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
 			    		 <TouchableOpacity onPress = {()=> this.props.navigation.navigate ('Setting')}>
@@ -74,6 +73,7 @@ class MainScreen extends Component {
 export default createBottomTabNavigator ({
 	Home : { screen : MainScreen,
     navigationOptions : {
+		header: null,
     	tabBarIcon : ({focused, tintColor}) => (
 			 <Image 
 			    style = {styles.icon}
@@ -113,6 +113,7 @@ export default createBottomTabNavigator ({
     }},
 },{
 	labeled  : true,
+	header : null,
     tabBarOptions: {
         showLabel: false, // hide labels
     },

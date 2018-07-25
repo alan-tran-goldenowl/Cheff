@@ -17,42 +17,46 @@ export default class Recommend extends Component {
 	render () { 
 		return (
 			<FlatList
-              data={arrFood} 
-							renderItem={({item}) =>
+                data={arrFood} 
+				renderItem={({item}) =>
                 <View style = {styles.container}>
-                  <TouchableOpacity style = {styles.itemFood}>
-										  <View style = {styles.imageFood}>
-												<Image
-														style = {{width : '100%', height : 150, borderRadius : 5,}}
-														resizeMode = {'cover'}
-														source={{uri: item.imageLink}}
-														/> 
-											</View>
+					<TouchableOpacity 
+					    onPress = {()=> this.props.moveToDetail ()}
+				        style = {styles.itemFood}>
+					    <View style = {styles.imageFood}>
+							<Image
+								style = {{width : '100%', height : 150, borderRadius : 5,}}
+								resizeMode = {'cover'}
+								source={{uri: item.imageLink}}
+								/> 
+						</View>
 
-											<View style  = {styles.infomationFood}>
-												<Text style = {{fontSize : 14, color : 'black', flex : 3}}>{item.name}</Text>
-												<View style = {{flex : 5, flexDirection : 'row'}}>
-												    <View style = {{flexDirection : 'row', flex : 1, justifyContent : 'flex-start', alignItems : 'center'}}>
-															<Image
-																		style = {{height : 15, width : 15}}
-																		resizeMode = {'contain'}
-																		source = {require('../assets/images/ic_clock.png')} />
-															<Text style = {{fontSize : 11, color : '#666', marginLeft : 7}}>{item.timeStamp}</Text>
-														</View>
+						<View 
+						    style  = {styles.infomationFood}>
+							<Text style = {{fontSize : 14, color : 'black', flex : 3}}>{item.name}</Text>
+						    <View 
+						          style = {{flex : 5, flexDirection : 'row'}}>
+						    <View 
+						          style = {{flexDirection : 'row', flex : 1, justifyContent : 'flex-start', alignItems : 'center'}}>
+								  <Image
+									style = {{height : 15, width : 15}}
+									resizeMode = {'contain'}
+									source = {require('../assets/images/ic_clock.png')} />
+							<Text style = {{fontSize : 11, color : '#666', marginLeft : 7}}>{item.timeStamp}</Text>
+						</View>
 
-														<View style = {{flexDirection : 'row', flex : 1, justifyContent : 'flex-end', alignItems : 'center'}}>
-														  <Text style = {{fontSize : 11, color : 'black', marginRight : 7}}>{item.like}</Text>
-															
-															<Image
-																		style = {{height : 15, width : 15}}
-																		resizeMode = {'contain'}
-																		source = {item.userLike ? require('../assets/images/ic_love.png') : require('../assets/images/ic_nonlove.png')}
+						<View style = {{flexDirection : 'row', flex : 1, justifyContent : 'flex-end', alignItems : 'center'}}>
+							<Text style = {{fontSize : 11, color : 'black', marginRight : 7}}>{item.like}</Text>							
+							<Image
+								style = {{height : 15, width : 15}}
+								resizeMode = {'contain'}
+							    source = {item.userLike ? require('../assets/images/ic_love.png') : require('../assets/images/ic_nonlove.png')}
 																		 />
-														</View>
-												</View>
-											</View>
-                  </TouchableOpacity>
-									<View style = {{backgroundColor : '#dddddd', height : 1}}></View>
+						</View>
+						</View>
+					</View>
+                    </TouchableOpacity>
+				    <View style = {{backgroundColor : '#dddddd', height : 1}}></View>
                 </View>
             }/>
 		);

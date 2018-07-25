@@ -6,6 +6,10 @@ import NavigationRoot from './navigation/NavigationRoot';
 
 
 export default class App extends React.Component {
+
+  static navigationOptions = {
+    header: null
+  }
   state = {
     isLoadingComplete: false,
   };

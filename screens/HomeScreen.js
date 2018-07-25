@@ -14,7 +14,7 @@ import Recommend from '../screens/Recommend';
 class HomeScreen extends Component {
 	render (){
 		return (
-			<Recommend />
+			<Recommend moveToDetail = {() => this.props.navigation.navigate('FoodDetail')}/>
 			);
 	}
 }

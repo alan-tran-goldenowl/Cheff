@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
- View, Text, Dimensions, Image, TouchableOpacity, TouchableHighlight, StyleSheet, BackHandler, TextInput
+ View, Text, Dimensions, Image, TouchableOpacity, TouchableHighlight, StyleSheet, BackHandler, TextInput, Switch
 } from 'react-native';
 
 export default class extends Component {
@@ -9,7 +9,9 @@ export default class extends Component {
     super(props);
     this.state = { 
       fullname : 'Kún Park',
-      email : 'Pikakun19@gmail.com'
+      email : 'Pikakun19@gmail.com',
+      toggleFacebook : true,
+      toggleGoogle : true
    };
   }
   static navigationOptions = {
@@ -91,6 +93,56 @@ export default class extends Component {
 
           <View style = {{margin : 20}}>
             <Text style = {{fontSize : 19, color : '#999'}}>Link Account</Text>
+          </View>
+
+          <View style = {{flexDirection : 'row', height : 50}}>
+
+            <View style = {{height : '100%', justifyContent : 'center', flex : 1}}>
+                <Image 
+                  style = {{width : 30, height : 30, marginLeft : 12}} 
+                  resizeMode = {'center'}
+                  source = {require ('../assets/images/ic_facebook.png')}
+                />
+            </View>
+            
+            <View style = {{height : '100%', justifyContent : 'center', marginLeft : 30, flex : 4}}>
+                <Text style = {{fontSize : 16}}>Facebook</Text>
+            </View>
+
+            <View style = {{height : '100%', justifyContent : 'center', alignItems : 'flex-end', marginRight : 20, flex : 5}}>
+                <Switch
+                    onValueChange = {(value) => this.setState ({ toggleFacebook : value})}
+                    value = {this.state.toggleFacebook}
+                    thumbTintColor = {'white'}
+                    onTintColor = {'#45db5e'}
+                    />
+            </View>
+            
+          </View>
+
+
+          <View style = {{flexDirection : 'row', height : 50}}>
+
+            <View style = {{height : '100%', justifyContent : 'center', flex : 1}}>
+                <Image 
+                  style = {{width : 30, height : 30, marginLeft : 20}} 
+                  resizeMode = {'center'}
+                  source = {require ('../assets/images/ic_google.png')}
+                />
+            </View>
+            
+            <View style = {{height : '100%', justifyContent : 'center', marginLeft : 30, flex : 4}}>
+                <Text style = {{fontSize : 16}}>Google</Text>
+            </View>
+
+            <View style = {{height : '100%', justifyContent : 'center', alignItems : 'flex-end', marginRight : 20, flex : 5}}>
+                <Switch
+                    onValueChange = {(value) => this.setState ({ toggleGoogle : value})}
+                    value = {this.state.toggleGoogle}
+                    thumbTintColor = {'white'}
+                    onTintColor = {'#45db5e'}
+                    />
+            </View>
             
           </View>
           

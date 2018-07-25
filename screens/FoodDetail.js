@@ -3,7 +3,9 @@ import {
 View, Text, Dimensions, Image, TouchableOpacity, StyleSheet
 } from 'react-native';
 
-export default class MealPlan extends Component {
+export default class FoodDetail extends Component {
+
+
     constructor (props){
         super (props);
         this.state = {
@@ -28,7 +30,7 @@ export default class MealPlan extends Component {
 			    	</View> 
  
 			    	<View style = {{flex : 1, justifyContent : 'center', alignItems : 'center'}}>
-			    		 <TouchableOpacity onPress = {()=> this.props.navigation.navigate ('CreatePlan')}>
+			    		 <TouchableOpacity onPress = {()=> this.props.navigation.navigate ('Setting')}>
 			    		 	<Image
 			                    style = {{height : 30, width : 30, marginLeft : 10, marginRight : 10}}
 			                    resizeMode = {'center'}
@@ -50,12 +52,11 @@ export default class MealPlan extends Component {
                     </View>
                 </View>
 
-                <View style = {{height : 50, marginLeft : 55}}>
-                    <Text style = {{fontSize : 14, color : '#999'}}>Let's see what our recipes.</Text>
-                    <Text style = {{fontSize : 14, color : '#999'}}>for the day are.</Text>
-                </View>
 
-				<View style = {{marginTop : 15, backgroundColor : '#ddd', height : 1, width : '100%'}}></View>
+                <View style = {{height : 50, marginLeft : 55}}>
+                    <Text style = {{fontSize : 14, color : '#888'}}>Let's see what our recipes.</Text>
+                    <Text style = {{fontSize : 14, color : '#888'}}>for the day are.</Text>
+                </View>
             </View>
         );
     }
