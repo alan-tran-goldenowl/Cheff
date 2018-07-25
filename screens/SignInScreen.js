@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -8,101 +8,113 @@ import {
   Button,
   ImageBackground,
   Text,
-  TouchableOpacity, 
-  Image, 
-} from 'react-native';
+  TouchableOpacity,
+  Image,
+} from 'react-native'
 
-import * as firebase from 'firebase';
-
+import * as firebase from 'firebase'
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCBcidAJQ-aQ2C213UZ5ZVxNc0WkpP4esg",
-  authDomain: "cheff-f3d45.firebaseapp.com",
-  databaseURL: "https://cheff-f3d45.firebaseio.com",
-  projectId: "cheff-f3d45",
-  storageBucket: "cheff-f3d45.appspot.com",
-  messagingSenderId: "1073567917248"
-};
-firebase.initializeApp(firebaseConfig);
-
-
+  apiKey: 'AIzaSyCBcidAJQ-aQ2C213UZ5ZVxNc0WkpP4esg',
+  authDomain: 'cheff-f3d45.firebaseapp.com',
+  databaseURL: 'https://cheff-f3d45.firebaseio.com',
+  projectId: 'cheff-f3d45',
+  storageBucket: 'cheff-f3d45.appspot.com',
+  messagingSenderId: '1073567917248',
+}
+firebase.initializeApp(firebaseConfig)
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
 
   render() {
     return (
-      <ImageBackground source = {require ('../assets/images/background.png')} style={{flex : 1}}>
-        <View style = {{flex : 1, justifyContent : 'flex-end', alignItems : 'center'}}>
-          <TouchableOpacity 
-            onPress = {() => this.props.navigation.navigate ('Main')} 
-            style = {styles.textSignInGG}>
-            <Text style = {{color : 'white'}}>Google</Text>
+      <ImageBackground
+        source={require('../assets/images/background.png')}
+        style={{ flex: 1 }}
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
+        >
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Main')}
+            style={styles.textSignInGG}
+          >
+            <Text style={{ color: 'white' }}>Google</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
-            onPress = {this.checkUserAuthencation.bind (this)}
-            style = {styles.textSignInFb}>
-            <Text style = {{color : 'white'}}>Facebook</Text>
+          <TouchableOpacity
+            onPress={this.checkUserAuthencation.bind(this)}
+            style={styles.textSignInFb}
+          >
+            <Text style={{ color: 'white' }}>Facebook</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    );
+    )
   }
-  checkUserAuthencation (){
-        // Listen for authentication state to change.
-        firebase.auth().onAuthStateChanged((user) => {
-        if (user != null){
-          console.log("We are authenticated now!" +  user);
-          this.props.navigation.navigate ('Main')
-        }
-        else {
-          console.log("User");
-          logIn (); 
-          console.log("User0000");
-        }
-      });
-  }; 
+  checkUserAuthencation() {
+    // Listen for authentication state to change.
+    firebase.auth().onAuthStateChanged(user => {
+      if (user != null) {
+        console.log('We are authenticated now!' + user)
+        this.props.navigation.navigate('Main')
+      } else {
+        console.log('User')
+        logIn()
+        console.log('User0000')
+      }
+    })
+  }
   async logIn() {
-  const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1704319859617231', {
-      permissions: ['public_profile'],
-    });
-  if (type === 'success') {
-    // Get the user's name using Facebook's Graph API
-       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-       console.log ('Logged in!' + `Hi ${(await response.json()).name}!`);
-       const credential = firebase.auth.FacebookAuthProvider.credential(token);
-       
-       firebase.auth().signInAndRetrieveDataWithCredential(credential).catch((error) => { 
-          console.log ("Login Facebook failled") });
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+      '1704319859617231',
+      {
+        permissions: ['public_profile'],
+      }
+    )
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`
+      )
+      console.log('Logged in!' + `Hi ${(await response.json()).name}!`)
+      const credential = firebase.auth.FacebookAuthProvider.credential(token)
+
+      firebase
+        .auth()
+        .signInAndRetrieveDataWithCredential(credential)
+        .catch(error => {
+          console.log('Login Facebook failled')
+        })
     }
   }
-} 
-const styles = StyleSheet.create ({
-    container : {
-      backgroundColor : 'red',
-      flex : 1,
-    },
-    textSignInGG : { 
-      height : 45,
-      width : 300,
-      marginLeft : 20, 
-      marginRight : 20,
-      backgroundColor : 'red',
-      alignItems : 'center',
-      justifyContent : 'center',
-      borderRadius : 5,
-    },
-     textSignInFb : { 
-      height : 45,
-      width : 300,
-      margin : 20,
-      backgroundColor : '#295eb5',
-      alignItems : 'center',
-      justifyContent : 'center',
-      borderRadius : 5,
-    }
-  })  
+}
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'red',
+    flex: 1,
+  },
+  textSignInGG: {
+    height: 45,
+    width: 300,
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  textSignInFb: {
+    height: 45,
+    width: 300,
+    margin: 20,
+    backgroundColor: '#295eb5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+})
