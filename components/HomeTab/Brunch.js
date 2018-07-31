@@ -55,7 +55,7 @@ var arrFood = [
       'https://lh3.googleusercontent.com/VvQZVyxsJRV19zxeHHkC3KWiXnacTNekMytY2_uDl8JeSC_geCj-k77ObblDDmzPJk1C_Q',
   },
 ]
-export default class Recommend extends Component {
+export default class Brunch extends Component {
   static navigationOptions = {
     header: null,
   }
@@ -65,10 +65,7 @@ export default class Recommend extends Component {
         data={arrFood}
         renderItem={({ item }) => (
           <View style={styles.container}>
-            <TouchableOpacity
-              onPress={() => this.props.moveToDetail()}
-              style={styles.itemFood}
-            >
+            <TouchableOpacity style={styles.itemFood}>
               <View style={styles.imageFood}>
                 <Image
                   style={{ width: '100%', height: 150, borderRadius: 5 }}
@@ -93,7 +90,7 @@ export default class Recommend extends Component {
                     <Image
                       style={{ height: 15, width: 15 }}
                       resizeMode={'contain'}
-                      source={require('../assets/images/ic_clock.png')}
+                      source={require('../../assets/images/ic_clock.png')}
                     />
                     <Text
                       style={{ fontSize: 11, color: '#666', marginLeft: 7 }}
@@ -115,14 +112,11 @@ export default class Recommend extends Component {
                     >
                       {item.like}
                     </Text>
+
                     <Image
                       style={{ height: 15, width: 15 }}
                       resizeMode={'contain'}
-                      source={
-                        item.userLike
-                          ? require('../assets/images/ic_love.png')
-                          : require('../assets/images/ic_nonlove.png')
-                      }
+                      source={require('../../assets/images/ic_love.png')}
                     />
                   </View>
                 </View>
