@@ -4,12 +4,8 @@ import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import NavigationRoot from './navigation/SwitchNavigation';
 
-
 export default class App extends React.Component {
 
-  static navigationOptions = {
-    header: null
-  }
   state = {
     isLoadingComplete: false,
   };

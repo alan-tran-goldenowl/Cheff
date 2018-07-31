@@ -41,7 +41,7 @@ var arrFood = [
 ]
 export default class FavoriteScreen extends Component {
   static navigationOptions = {
-    header: { visible: false },
+    header: null,
   }
   render() {
     return (

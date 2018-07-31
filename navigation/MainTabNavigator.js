@@ -92,8 +92,8 @@ export default createBottomTabNavigator(
 
 const styles = StyleSheet.create({
   icon: {
-    height: 30,
-    width: 30,
+    height: 20,
+    width: 20,
     marginLeft: 10
   }
 });
