@@ -90,7 +90,7 @@ export default class Dinner extends Component {
                     <Image
                       style={{ height: 15, width: 15 }}
                       resizeMode={'contain'}
-                      source={require('../assets/images/ic_clock.png')}
+                      source={require('../../assets/images/ic_clock.png')}
                     />
                     <Text
                       style={{ fontSize: 11, color: '#666', marginLeft: 7 }}
@@ -116,7 +116,7 @@ export default class Dinner extends Component {
                     <Image
                       style={{ height: 15, width: 15 }}
                       resizeMode={'contain'}
-                      source={require('../assets/images/ic_love.png')}
+                      source={require('../../assets/images/ic_love.png')}
                     />
                   </View>
                 </View>

@@ -9,12 +9,18 @@ import {
 } from 'react-native'
 
 export default class MealPlan extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
-      fullname: 'Kún Park',
+      fullname: 'Michael',
     }
   }
+
+  static navigationOptions = {
+    header: null,
+  }
+
   render() {
     return (
       <View style={styles.container}>

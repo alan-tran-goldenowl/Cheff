@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import {
   View,
   Text,
@@ -18,50 +18,50 @@ import HomeScreen from '../screens/HomeScreen'
 
 class MainScreen extends Component {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Setting')}
+              onPress={() => this.props.navigation.navigate("Setting")}
             >
               <Image
                 style={styles.icon}
-                resizeMode={'center'}
-                source={require('../assets/images/icon_side_menu.png')}
+                resizeMode={"center"}
+                source={require("../assets/images/icon_side_menu.png")}
               />
             </TouchableOpacity>
           </View>
 
           <View
-            style={{ flex: 7, justifyContent: 'center', alignItems: 'center' }}
+            style={{ flex: 7, justifyContent: "center", alignItems: "center" }}
           >
             <Image
-              style={{ resizeMode: 'center', width: 100 }}
-              source={require('../assets/images/logo_cheff.png')}
+              style={{ resizeMode: "center", width: 100 }}
+              source={require("../assets/images/logo_cheff.png")}
             />
           </View>
 
           <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Setting')}
+              onPress={() => this.props.navigation.navigate("Setting")}
             >
               <Image
                 style={{
                   height: 30,
                   width: 30,
                   marginLeft: 10,
-                  marginRight: 10,
+                  marginRight: 10
                 }}
-                resizeMode={'center'}
-                source={require('../assets/images/ic_push_notification.png')}
+                resizeMode={"center"}
+                source={require("../assets/images/ic_push_notification.png")}
               />
             </TouchableOpacity>
           </View>
@@ -69,49 +69,48 @@ class MainScreen extends Component {
 
         <View
           style={{
-            position: 'relative',
+            position: "relative",
             height: 150,
-            backgroundColor: 'white',
-            marginTop: 10,
+            backgroundColor: "white",
+            marginTop: 10
           }}
         >
           <Image
-            resizeMode={'stretch'}
-            source={require('../assets/images/img1.jpg')}
+            resizeMode={"stretch"}
+            source={require("../assets/images/img1.jpg")}
             style={{
               top: 0,
               left: 0,
               zIndex: 1,
-              position: 'absolute',
+              position: "absolute",
               height: 130,
-              width: '100%',
+              width: "100%"
             }}
           />
           <View
             style={{
               marginLeft: 20,
               marginRight: 10,
-              position: 'absolute',
+              position: "absolute",
               zIndex: 2,
               height: 150,
-              justifyContent: 'flex-end',
-              width: '100%',
+              justifyContent: "flex-end",
+              width: "100%"
             }}
           >
             <SearchViewCheff
-              moveToSeacrh={() => this.props.navigation.navigate('Search')}
+              moveToSeacrh={() => this.props.navigation.navigate("Search")}
             />
           </View>
         </View>
 
         <HomeScreen />
       </View>
-    )
+    );
   }
 }
 
-export default createBottomTabNavigator(
-  {
+const routeConfigs = {
     Home: {
       screen: MainScreen,
       navigationOptions: {
@@ -119,16 +118,16 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ focused, tintColor }) => (
           <Image
             style={styles.icon}
-            resizeMode={'center'}
+          resizeMode={"center"}
             source={
               focused
-                ? require('../assets/images/ic_home_active.png')
-                : require('../assets/images/ic_home_unactive.png')
+              ? require("../assets/images/ic_home_active.png")
+              : require("../assets/images/ic_home_unactive.png")
             }
           />
-        ),
+      )
+    }
       },
-    },
 
     Favorite: {
       screen: FavoriteScreen,
@@ -136,16 +135,16 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ focused, tintColor }) => (
           <Image
             style={styles.icon}
-            resizeMode={'center'}
+          resizeMode={"center"}
             source={
               focused
-                ? require('../assets/images/ic_favorite_active.png')
-                : require('../assets/images/ic_favorite_unactive.png')
+              ? require("../assets/images/ic_favorite_active.png")
+              : require("../assets/images/ic_favorite_unactive.png")
             }
           />
-        ),
+      )
+    }
       },
-    },
 
     MealPlan: {
       screen: MealPlanScreen,
@@ -153,16 +152,16 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ focused, tintColor }) => (
           <Image
             style={styles.icon}
-            resizeMode={'center'}
+          resizeMode={"center"}
             source={
               focused
-                ? require('../assets/images/ic_plan_active.png')
-                : require('../assets/images/ic_plan_unactive.png')
+              ? require("../assets/images/ic_plan_active.png")
+              : require("../assets/images/ic_plan_unactive.png")
             }
           />
-        ),
+      )
+    }
       },
-    },
 
     Activity: {
       screen: ActivityScreen,
@@ -170,43 +169,48 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ focused, tintColor }) => (
           <Image
             style={styles.icon}
-            resizeMode={'center'}
+          resizeMode={"center"}
             source={
               focused
-                ? require('../assets/images/ic_activity_active.png')
-                : require('../assets/images/ic_activity_unactive.png')
+              ? require("../assets/images/ic_activity_active.png")
+              : require("../assets/images/ic_activity_unactive.png")
             }
           />
-        ),
-      },
-    },
-  },
-  {
+      )
+    }
+  }
+};
+
+const tabNavigatorConfig = {
     labeled: true,
     header: null,
     tabBarOptions: {
-      showLabel: false, // hide labels
+    showLabel: false // hide labels
     },
-    barStyle: { backgroundColor: 'white' },
-    shifting: true,
-  }
-)
-const { height, width } = Dimensions.get('window')
+  barStyle: { backgroundColor: "white" },
+  shifting: true
+};
+
+const App = createBottomTabNavigator(routeConfigs, tabNavigatorConfig);
+
+export default App;
+
+const { height, width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white"
   },
   header: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     marginTop: 30,
     height: height / 20,
     width: null,
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   icon: {
     height: 30,
     width: 30,
-    marginLeft: 10,
-  },
-})
+    marginLeft: 10
+  }
+});
