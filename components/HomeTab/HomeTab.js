@@ -20,7 +20,7 @@ export default class HomeTab extends Component {
             {...tabBarProps}
             style={{
               borderWidth: 0,
-              borderColor: "transparent",
+              borderColor: "transparent"
             }}
           />
         )}
@@ -32,14 +32,14 @@ export default class HomeTab extends Component {
           backgroundColor: "#ff2d65",
           width: 30,
           marginLeft: 20,
-          height: 2,
+          height: 2
         }}
       >
-        <Recommend tabLabel="Recommend" />
-        <Breakfast tabLabel="Breakfast" />
-        <Brunch tabLabel="Brunch" />
-        <Lunch tabLabel="Lunch" />
-        <Dinner tabLabel="Dinner" />
+        <Recommend tabLabel="Recommend" {...this.props} />
+        <Breakfast tabLabel="Breakfast" {...this.props} />
+        <Brunch tabLabel="Brunch" {...this.props} />
+        <Lunch tabLabel="Lunch" {...this.props} />
+        <Dinner tabLabel="Dinner" {...this.props} />
       </ScrollableTabView>
     );
   }
