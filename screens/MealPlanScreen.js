@@ -1,139 +1,150 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from "react";
 import {
   View,
   Text,
   Dimensions,
   Image,
   TouchableOpacity,
-  StyleSheet,
-} from 'react-native'
+  StyleSheet
+} from "react-native";
+import MyCalendar from "../components/Calendar";
 
 export default class MealPlan extends Component {
+  static navigationOptions = {
+    header: null
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      fullname: 'Michael',
-    }
+      fullname: "Michael"
+    };
   }
 
-  static navigationOptions = {
-    header: null,
-  }
-
-  render() {
+  renderHeader() {
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+      <View style={styles.header}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Setting")}
           >
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Setting')}
-            >
-              <Image
-                style={styles.icon}
-                resizeMode={'center'}
-                source={require('../assets/images/icon_side_menu.png')}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{ flex: 7, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <Text style={{ fontSize: 16 }}>Meal Plan</Text>
-          </View>
-
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('CreatePlan')}
-            >
-              <Image
-                style={{
-                  height: 30,
-                  width: 30,
-                  marginLeft: 10,
-                  marginRight: 10,
-                }}
-                resizeMode={'center'}
-                source={require('../assets/images/ic_plus.png')}
-              />
-            </TouchableOpacity>
-          </View>
+            <Image
+              style={styles.icon}
+              resizeMode={"center"}
+              source={require("../assets/images/icon_side_menu.png")}
+            />
+          </TouchableOpacity>
         </View>
+        <View
+          style={{ flex: 7, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ fontSize: 16 }}>Meal Plan</Text>
+        </View>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("CreatePlan")}
+          >
+            <Image
+              style={{
+                height: 30,
+                width: 30,
+                marginLeft: 10,
+                marginRight: 10
+              }}
+              resizeMode={"center"}
+              source={require("../assets/images/ic_plus.png")}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
-        <View style={{ height: 50, flexDirection: 'row', marginLeft: 25 }}>
-          <View style={{ height: '100%', justifyContent: 'center' }}>
+  renderIntro() {
+    return (
+      <Fragment>
+        <View style={{ height: 50, flexDirection: "row", marginLeft: 25 }}>
+          <View style={{ height: "100%", justifyContent: "center" }}>
             <Image
               style={{ height: 30, width: 30 }}
-              resizeMode={'center'}
-              source={require('../assets/images/ic_pink_circle.png')}
+              resizeMode={"center"}
+              source={require("../assets/images/ic_pink_circle.png")}
             />
           </View>
 
-          <View style={{ height: '100%', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 16, color: 'black' }}>
+          <View style={{ height: "100%", justifyContent: "center" }}>
+            <Text style={{ fontSize: 16, color: "black" }}>
               Hi, {this.state.fullname}
             </Text>
           </View>
         </View>
 
         <View style={{ height: 50, marginLeft: 55 }}>
-          <Text style={{ fontSize: 14, color: '#999' }}>
+          <Text style={{ fontSize: 14, color: "#999" }}>
             Let's see what our recipes.
           </Text>
-          <Text style={{ fontSize: 14, color: '#999' }}>for the day are.</Text>
+          <Text style={{ fontSize: 14, color: "#999" }}>for the day are.</Text>
         </View>
+      </Fragment>
+    );
+  }
 
-        <View
-          style={{
-            marginTop: 15,
-            backgroundColor: '#ddd',
-            height: 1,
-            width: '100%',
-          }}
-        />
+  renderCalendar() {
+    return (
+      <View style={{ marginTop: 15 }}>
+        <MyCalendar />
       </View>
-    )
+    );
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.renderHeader()}
+        {this.renderIntro()}
+        {this.renderCalendar()}
+      </View>
+    );
   }
 }
 
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white"
   },
   header: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     marginTop: 30,
     height: height / 20,
     width: null,
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   icon: {
     height: 30,
     width: 30,
-    marginLeft: 10,
+    marginLeft: 10
   },
   list: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 20,
+    marginTop: 20
   },
   itemFood: {
-    width: '100%',
-    height: 220,
+    width: "100%",
+    height: 220
   },
   imageFood: {
-    flex: 3,
+    flex: 3
   },
   infomationFood: {
-    flex: 1,
-  },
-})
+    flex: 1
+  }
+});

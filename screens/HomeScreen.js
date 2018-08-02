@@ -14,14 +14,6 @@ import HomeTab from "../components/HomeTab/HomeTab";
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
-    // title: 'Home',
-    // headerStyle: {
-    //   backgroundColor: '#f4511e',
-    // },
-    // headerTintColor: '#fff',
-    // headerTitleStyle: {
-    //   fontWeight: 'bold',
-    // },
     header: null,
   };
 
