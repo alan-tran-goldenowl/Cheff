@@ -9,6 +9,7 @@ import CreatePlan from "../screens/CreatePlan";
 import MainScreen from "./MainTabNavigator";
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import ListPlan from '../screens/ListPlan';
 // Implementation of HomeScreen, OtherScreen, SignInScreen, AuthLoadingScreen
 // goes here.
 
@@ -20,7 +21,8 @@ const AppStack = createStackNavigator(
     FoodDetail: FoodDetail,
     CreatePlan: CreatePlan,
     Links: LinksScreen,
-    Settings: SettingsScreen
+    Settings: SettingsScreen,
+    ListPlan,
   },
   {
     headerMode: "none"

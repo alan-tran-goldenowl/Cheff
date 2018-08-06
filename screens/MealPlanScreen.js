@@ -96,7 +96,7 @@ export default class MealPlan extends Component {
   renderCalendar() {
     return (
       <View style={{ marginTop: 15 }}>
-        <MyCalendar />
+        <MyCalendar moveToListPlan={() => this.props.navigation.navigate("ListPlan")} />
       </View>
     );
   }

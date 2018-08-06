@@ -123,6 +123,7 @@ class MyCalendar extends Component {
         //handle press day
         onDayPress={day => {
           console.log("selected day", day);
+          this.props.moveToListPlan();
         }}
         // Handler which gets executed on day long press. Default = undefined
         onDayLongPress={day => {
