@@ -1,14 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import ScrollableTabView, {
-  ScrollableTabBar
-} from "react-native-scrollable-tab-view";
-import { Text, View } from "react-native";
+  ScrollableTabBar,
+} from 'react-native-scrollable-tab-view';
+import { Text, View } from 'react-native';
 
-import Dinner from "./Dinner";
-import Breakfast from "./Breakfast";
-import Lunch from "./Lunch";
-import Brunch from "./Brunch";
-import Recommend from "./Recommend";
+import Dinner from './Dinner';
+import Breakfast from './Breakfast';
+import Lunch from './Lunch';
+import Brunch from './Brunch';
+import Recommend from './Recommend';
+
+import { responsive } from '../../utils';
 
 export default class HomeTab extends Component {
   render() {
@@ -20,19 +22,19 @@ export default class HomeTab extends Component {
             {...tabBarProps}
             style={{
               borderWidth: 0,
-              borderColor: "transparent"
+              borderColor: 'transparent',
             }}
           />
         )}
         tabBarBackgroundColor="transparent"
         tabBarActiveTextColor="#000"
         tabBarInactiveTextColor="#666"
-        tabBarTextStyle={{ fontSize: 14 }}
+        tabBarTextStyle={{ fontSize: responsive({ f: 14 }) }}
         tabBarUnderlineStyle={{
-          backgroundColor: "#ff2d65",
-          width: 30,
-          marginLeft: 20,
-          height: 2
+          backgroundColor: '#ff2d65',
+          width: responsive({ h: 28 }),
+          marginLeft: responsive({ d: 25 }),
+          height: 2,
         }}
       >
         <Recommend tabLabel="Recommend" {...this.props} />

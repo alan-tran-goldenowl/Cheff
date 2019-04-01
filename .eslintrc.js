@@ -1,14 +1,18 @@
 module.exports = {
-  env: {
-    node: true,
-    es6: true
-  },
-  parser: "babel-eslint",
-  plugins: ["react", "react-native", "jsx-a11y", "prettier"],
-  rules: {
-    "prettier/prettier": "error",
-    "no-unexpected-multiline": "error",
-    "react/jsx-filename-extension": [0]
-  },
-  extends: "airbnb"
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/prop-types": 0,
+      "react/destructuring-assignment": 0,
+      "no-unused-expressions": 0,
+      "import/prefer-default-export": 0,
+      "global-require": 0,
+      "react/no-string-refs": 0,
+      "no-underscore-dangle": 0,
+      "react/jsx-no-bind": 0,
+      "default-case": 0,
+      "consistent-return": 0,
+      "camelcase": 0
+  }
 };
