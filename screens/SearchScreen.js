@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,14 @@ import {
   TextInput,
   Switch,
   TouchableOpacity,
-} from 'react-native'
-import SearchViewCheff from '../components/SearchViewCheff'
+} from 'react-native';
+import SearchViewCheff from '../components/SearchViewCheff';
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   }
+
   render() {
     return (
       <View style={style.container}>
@@ -22,7 +23,7 @@ export default class SettingsScreen extends React.Component {
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Image
               style={style.iconBack}
-              resizeMode={'center'}
+              resizeMode="center"
               source={require('../assets/images/icon_back.png')}
             />
           </TouchableOpacity>
@@ -32,11 +33,11 @@ export default class SettingsScreen extends React.Component {
           <SearchViewCheff moveToSeacrh={() => console.log('OnFocus')} />
         </View>
       </View>
-    )
+    );
   }
 }
 
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window');
 const style = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
@@ -54,4 +55,4 @@ const style = StyleSheet.create({
     width: 30,
     marginLeft: 10,
   },
-})
+});
