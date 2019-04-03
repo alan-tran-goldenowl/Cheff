@@ -1,47 +1,117 @@
 export default [
   {
-    key: '1',
+    key: 'dinner-1',
     name: 'Braised Short Ribs',
     like: 342,
     userLike: true,
     timeStamp: '15 minutes ago',
+    type: 'dinner',
     imageLink:
       'https://tastykitchen.com/recipes/wp-content/uploads/sites/2/2009/11/4101480755_e622c72678_o-420x280.jpg',
+    ingredients: [
+      { amount: 1, name: 'short ribs' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'cup hot sauce' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 4,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '2',
+    key: 'dinner-2',
     name: 'Short Rib Ragu over Pappardelle',
     like: 162,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'dinner',
     imageLink:
       'https://www.tasteofhome.com/wp-content/uploads/0001/01/Crockpot-Short-Rib-Ragu-over-Pappardelle_EXPS_THSO18_218391_B04_20_8b-696x696.jpg',
+    ingredients: [
+      { amount: 1, name: 'rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'cup hot sauce' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 1,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '3',
+    key: 'dinner-3',
     name: 'Korean Braised Beef Short Ribs',
     like: 382,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'dinner',
     imageLink:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaBOhLnH-_Ho-6pfSmDNMxEFpmXUxkrK_KCzEA44HRuiDs49gEvA',
+    ingredients: [
+      { amount: 1, name: 'beef ribs' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'cup hot sauce' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 2,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '4',
+    key: 'dinner-4',
     name: 'Boneless Beef Short Ribs',
     like: 1123,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'dinner',
     imageLink:
       'http://1.bp.blogspot.com/-5wfIGjqdYC8/VOfrB7LvnDI/AAAAAAAAO2w/Ife6_Ia6-PM/s1600/_M4A3208.jpg',
+    ingredients: [
+      { amount: 1, name: 'boneless beef' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'cup hot sauce' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 3,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '5',
+    key: 'dinner-5',
     name: 'Short Ribs and Scallops',
     like: 632,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'dinner',
     imageLink:
       'http://2.bp.blogspot.com/-HSRpNbuiQmQ/T-rnnWnn65I/AAAAAAAAA9s/woR6JN4Vozs/s1600/IMG_1885.JPG',
+    ingredients: [
+      { amount: 1, name: 'pounds rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'scallop' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 2,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
-]
+];

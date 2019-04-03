@@ -15,6 +15,7 @@ export default StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     elevation: 0.5,
+    alignSelf: 'center',
   },
   icon: {
     height: responsive({ h: 20 }),

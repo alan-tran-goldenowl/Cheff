@@ -1,58 +1,69 @@
 import React from 'react';
 import {
   View,
-  Text,
-  StyleSheet,
-  Dimensions,
   Image,
-  TextInput,
-  Switch,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import SearchViewCheff from '../components/SearchViewCheff';
+import { connect } from '../recontext/store';
+import FoodItem from '../components/FoodItem';
+import styles from '../styles/SearchStyle';
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   }
 
+  state = {
+    searchText: '',
+    filterData: [],
+  }
+
+  onChangeText = (searchText) => {
+    let filterData = [];
+    if (searchText.length > 0) {
+      filterData = this.props.listFood.filter(
+        i => i.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+        || i.ingredients.map(e => e.name.toLowerCase()).indexOf(searchText.toLowerCase()) > -1,
+      );
+    }
+    this.setState({ filterData, searchText });
+  }
+
   render() {
+    const { searchText, filterData } = this.state;
     return (
-      <View style={style.container}>
-        <View style={style.header}>
+      <View style={styles.container}>
+        <View style={styles.header}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Image
-              style={style.iconBack}
+              style={styles.iconBack}
               resizeMode="center"
               source={require('../assets/images/icon_back.png')}
             />
           </TouchableOpacity>
         </View>
 
-        <View style={{ marginLeft: 20, marginRight: 20 }}>
-          <SearchViewCheff moveToSeacrh={() => console.log('OnFocus')} />
+        <View style={styles.searchView}>
+          <SearchViewCheff
+            value={searchText}
+            onChangeText={this.onChangeText}
+          />
+          <FlatList
+            data={filterData}
+            renderItem={({ item }) => <FoodItem item={item} />}
+            keyExtractor={item => String(item.key)}
+            extraData={this.state.searchText}
+          />
         </View>
       </View>
     );
   }
 }
 
-const { height, width } = Dimensions.get('window');
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flex: 1,
-  },
-
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: 30,
-    height: height / 20,
-  },
-
-  iconBack: {
-    height: 30,
-    width: 30,
-    marginLeft: 10,
-  },
+const mapStateToProps = state => ({
+  listFood: state.listFood,
 });
+
+export default connect(mapStateToProps)(SettingsScreen);

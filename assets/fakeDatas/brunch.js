@@ -1,47 +1,117 @@
 export default [
   {
-    key: '1',
+    key: 'brunch-1',
     name: 'Red Chilaquiles',
     like: 342,
     userLike: true,
     timeStamp: '15 minutes ago',
+    type: 'brunch',
     imageLink:
       'https://www.isabeleats.com/wp-content/uploads/2017/12/easy-red-chilaquiles-small-1.jpg',
+    ingredients: [
+      { amount: 1, name: 'chilaquiles rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'scallop' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 4,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '2',
+    key: 'brunch-2',
     name: 'Creamy Brioche and Egg',
     like: 162,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'brunch',
     imageLink:
       'https://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/creamy-brioche-and-egg-bake.jpg?itok=zkPs9Xcm',
+    ingredients: [
+      { amount: 1, name: 'egg rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'scallop' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 2,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '3',
+    key: 'brunch-3',
     name: 'Puckett\'s of Leiper\'s Fork',
     like: 382,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'brunch',
     imageLink:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfUuTvcVO95mBukavaB7tNkWv5ZRGqZ2MOWoI_FLXEhnWqWOY',
+    ingredients: [
+      { amount: 1, name: 'fork rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'scallop' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 1,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '4',
+    key: 'brunch-4',
     name: 'Pizza',
     like: 1123,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'brunch',
     imageLink:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuXJut4maeLpLSv8-ay7LRbHS2FsKnhr4spVU_GUwSu_HHngXH',
+    ingredients: [
+      { amount: 1, name: 'pizza rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'scallop' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 3,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
   {
-    key: '5',
+    key: 'brunch-5',
     name: 'Egg Tacos',
     like: 632,
     userLike: false,
     timeStamp: '15 minutes ago',
+    type: 'brunch',
     imageLink:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh1ChONb-ZhAcBsFdQoZ2atZZUBo3xLefTUKG2jLVM5hhTWSOo',
+    ingredients: [
+      { amount: 1, name: 'egg rib' },
+      { amount: 2, name: 'large onions, thinly sliced' },
+      { amount: 0.25, name: 'scallop' },
+      { amount: 8, name: 'good-quality hot dog rolls' },
+      { amount: 8, name: 'all-natural hot dogs with no fillers' },
+    ],
+    serveForPeople: 2,
+    guidline: [
+      'Preheat oven to 400 degrees F (204 C) and line a baking sheet with parchment paper (or lightly grease with non-stick spray).',
+      'In the meantime wrap tofu in a clean, absorbent towel and set something heavy on top (such as a cast iron skillet) to press out the liquid.',
+      'Once the oven is preheated, dice tofu into 1/4-inch cubes and arrange on baking sheet. Bake for',
+    ],
   },
-]
+];

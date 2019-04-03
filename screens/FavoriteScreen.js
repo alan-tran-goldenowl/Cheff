@@ -11,8 +11,9 @@ import SearchViewCheff from '../components/SearchViewCheff';
 import recommend from '../assets/fakeDatas/recommend';
 import FoodItem from '../components/FoodItem';
 import styles from '../styles/FavoriteStyle';
+import { connect } from '../recontext/store';
 
-export default class FavoriteScreen extends Component {
+class FavoriteScreen extends Component {
   static navigationOptions = {
     header: null,
   }
@@ -46,10 +47,11 @@ export default class FavoriteScreen extends Component {
         <View style={styles.searchView}>
           <SearchViewCheff
             moveToSeacrh={() => this.props.navigation.navigate('Search')}
+            pointerEvents="none"
           />
         </View>
         <FlatList
-          data={recommend}
+          data={this.props.listFood.filter(i => i.favorite)}
           renderItem={({ item }) => <FoodItem item={item} />}
           keyExtractor={item => String(item.key)}
         />
@@ -57,3 +59,9 @@ export default class FavoriteScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  listFood: state.listFood,
+});
+
+export default connect(mapStateToProps)(FavoriteScreen);

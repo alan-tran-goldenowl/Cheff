@@ -3,7 +3,7 @@ import {
   View, Image, TextInput, TouchableWithoutFeedback,
 } from 'react-native';
 
-import styles from '../styles/SearchiewCheffStyle';
+import styles from '../styles/SearchViewCheffStyle';
 
 const SearchiewCheff = props => (
   <TouchableWithoutFeedback onPress={props.moveToSeacrh}>
@@ -19,9 +19,10 @@ const SearchiewCheff = props => (
         <TextInput
           underlineColorAndroid="transparent"
           autofocus={false}
-          editable={false}
           placeholder="Search your recipes..."
           style={styles.text}
+          autoCorrect={false}
+          {...props}
         />
       </View>
     </View>

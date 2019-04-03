@@ -6331,6 +6331,11 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
+react-recontext@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-recontext/-/react-recontext-3.1.4.tgz#5478908b3e784497b9c6b504b641bb9196468f56"
+  integrity sha512-4uKsuImjupt2Gy3ApUgn5/JLmP/R/2nf/+V1oeVgPwB4o4WihhigWkhtENdXo/XQd10IBU+msobKLAO2WWV9HA==
+
 react-test-renderer@^16.3.1:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.8.6.tgz#188d8029b8c39c786f998aa3efd3ffe7642d5ba1"

@@ -1,4 +1,4 @@
-import { Dimensions, PixelRatio, Platform } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,3 +20,7 @@ export const responsive = ({ f, h, d }) => {
 
 export const isEmail = email => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
+export const actionNameToTypes = actionName => actionName
+  .replace(/([A-Z])/g, '_$1')
+  .trim()
+  .toUpperCase();

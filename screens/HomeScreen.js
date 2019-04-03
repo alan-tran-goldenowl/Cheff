@@ -7,15 +7,10 @@ import {
 import SearchViewCheff from '../components/SearchViewCheff';
 import HomeTab from '../components/HomeTab/HomeTab';
 
-import recommend from '../assets/fakeDatas/recommend';
-import breakfast from '../assets/fakeDatas/breakfast';
-import brunch from '../assets/fakeDatas/brunch';
-import lunch from '../assets/fakeDatas/lunch';
-import dinner from '../assets/fakeDatas/dinner';
-
 import styles from '../styles/HomeStyle';
+import { connect } from '../recontext/store';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -58,6 +53,7 @@ export default class HomeScreen extends Component {
           <View style={styles.search}>
             <SearchViewCheff
               moveToSeacrh={() => this.props.navigation.navigate('Search')}
+              pointerEvents="none"
             />
           </View>
         </View>
@@ -71,13 +67,19 @@ export default class HomeScreen extends Component {
         {this.renderHeader()}
         <HomeTab
           moveToDetail={() => this.props.navigation.navigate('FoodDetail')}
-          recommendFoods={recommend}
-          breakfastFoods={breakfast}
-          lunchFoods={lunch}
-          brunchFoods={brunch}
-          dinnerFoods={dinner}
+          recommendFoods={this.props.listFood.filter(i => i.type === 'recommend')}
+          breakfastFoods={this.props.listFood.filter(i => i.type === 'breakfast')}
+          lunchFoods={this.props.listFood.filter(i => i.type === 'lunch')}
+          brunchFoods={this.props.listFood.filter(i => i.type === 'brunch')}
+          dinnerFoods={this.props.listFood.filter(i => i.type === 'dinner')}
         />
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  listFood: state.listFood,
+});
+
+export default connect(mapStateToProps)(HomeScreen);
