@@ -3,7 +3,7 @@ export default [
     key: 'breakfast-1',
     name: 'Tater Tot Breakfast Casserole',
     like: 342,
-    userLike: true,
+    favorite: true,
     timeStamp: '15 minutes ago',
     type: 'breakfast',
     imageLink:
@@ -27,7 +27,7 @@ export default [
     key: 'breakfast-2',
     name: 'Brioche',
     like: 162,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'breakfast',
     imageLink:
@@ -51,7 +51,7 @@ export default [
     key: 'breakfast-3',
     name: 'Waffles with Butter and Maple Syrup',
     like: 382,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'breakfast',
     imageLink:
@@ -75,7 +75,7 @@ export default [
     key: 'breakfast-4',
     name: 'Pancakes',
     like: 1123,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'breakfast',
     imageLink:
@@ -99,7 +99,7 @@ export default [
     key: 'breakfast-5',
     name: 'Eggs Benedict',
     like: 632,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'breakfast',
     imageLink:

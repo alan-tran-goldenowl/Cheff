@@ -3,7 +3,7 @@ export default [
     key: 'brunch-1',
     name: 'Red Chilaquiles',
     like: 342,
-    userLike: true,
+    favorite: true,
     timeStamp: '15 minutes ago',
     type: 'brunch',
     imageLink:
@@ -26,7 +26,7 @@ export default [
     key: 'brunch-2',
     name: 'Creamy Brioche and Egg',
     like: 162,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'brunch',
     imageLink:
@@ -49,7 +49,7 @@ export default [
     key: 'brunch-3',
     name: 'Puckett\'s of Leiper\'s Fork',
     like: 382,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'brunch',
     imageLink:
@@ -72,7 +72,7 @@ export default [
     key: 'brunch-4',
     name: 'Pizza',
     like: 1123,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'brunch',
     imageLink:
@@ -95,7 +95,7 @@ export default [
     key: 'brunch-5',
     name: 'Egg Tacos',
     like: 632,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'brunch',
     imageLink:

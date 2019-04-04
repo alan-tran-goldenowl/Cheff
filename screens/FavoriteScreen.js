@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import SearchViewCheff from '../components/SearchViewCheff';
-import recommend from '../assets/fakeDatas/recommend';
 import FoodItem from '../components/FoodItem';
 import styles from '../styles/FavoriteStyle';
 import { connect } from '../recontext/store';
@@ -16,6 +15,28 @@ import { connect } from '../recontext/store';
 class FavoriteScreen extends Component {
   static navigationOptions = {
     header: null,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      listFavoriteFood: props.listFood.filter(i => i.favorite) || [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('didFocus', () => {
+      if (JSON.stringify(this.state.listFavoriteFood)
+      !== JSON.stringify(this.props.listFood.filter(i => i.favorite))) {
+        this.setState({ listFavoriteFood: this.props.listFood.filter(i => i.favorite) });
+      }
+    });
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.state.listFavoriteFood.length === 0) {
+      this.setState({ listFavoriteFood: newProps.listFood.filter(i => i.favorite) });
+    }
   }
 
   render() {
@@ -51,7 +72,7 @@ class FavoriteScreen extends Component {
           />
         </View>
         <FlatList
-          data={this.props.listFood.filter(i => i.favorite)}
+          data={this.state.listFavoriteFood}
           renderItem={({ item }) => <FoodItem item={item} />}
           keyExtractor={item => String(item.key)}
         />

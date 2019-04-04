@@ -3,7 +3,7 @@ export default [
     key: 'dinner-1',
     name: 'Braised Short Ribs',
     like: 342,
-    userLike: true,
+    favorite: true,
     timeStamp: '15 minutes ago',
     type: 'dinner',
     imageLink:
@@ -26,7 +26,7 @@ export default [
     key: 'dinner-2',
     name: 'Short Rib Ragu over Pappardelle',
     like: 162,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'dinner',
     imageLink:
@@ -49,7 +49,7 @@ export default [
     key: 'dinner-3',
     name: 'Korean Braised Beef Short Ribs',
     like: 382,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'dinner',
     imageLink:
@@ -72,7 +72,7 @@ export default [
     key: 'dinner-4',
     name: 'Boneless Beef Short Ribs',
     like: 1123,
-    userLike: false,
+    favorite: false,
     timeStamp: '15 minutes ago',
     type: 'dinner',
     imageLink:
@@ -95,7 +95,7 @@ export default [
     key: 'dinner-5',
     name: 'Short Ribs and Scallops',
     like: 632,
-    userLike: false,
+    favorite: true,
     timeStamp: '15 minutes ago',
     type: 'dinner',
     imageLink:

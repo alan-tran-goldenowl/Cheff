@@ -5,7 +5,6 @@ import lunch from '../assets/fakeDatas/lunch';
 import recommend from '../assets/fakeDatas/recommend';
 
 export default {
-  loading: false,
   listFood: [
     ...recommend,
     ...dinner,
