@@ -5,13 +5,16 @@
     "slug": "cheff",
     "privacy": "public",
     "sdkVersion": "27.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "facebookScheme" : "fb1704319859617231",
-    "facebookAppId" : "1704319859617231",
-    "facebookDisplayName" : "Cheff",
+    "facebookScheme": "fb1704319859617231",
+    "facebookAppId": "1704319859617231",
+    "facebookDisplayName": "Cheff",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -25,7 +28,6 @@
     ],
     "ios": {
       "supportsTablet": true
-    },
-
+    }
   }
 }

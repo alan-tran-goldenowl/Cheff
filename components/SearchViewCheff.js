@@ -7,7 +7,7 @@ import styles from '../styles/SearchViewCheffStyle';
 
 const SearchiewCheff = props => (
   <TouchableWithoutFeedback onPress={props.moveToSeacrh}>
-    <View style={styles.search}>
+    <View style={[styles.search, props.overrideStyle]}>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Image
           style={styles.iconSearch}

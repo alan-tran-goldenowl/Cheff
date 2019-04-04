@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import SearchViewCheff from '../components/SearchViewCheff';
 import { connect } from '../recontext/store';
-import FoodItem from '../components/FoodItem';
+import SearchItem from '../components/SearchItem';
 import styles from '../styles/SearchStyle';
 
 class SettingsScreen extends React.Component {
@@ -48,11 +48,12 @@ class SettingsScreen extends React.Component {
         <View style={styles.searchView}>
           <SearchViewCheff
             value={searchText}
+            overrideStyle={styles.search}
             onChangeText={this.onChangeText}
           />
           <FlatList
             data={filterData}
-            renderItem={({ item }) => <FoodItem item={item} />}
+            renderItem={({ item }) => <SearchItem item={item} />}
             keyExtractor={item => String(item.key)}
             extraData={this.state.searchText}
           />
