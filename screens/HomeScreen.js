@@ -1,9 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import SearchViewCheff from '../components/SearchViewCheff';
 import HomeTab from '../components/HomeTab/HomeTab';
 
@@ -29,10 +25,7 @@ class HomeScreen extends Component {
             </TouchableOpacity>
           </View>
           <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
-            <Image
-              style={styles.logo}
-              source={require('../assets/images/logo_cheff.png')}
-            />
+            <Image style={styles.logo} source={require('../assets/images/logo_cheff.png')} />
           </View>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
@@ -52,7 +45,9 @@ class HomeScreen extends Component {
           />
           <View style={styles.search}>
             <SearchViewCheff
-              moveToSeacrh={() => this.props.navigation.navigate('Search')}
+              moveToSeacrh={() => this.props.navigation.navigate('Search', {
+                data: this.props.listFood,
+              })}
               pointerEvents="none"
             />
           </View>

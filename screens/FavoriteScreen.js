@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
+  Text, View, Image, TouchableOpacity, FlatList,
 } from 'react-native';
 
 import SearchViewCheff from '../components/SearchViewCheff';
@@ -15,7 +11,7 @@ import { connect } from '../recontext/store';
 class FavoriteScreen extends Component {
   static navigationOptions = {
     header: null,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -26,8 +22,10 @@ class FavoriteScreen extends Component {
 
   componentDidMount() {
     this.props.navigation.addListener('didFocus', () => {
-      if (JSON.stringify(this.state.listFavoriteFood)
-      !== JSON.stringify(this.props.listFood.filter(i => i.favorite))) {
+      if (
+        JSON.stringify(this.state.listFavoriteFood)
+        !== JSON.stringify(this.props.listFood.filter(i => i.favorite))
+      ) {
         this.setState({ listFavoriteFood: this.props.listFood.filter(i => i.favorite) });
       }
     });
@@ -67,7 +65,9 @@ class FavoriteScreen extends Component {
         </View>
         <View style={styles.searchView}>
           <SearchViewCheff
-            moveToSeacrh={() => this.props.navigation.navigate('Search')}
+            moveToSeacrh={() => this.props.navigation.navigate('Search', {
+              data: this.props.listFood.filter(i => i.favorite),
+            })}
             pointerEvents="none"
           />
         </View>
