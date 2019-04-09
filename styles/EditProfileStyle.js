@@ -6,21 +6,6 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1,
   },
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: responsive({ d: 30 }),
-    height: device.height / 20,
-    width: null,
-    flexDirection: 'row',
-    marginHorizontal: responsive({ d: 10 }),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconBack: {
-    height: responsive({ h: 20 }),
-    width: responsive({ h: 20 }),
-    marginLeft: responsive({ d: 10 }),
-  },
   imageContainer: {
     height: responsive({ h: 110 }),
     width: responsive({ h: 110 }),
@@ -35,12 +20,5 @@ export default StyleSheet.create({
     width: responsive({ h: 200 }),
     fontSize: responsive({ f: 17 }),
     color: 'black',
-  },
-  title: {
-    fontSize: responsive({ f: 15 }),
-  },
-  saveText: {
-    fontSize: responsive({ f: 14 }),
-    marginRight: responsive({ d: 10 }),
   },
 });

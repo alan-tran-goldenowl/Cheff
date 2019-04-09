@@ -1,26 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { responsive, device } from '../utils';
+import { responsive } from '../utils';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-  },
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: responsive({ d: 30 }),
-    height: device.height / 20,
-    width: null,
-    flexDirection: 'row',
-    marginHorizontal: responsive({ d: 10 }),
-  },
-  icon: {
-    height: responsive({ h: 30 }),
-    width: responsive({ h: 30 }),
-  },
-  logo: {
-    resizeMode: 'center',
-    width: responsive({ h: 80 }),
   },
   searchView: {
     position: 'relative',

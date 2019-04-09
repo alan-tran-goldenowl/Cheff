@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   TouchableHighlight,
   BackHandler,
   TextInput,
@@ -11,11 +10,12 @@ import {
 } from 'react-native';
 
 import styles from '../styles/EditProfileStyle';
+import Header from '../components/Header';
 
 export default class extends Component {
   static navigationOptions = {
     header: null,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -41,41 +41,25 @@ export default class extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-              <Image
-                style={styles.iconBack}
-                resizeMode="center"
-                source={require('../assets/images/icon_back.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.title}>Edit Profile</Text>
-          </View>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TouchableOpacity>
-              <Text style={styles.saveText}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Header
+          iconLeft={require('../assets/images/icon_back.png')}
+          onPressLeft={() => this.props.navigation.goBack()}
+          title="Edit Profile"
+          rightText="Save"
+        />
         <View style={{ alignItems: 'center', marginTop: 30 }}>
           <TouchableHighlight style={styles.imageContainer2}>
             <Image
               style={styles.image}
               source={{
-                uri:
-                  'http://www.free-avatars.com/data/media/37/cat_avatar_0597.jpg',
+                uri: 'http://www.free-avatars.com/data/media/37/cat_avatar_0597.jpg',
               }}
             />
           </TouchableHighlight>
         </View>
 
         <View style={{ alignItems: 'center', marginTop: 15 }}>
-          <Text style={{ color: 'blue', fontSize: 15 }}>
-            Change image profile
-          </Text>
+          <Text style={{ color: 'blue', fontSize: 15 }}>Change image profile</Text>
         </View>
 
         <View style={{ margin: 20 }}>

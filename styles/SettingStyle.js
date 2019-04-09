@@ -6,11 +6,6 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1,
   },
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: responsive({ d: 30 }),
-    height: device.height / 20,
-  },
   iconBack: {
     height: responsive({ h: 20 }),
     width: responsive({ h: 20 }),

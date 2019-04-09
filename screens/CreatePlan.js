@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import styles from '../styles/CreatePlanStyle';
+import Header from '../components/Header';
 
 const months = [
   'January',
@@ -70,16 +71,10 @@ export default class CreatePlan extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Image
-              style={styles.iconBack}
-              resizeMode="center"
-              source={require('../assets/images/ic_exist.png')}
-            />
-          </TouchableOpacity>
-        </View>
-
+        <Header
+          iconLeft={require('../assets/images/ic_exist.png')}
+          onPressLeft={() => this.props.navigation.goBack()}
+        />
         <Text style={{ fontSize: 20, color: '#777', marginLeft: 20 }}>
           Title of the meal plan
         </Text>

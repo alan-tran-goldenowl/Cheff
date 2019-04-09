@@ -8,6 +8,7 @@ import {
   BackHandler,
 } from 'react-native';
 
+import Header from '../components/Header';
 import styles from '../styles/SettingStyle';
 
 export default class SettingsScreen extends React.Component {
@@ -38,15 +39,10 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Image
-              style={styles.iconBack}
-              resizeMode="center"
-              source={require('../assets/images/icon_back.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <Header
+          iconLeft={require('../assets/images/icon_back.png')}
+          onPressLeft={() => this.props.navigation.goBack()}
+        />
         <View style={styles.preferences}>
           <Text style={styles.textSetting}>Settings</Text>
           <Text style={styles.textPreferences}>Update your preferences</Text>

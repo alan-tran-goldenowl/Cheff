@@ -38,7 +38,7 @@ class FoodItem extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.itemFood}>
+        <TouchableOpacity style={styles.itemFood} onPress={this.props.onPressItem}>
           <View style={styles.imageFood}>
             <Image
               style={styles.imageFoodCover}

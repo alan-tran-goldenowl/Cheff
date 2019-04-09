@@ -6,13 +6,6 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1,
   },
-
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: 30,
-    height: device.height / 20,
-  },
-
   iconBack: {
     height: 15,
     width: 15,

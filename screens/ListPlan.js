@@ -9,6 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import Header from '../components/Header';
+
 const breakfastIcon = require('../assets/images/icon-breakfast.png');
 const brunchIcon = require('../assets/images/icon-brunch.png');
 const lunchIcon = require('../assets/images/icon-lunch.png');
@@ -50,17 +52,10 @@ const data = [
 class ListPlan extends Component {
   renderHeader() {
     return (
-      <View style={styles.header}>
-        <View>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Image
-              style={styles.icon}
-              resizeMode="center"
-              source={require('../assets/images/icon_back.png')}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Header
+        iconLeft={require('../assets/images/icon_back.png')}
+        onPressLeft={() => this.props.navigation.goBack()}
+      />
     );
   }
 

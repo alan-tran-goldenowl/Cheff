@@ -6,18 +6,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: responsive({ d: 30 }),
-    height: device.height / 20,
-    width: null,
-    flexDirection: 'row',
-    marginHorizontal: responsive({ d: 10 }),
-  },
-  icon: {
-    height: responsive({ h: 20 }),
-    width: responsive({ h: 20 }),
-  },
   list: {
     flex: 1,
     backgroundColor: 'white',
@@ -34,9 +22,6 @@ export default StyleSheet.create({
   },
   infomationFood: {
     flex: 1,
-  },
-  title: {
-    fontSize: responsive({ f: 15 }),
   },
   welcomeView: {
     height: responsive({ h: 40 }),

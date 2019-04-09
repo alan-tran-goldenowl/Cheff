@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
-import ScrollableTabView, {
-  ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
-import { Text, View } from 'react-native';
+import React from 'react';
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 import Dinner from './Dinner';
 import Breakfast from './Breakfast';

@@ -1,9 +1,8 @@
 import React from 'react';
-import {
-  View, Image, TouchableOpacity, FlatList,
-} from 'react-native';
+import { View, FlatList } from 'react-native';
 import SearchViewCheff from '../components/SearchViewCheff';
 import SearchItem from '../components/SearchItem';
+import Header from '../components/Header';
 import styles from '../styles/SearchStyle';
 
 class SettingsScreen extends React.Component {
@@ -22,7 +21,7 @@ class SettingsScreen extends React.Component {
 
   onChangeText = (searchText) => {
     let filterData = [];
-    const data = this.props.navigation.getParam('data')
+    const data = this.props.navigation.getParam('data');
     if (searchText.length > 0) {
       filterData = data.filter(
         i => i.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
@@ -36,16 +35,10 @@ class SettingsScreen extends React.Component {
     const { searchText, filterData } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Image
-              style={styles.iconBack}
-              resizeMode="center"
-              source={require('../assets/images/icon_back.png')}
-            />
-          </TouchableOpacity>
-        </View>
-
+        <Header
+          iconLeft={require('../assets/images/icon_back.png')}
+          onPressLeft={() => this.props.navigation.goBack()}
+        />
         <View style={styles.searchView}>
           <SearchViewCheff
             value={searchText}
@@ -54,7 +47,12 @@ class SettingsScreen extends React.Component {
           />
           <FlatList
             data={searchText.length > 0 ? filterData : []}
-            renderItem={({ item }) => <SearchItem item={item} />}
+            renderItem={({ item }) => (
+              <SearchItem
+                item={item}
+                onPressItem={() => this.props.navigation.navigate('FoodDetail', { data: item })}
+              />
+            )}
             keyExtractor={item => String(item.key)}
             extraData={this.state.searchText}
           />

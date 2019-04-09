@@ -19,6 +19,7 @@
     "react-native-expo-image-cache": "^3.2.0",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-scrollable-tab-view": "^0.8.0",
+    "react-native-snap-carousel": "^3.7.5",
     "react-navigation": "^2.6.2",
     "react-recontext": "^3.1.4"
   },

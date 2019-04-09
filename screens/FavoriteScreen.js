@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Text, View, Image, TouchableOpacity, FlatList,
-} from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import SearchViewCheff from '../components/SearchViewCheff';
 import FoodItem from '../components/FoodItem';
+import Header from '../components/Header';
 import styles from '../styles/FavoriteStyle';
 import { connect } from '../recontext/store';
 
@@ -40,40 +39,30 @@ class FavoriteScreen extends Component {
   render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1 }}>
-        <View style={styles.header}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
-              <Image
-                style={styles.icon}
-                resizeMode="center"
-                source={require('../assets/images/icon_side_menu.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.title}>Favorites</Text>
-          </View>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
-              <Image
-                style={styles.icon}
-                resizeMode="center"
-                source={require('../assets/images/ic_push_notification.png')}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Header
+          iconLeft={require('../assets/images/icon_side_menu.png')}
+          onPressLeft={() => this.props.navigation.navigate('Settings')}
+          iconRight={require('../assets/images/ic_push_notification.png')}
+          onPressRight={() => {}}
+          title="Favorites"
+        />
         <View style={styles.searchView}>
           <SearchViewCheff
             moveToSeacrh={() => this.props.navigation.navigate('Search', {
               data: this.props.listFood.filter(i => i.favorite),
-            })}
+            })
+            }
             pointerEvents="none"
           />
         </View>
         <FlatList
           data={this.state.listFavoriteFood}
-          renderItem={({ item }) => <FoodItem item={item} />}
+          renderItem={({ item }) => (
+            <FoodItem
+              item={item}
+              onPressItem={() => this.props.navigation.navigate('FoodDetail', { data: item })}
+            />
+          )}
           keyExtractor={item => String(item.key)}
         />
       </View>

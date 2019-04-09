@@ -22,6 +22,15 @@ export default [
       'Oil the scallops with the remaining tablespoon of olive oil, and season with salt and pepper. Sear the scallops on both sides until golden brown, about 3 to 4 minutes per side.',
       'Use a 3-inch ring mold or circle-shaped cookie cutter and fill with mofongo, to shape on serving plate. Place a seared scallop on top of mofongo cake. Remove the short ribs from the pot and shear with fork. Place the ribs on top of the scallop, then use the sauce from the pan and pour about 2 tablespoons on top of it all and serve.',
     ],
+    images: [
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fbreakfast-casseroles-2488001_break_tater_tot109_highres.jpg%3Fitok%3DvEj0rKzC&w=450&c=sc&poi=face&q=85',
+      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/brioche-breakfast-bake-with-crispy-bacon.jpg?itok=zAgwCv6f',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jeBo_5KVyrrRmv2Zfp76o86nZSNbKna-MS8GojgZ7fbndIHM8g',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eggs_Benedict-01-cropped.jpg/300px-Eggs_Benedict-01-cropped.jpg',
+    ],
+    calories: 422,
+    timeCook: '21 minutes',
+    tags: ['vegaterian', 'dry', 'main dishes'],
   },
   {
     key: 'breakfast-2',
@@ -46,6 +55,15 @@ export default [
       'Oil the scallops with the remaining tablespoon of olive oil, and season with salt and pepper. Sear the scallops on both sides until golden brown, about 3 to 4 minutes per side.',
       'Use a 3-inch ring mold or circle-shaped cookie cutter and fill with mofongo, to shape on serving plate. Place a seared scallop on top of mofongo cake. Remove the short ribs from the pot and shear with fork. Place the ribs on top of the scallop, then use the sauce from the pan and pour about 2 tablespoons on top of it all and serve.',
     ],
+    images: [
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fbreakfast-casseroles-2488001_break_tater_tot109_highres.jpg%3Fitok%3DvEj0rKzC&w=450&c=sc&poi=face&q=85',
+      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/brioche-breakfast-bake-with-crispy-bacon.jpg?itok=zAgwCv6f',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jeBo_5KVyrrRmv2Zfp76o86nZSNbKna-MS8GojgZ7fbndIHM8g',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eggs_Benedict-01-cropped.jpg/300px-Eggs_Benedict-01-cropped.jpg',
+    ],
+    calories: 381,
+    timeCook: '40 minutes',
+    tags: ['vegaterian', 'dry', 'main dishes'],
   },
   {
     key: 'breakfast-3',
@@ -70,6 +88,15 @@ export default [
       'Oil the scallops with the remaining tablespoon of olive oil, and season with salt and pepper. Sear the scallops on both sides until golden brown, about 3 to 4 minutes per side.',
       'Use a 3-inch ring mold or circle-shaped cookie cutter and fill with mofongo, to shape on serving plate. Place a seared scallop on top of mofongo cake. Remove the short ribs from the pot and shear with fork. Place the ribs on top of the scallop, then use the sauce from the pan and pour about 2 tablespoons on top of it all and serve.',
     ],
+    images: [
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fbreakfast-casseroles-2488001_break_tater_tot109_highres.jpg%3Fitok%3DvEj0rKzC&w=450&c=sc&poi=face&q=85',
+      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/brioche-breakfast-bake-with-crispy-bacon.jpg?itok=zAgwCv6f',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jeBo_5KVyrrRmv2Zfp76o86nZSNbKna-MS8GojgZ7fbndIHM8g',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eggs_Benedict-01-cropped.jpg/300px-Eggs_Benedict-01-cropped.jpg',
+    ],
+    calories: 300,
+    timeCook: '22 minutes',
+    tags: ['vegaterian', 'dry', 'main dishes'],
   },
   {
     key: 'breakfast-4',
@@ -94,6 +121,15 @@ export default [
       'Oil the scallops with the remaining tablespoon of olive oil, and season with salt and pepper. Sear the scallops on both sides until golden brown, about 3 to 4 minutes per side.',
       'Use a 3-inch ring mold or circle-shaped cookie cutter and fill with mofongo, to shape on serving plate. Place a seared scallop on top of mofongo cake. Remove the short ribs from the pot and shear with fork. Place the ribs on top of the scallop, then use the sauce from the pan and pour about 2 tablespoons on top of it all and serve.',
     ],
+    images: [
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fbreakfast-casseroles-2488001_break_tater_tot109_highres.jpg%3Fitok%3DvEj0rKzC&w=450&c=sc&poi=face&q=85',
+      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/brioche-breakfast-bake-with-crispy-bacon.jpg?itok=zAgwCv6f',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jeBo_5KVyrrRmv2Zfp76o86nZSNbKna-MS8GojgZ7fbndIHM8g',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eggs_Benedict-01-cropped.jpg/300px-Eggs_Benedict-01-cropped.jpg',
+    ],
+    calories: 182,
+    timeCook: '10 minutes',
+    tags: ['vegaterian', 'dry', 'main dishes'],
   },
   {
     key: 'breakfast-5',
@@ -118,5 +154,14 @@ export default [
       'Oil the scallops with the remaining tablespoon of olive oil, and season with salt and pepper. Sear the scallops on both sides until golden brown, about 3 to 4 minutes per side.',
       'Use a 3-inch ring mold or circle-shaped cookie cutter and fill with mofongo, to shape on serving plate. Place a seared scallop on top of mofongo cake. Remove the short ribs from the pot and shear with fork. Place the ribs on top of the scallop, then use the sauce from the pan and pour about 2 tablespoons on top of it all and serve.',
     ],
+    images: [
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fbreakfast-casseroles-2488001_break_tater_tot109_highres.jpg%3Fitok%3DvEj0rKzC&w=450&c=sc&poi=face&q=85',
+      'https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/brioche-breakfast-bake-with-crispy-bacon.jpg?itok=zAgwCv6f',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jeBo_5KVyrrRmv2Zfp76o86nZSNbKna-MS8GojgZ7fbndIHM8g',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eggs_Benedict-01-cropped.jpg/300px-Eggs_Benedict-01-cropped.jpg',
+    ],
+    calories: 382,
+    timeCook: '20 minutes',
+    tags: ['vegaterian', 'dry', 'main dishes'],
   },
 ];
