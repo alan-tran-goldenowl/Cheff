@@ -7,8 +7,8 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   iconHeart: {
-    height: responsive({ h: 30 }),
-    width: responsive({ h: 30 }),
+    height: responsive({ h: 35 }),
+    width: responsive({ h: 35 }),
   },
   likeView: {
     justifyContent: 'center',
@@ -38,6 +38,7 @@ export default StyleSheet.create({
   flexRowCenter: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: responsive({ d: 5 }),
   },
   infoText: {
     color: 'rgb(68,68,68)',
@@ -59,9 +60,10 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
   },
   tagView: {
-    marginRight: responsive({ d: 10 }),
     borderRadius: 2,
+    marginRight: responsive({ d: 25 }),
     backgroundColor: 'rgb(226,226,226)',
+    paddingHorizontal: responsive({ d: 5 }),
   },
   tagText: {
     padding: responsive({ d: 10 }),
@@ -92,12 +94,14 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderColor: 'rgb(217,217,217)',
-    borderWidth: 0.7,
+    borderLeftWidth: 0.5,
+    borderRightWidth: 0.5,
     marginRight: responsive({ d: 30 }),
+    padding: responsive({ d: 20 }),
   },
   iconServing: {
-    height: responsive({ h: 25 }),
-    width: responsive({ h: 25 }),
+    height: responsive({ h: 10 }),
+    width: responsive({ h: 10 }),
   },
   instructionView: {
     marginLeft: responsive({ d: 30 }),

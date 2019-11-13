@@ -1,28 +1,30 @@
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import {
+  createAppContainer,
+  createStackNavigator,
+  createSwitchNavigator,
+} from 'react-navigation';
 
-import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import SignInScreen from '../screens/SignInScreen';
-import SearchScreen from '../screens/SearchScreen';
-import EditProfile from '../screens/EditProfile';
+import Main from './MainTabNavigator';
+import Links from '../screens/LinksScreen';
+import ListPlan from '../screens/ListPlan';
+import SignIn from '../screens/SignInScreen';
+import Search from '../screens/SearchScreen';
 import FoodDetail from '../screens/FoodDetail';
 import CreatePlan from '../screens/CreatePlan';
-import MainScreen from './MainTabNavigator';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import ListPlan from '../screens/ListPlan';
-// Implementation of HomeScreen, OtherScreen, SignInScreen, AuthLoadingScreen
-// goes here.
+import Settings from '../screens/SettingsScreen';
+import EditProfile from '../screens/EditProfile';
+import AuthLoading from '../screens/AuthLoadingScreen';
 
 const AppStack = createStackNavigator(
   {
-    Main: MainScreen,
-    Search: SearchScreen,
-    EditProfile,
-    FoodDetail,
-    CreatePlan,
-    Links: LinksScreen,
-    Settings: SettingsScreen,
+    Main,
+    Links,
+    Search,
     ListPlan,
+    Settings,
+    CreatePlan,
+    FoodDetail,
+    EditProfile,
   },
   {
     headerMode: 'none',
@@ -31,9 +33,9 @@ const AppStack = createStackNavigator(
 
 const AppSwitch = createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
+    AuthLoading,
     App: AppStack,
-    Auth: createStackNavigator({ SignIn: SignInScreen }),
+    Auth: createStackNavigator({ SignIn }),
   },
   {
     initialRouteName: 'AuthLoading',

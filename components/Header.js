@@ -6,8 +6,8 @@ import { device, responsive } from '../utils';
 
 const styles = StyleSheet.create({
   icon: {
-    height: responsive({ h: 30 }),
-    width: responsive({ h: 30 }),
+    height: responsive({ h: 20 }),
+    width: responsive({ h: 20 }),
   },
   header: {
     backgroundColor: '#ffffff',
@@ -42,14 +42,22 @@ const Header = props => (
       {props.logoVisible && (
         <Image style={styles.logo} source={require('../assets/images/logo_cheff.png')} />
       )}
-      {props.title && <Text style={styles.title}>{props.title}</Text>}
+      {props.title && (
+      <Text style={styles.title}>
+        {props.title}
+      </Text>
+      )}
     </View>
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity onPress={props.onPressRight}>
         {props.iconRight && (
           <Image style={styles.icon} resizeMode="center" source={props.iconRight} />
         )}
-        {props.rightText && <Text style={styles.rightText}>{props.rightText}</Text>}
+        {props.rightText && (
+        <Text style={styles.rightText}>
+          {props.rightText}
+        </Text>
+        )}
         {props.customRight && props.customRight()}
       </TouchableOpacity>
     </View>

@@ -1,90 +1,133 @@
 import React, { Component } from 'react';
 import {
-  View, Text, Image as RNImage, ScrollView, FlatList, TouchableWithoutFeedback,
+  View, Text, Image as RNImage, ScrollView, FlatList, TouchableWithoutFeedback, TouchableOpacity,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Image } from 'react-native-expo-image-cache';
 
-import CollapseView from '../components/CollapseView';
 import Header from '../components/Header';
 import styles from '../styles/FoodDetailStyle';
+import CollapseView from '../components/CollapseView';
+
 import { device, responsive } from '../utils';
 
 export default class FoodDetail extends Component {
-  constructor(props) {
-    super(props);
-    const data = this.props.navigation.getParam('data');
-    const { serveForPeople } = data;
-    this.state = {
-      ingredientsExpand: true,
-      serveForPeople,
-    };
+  state = {
+    like: 0,
+    userLike: false,
+    serveForPeople: 0,
+    ingredientsExpand: true,
   }
 
+  componentDidMount() {
+    const {
+      like = 0,
+      userLike = false,
+      serveForPeople = 0,
+    } = this.props.navigation.getParam('data') || {};
+
+    this.setState({
+      like,
+      userLike,
+      serveForPeople,
+    });
+  }
+
+  handleToggleLike = () => this.setState(prevState => ({
+    userLike: !prevState.userLike,
+    like: prevState.like + (prevState.userLike ? -1 : 1),
+  }))
+
+  handleAddServe = () => this.setState(prevState => ({
+    serveForPeople: prevState.serveForPeople + 1,
+  }))
+
+  handleSubtractServe = () => this.setState(prevState => ({
+    serveForPeople: prevState.serveForPeople > 1 ? prevState.serveForPeople - 1 : 1,
+  }))
+
   render() {
-    const data = this.props.navigation.getParam('data');
+    const data = this.props.navigation.getParam('data') || {};
+
     return (
       <View style={styles.container}>
         <Header
+          onPressLeft={this.props.navigation.goBack}
           iconLeft={require('../assets/images/icon_back.png')}
-          onPressLeft={() => this.props.navigation.goBack()}
           customRight={() => (
-            <View style={styles.likeView}>
-              <Text style={styles.likeNumber}>{data.like}</Text>
+            <TouchableOpacity
+              style={styles.likeView}
+              onPress={this.handleToggleLike}
+            >
+              <Text style={styles.likeNumber}>
+                {this.state.like}
+              </Text>
               <RNImage
-                style={styles.iconHeart}
                 resizeMode="center"
-                source={require('../assets/images/ic_heart_black.png')}
+                style={styles.iconHeart}
+                source={
+                  this.state.userLike
+                    ? require('../assets/images/ic_love.png')
+                    : require('../assets/images/ic_nonlove.png')
+                }
               />
-            </View>
+            </TouchableOpacity>
           )}
         />
         <ScrollView>
           <View style={styles.nameView}>
-            <Text style={styles.nameText}>{data.name}</Text>
+            <Text style={styles.nameText}>
+              {data.name}
+            </Text>
           </View>
           <View>
             <Carousel
               data={data.images}
               renderItem={({ item }) => (
                 <Image
-                  style={styles.imageFoodCover}
-                  resizeMode="cover"
                   uri={item}
+                  resizeMode="cover"
+                  style={styles.imageFoodCover}
                 />
               )}
-              removeClippedSubviews={false}
-              sliderWidth={device.width}
-              itemWidth={device.width - responsive({ d: 60 })}
               inactiveSlideScale={1}
               inactiveSlideOpacity={1}
+              sliderWidth={device.width}
+              removeClippedSubviews={false}
+              itemWidth={device.width - responsive({ d: 60 })}
             />
           </View>
           <View style={styles.tagInfoView}>
             <View style={styles.infoView}>
               <View style={styles.flexRowCenter}>
                 <RNImage
-                  style={styles.iconInfo}
                   resizeMode="contain"
+                  style={styles.iconInfo}
                   source={require('../assets/images/ic_clock.png')}
                 />
-                <Text style={styles.infoText}>{data.timeCook}</Text>
+                <Text style={styles.infoText}>
+                  {data.timeCook}
+                </Text>
               </View>
               <View style={[styles.flexRowCenter, { marginLeft: 10 }]}>
                 <RNImage
-                  style={styles.iconInfo}
                   resizeMode="contain"
+                  style={styles.iconInfo}
                   source={require('../assets/images/ic_ingredient.png')}
                 />
-                <Text>{`${data.ingredients.length} ingredients`}</Text>
+                <Text>
+                  {`${data.ingredients.length} ingredients`}
+                </Text>
               </View>
               <View style={[styles.flexRowCenter, { marginLeft: 10 }]}>
                 <RNImage
-                  style={styles.iconInfo}
                   resizeMode="contain"
+                  style={styles.iconInfo}
                   source={require('../assets/images/ic_fire.png')}
                 />
-                <Text>{`${data.calories} calories`}</Text>
+                <Text>
+                  {`${data.calories} calories`}
+                </Text>
               </View>
             </View>
             <FlatList
@@ -94,7 +137,9 @@ export default class FoodDetail extends Component {
               style={styles.flatList}
               renderItem={({ item }) => (
                 <View style={styles.tagView}>
-                  <Text style={styles.tagText}>{item.toUpperCase()}</Text>
+                  <Text style={styles.tagText}>
+                    {item.toUpperCase()}
+                  </Text>
                 </View>
               )}
             />
@@ -104,7 +149,9 @@ export default class FoodDetail extends Component {
               onExpand={() => this.setState({ ingredientsExpand: true })}
               onCollapse={() => this.setState({ ingredientsExpand: false })}
             >
-              <Text style={styles.ingredientsTitle}>INGREDIENTS</Text>
+              <Text style={styles.ingredientsTitle}>
+                INGREDIENTS
+              </Text>
               <FlatList
                 data={data.ingredients}
                 keyExtractor={(item, index) => String(index)}
@@ -112,7 +159,9 @@ export default class FoodDetail extends Component {
                   const { serveForPeople } = this.state;
                   const amountForOne = Math.round(item.amount / data.serveForPeople);
                   return (
-                    <Text style={styles.ingredientsText}>{`${amountForOne * serveForPeople}  ${item.name}`}</Text>
+                    <Text style={styles.ingredientsText}>
+                      {`${amountForOne * serveForPeople}  ${item.name}`}
+                    </Text>
                   );
                 }}
                 extraData={this.state.serveForPeople}
@@ -121,25 +170,23 @@ export default class FoodDetail extends Component {
                 this.state.ingredientsExpand && (
                   <View style={styles.servingBox}>
                     <TouchableWithoutFeedback
-                      onPress={() => this.setState(prevState => ({
-                        serveForPeople: prevState.serveForPeople - 1,
-                      }))}
+                      onPress={this.handleSubtractServe}
                     >
                       <RNImage
-                        style={styles.iconServing}
                         resizeMode="center"
+                        style={styles.iconServing}
                         source={require('../assets/images/ic_minus.png')}
                       />
                     </TouchableWithoutFeedback>
-                    <Text>{`${this.state.serveForPeople} serving${this.state.serveForPeople > 1 ? 's' : ''}`}</Text>
+                    <Text>
+                      {`${this.state.serveForPeople} serving${this.state.serveForPeople > 1 ? 's' : ''}`}
+                    </Text>
                     <TouchableWithoutFeedback
-                      onPress={() => this.setState(prevState => ({
-                        serveForPeople: prevState.serveForPeople + 1,
-                      }))}
+                      onPress={this.handleAddServe}
                     >
                       <RNImage
-                        style={styles.iconServing}
                         resizeMode="center"
+                        style={styles.iconServing}
                         source={require('../assets/images/ic_plus.png')}
                       />
                     </TouchableWithoutFeedback>
@@ -150,11 +197,17 @@ export default class FoodDetail extends Component {
           </View>
           <View style={styles.instructionView}>
             <CollapseView isCollapse>
-              <Text style={styles.ingredientsTitle}>INSTRUCTIONS</Text>
+              <Text style={styles.ingredientsTitle}>
+                INSTRUCTIONS
+              </Text>
               <FlatList
                 data={data.guidline}
                 keyExtractor={(item, index) => String(index)}
-                renderItem={({ item, index }) => <Text style={styles.ingredientsText}>{`${index + 1}. ${item}`}</Text>}
+                renderItem={({ item, index }) => (
+                  <Text style={styles.ingredientsText}>
+                    {`${index + 1}. ${item}`}
+                  </Text>
+                )}
               />
             </CollapseView>
           </View>

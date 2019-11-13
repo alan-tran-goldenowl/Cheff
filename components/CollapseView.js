@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import {
   View,
-  LayoutAnimation,
+  Image,
   UIManager,
   StyleSheet,
-  Image,
+  LayoutAnimation,
   TouchableOpacity,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+
 import { responsive } from '../utils';
 
 UIManager.setLayoutAnimationEnabledExperimental
@@ -15,22 +16,22 @@ UIManager.setLayoutAnimationEnabledExperimental
 
 const styles = StyleSheet.create({
   linearGradient: {
-    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
+    position: 'absolute',
     height: responsive({ h: 70 }),
   },
   iconUpDown: {
-    height: responsive({ h: 20 }),
-    width: responsive({ h: 20 }),
+    width: responsive({ h: 10 }),
+    height: responsive({ h: 10 }),
   },
   iconView: {
-    justifyContent: 'center',
     alignItems: 'center',
+    borderBottomWidth: 0.7,
+    justifyContent: 'center',
     paddingVertical: responsive({ d: 10 }),
     borderBottomColor: 'rgb(217,217,217)',
-    borderBottomWidth: 0.7,
   },
 });
 
