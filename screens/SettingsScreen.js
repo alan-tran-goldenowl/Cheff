@@ -96,8 +96,8 @@ export default class SettingsScreen extends React.Component {
               <Switch
                 onValueChange={value => this.setState({ toggleNotification: value })}
                 value={this.state.toggleNotification}
-                thumbTintColor="white"
-                onTintColor="#45db5e"
+                thumbColor="white"
+                trackColor="#45db5e"
               />
             </View>
           </View>

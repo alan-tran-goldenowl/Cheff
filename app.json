@@ -4,11 +4,8 @@
     "description": "A very interesting project.",
     "slug": "cheff",
     "privacy": "public",
-    "sdkVersion": "27.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "sdkVersion": "33.0.0",
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -23,11 +20,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.goldenowl.cheff"
+    },
+    "android": {
+      "package": "com.goldenowl.cheff"
     }
   }
 }

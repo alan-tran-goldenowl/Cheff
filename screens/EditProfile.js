@@ -122,8 +122,8 @@ export default class extends Component {
             <Switch
               onValueChange={value => this.setState({ toggleFacebook: value })}
               value={this.state.toggleFacebook}
-              thumbTintColor="white"
-              onTintColor="#45db5e"
+              thumbColor="white"
+              trackColor="#45db5e"
             />
           </View>
         </View>
@@ -160,8 +160,8 @@ export default class extends Component {
             <Switch
               onValueChange={value => this.setState({ toggleGoogle: value })}
               value={this.state.toggleGoogle}
-              thumbTintColor="white"
-              onTintColor="#45db5e"
+              thumbColor="white"
+              trackColor="#45db5e"
             />
           </View>
         </View>
