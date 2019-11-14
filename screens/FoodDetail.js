@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Image } from 'react-native-expo-image-cache';
+import { withNavigation, NavigationActions } from 'react-navigation';
 
 import Header from '../components/Header';
 import styles from '../styles/FoodDetailStyle';
@@ -11,7 +12,7 @@ import CollapseView from '../components/CollapseView';
 
 import { device, responsive } from '../utils';
 
-export default class FoodDetail extends Component {
+class FoodDetail extends Component {
   state = {
     like: 0,
     userLike: false,
@@ -46,13 +47,17 @@ export default class FoodDetail extends Component {
     serveForPeople: prevState.serveForPeople > 1 ? prevState.serveForPeople - 1 : 1,
   }))
 
+  goBack = () => {
+    this.props.navigation.dispatch(NavigationActions.back());
+  }
+
   render() {
     const data = this.props.navigation.getParam('data') || {};
 
     return (
       <View style={styles.container}>
         <Header
-          onPressLeft={this.props.navigation.goBack}
+          onPressLeft={this.goBack}
           iconLeft={require('../assets/images/icon_back.png')}
           customRight={() => (
             <TouchableOpacity
@@ -216,3 +221,5 @@ export default class FoodDetail extends Component {
     );
   }
 }
+
+export default withNavigation(FoodDetail);

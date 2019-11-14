@@ -4,7 +4,7 @@ import {
   Text,
   FlatList,
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, NavigationActions } from 'react-navigation';
 
 import Header from '../../components/Header';
 import ListPlanItem from './components/ListPlanItem';
@@ -43,9 +43,13 @@ const mockData = [
 ];
 
 export default withNavigation(({ navigation }) => {
+  const goBack = () => {
+    navigation.dispatch(NavigationActions.back());
+  };
+
   const renderHeader = () => (
     <Header
-      onPressLeft={navigation.goBack}
+      onPressLeft={goBack}
       iconLeft={require('../../assets/images/icon_back.png')}
     />
   );
@@ -53,13 +57,13 @@ export default withNavigation(({ navigation }) => {
   const renderDayTime = () => (
     <View
       style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
         height: 50,
         marginLeft: 17,
+        display: 'flex',
+        flexDirection: 'row',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
+        justifyContent: 'space-between',
       }}
     >
       <Text style={{ marginTop: 15, color: 'black', fontSize: 24 }}>
@@ -84,7 +88,7 @@ export default withNavigation(({ navigation }) => {
       {renderDayTime()}
       <FlatList
         data={mockData}
-        keyExtractor={item => item.id}
+        keyExtractor={({ id }) => id}
         renderItem={({ item }) => <ListPlanItem {...item} />}
       />
     </View>
