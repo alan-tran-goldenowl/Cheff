@@ -19,7 +19,7 @@ const icon = {
 export default withNavigation(({
   id, time, type, title, description, navigation,
 }) => {
-  const goToMealPlan = () => navigation.navigate('MealPlan', { id });
+  const goToMealPlan = () => navigation.navigate('PlanDetails', { id });
 
   return (
     <View

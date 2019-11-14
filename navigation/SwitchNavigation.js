@@ -13,6 +13,7 @@ import FoodDetail from '../screens/FoodDetail';
 import CreatePlan from '../screens/CreatePlan';
 import Settings from '../screens/SettingsScreen';
 import EditProfile from '../screens/EditProfile';
+import PlanDetails from '../screens/PlanDetails';
 import AuthLoading from '../screens/AuthLoadingScreen';
 
 const AppStack = createStackNavigator(
@@ -25,6 +26,7 @@ const AppStack = createStackNavigator(
     CreatePlan,
     FoodDetail,
     EditProfile,
+    PlanDetails,
   },
   {
     headerMode: 'none',
