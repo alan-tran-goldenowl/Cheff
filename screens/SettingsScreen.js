@@ -1,14 +1,15 @@
 import React from 'react';
 import {
-  View,
   Text,
+  View,
   Image,
   Switch,
-  TouchableOpacity,
   BackHandler,
+  TouchableOpacity,
 } from 'react-native';
 
 import Header from '../components/Header';
+
 import styles from '../styles/SettingStyle';
 
 export default class SettingsScreen extends React.Component {
@@ -16,24 +17,16 @@ export default class SettingsScreen extends React.Component {
     header: null,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      toggleNotification: true,
-    };
-  }
+  state = {
+    toggleNotification: true,
+  };
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.props.navigation.goBack);
   }
 
   componentWillUnmount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-  }
-
-  handleBackPress = () => {
-    this.goBack();
-    return true;
+    BackHandler.removeEventListener('hardwareBackPress', this.props.navigation.goBack);
   }
 
   render() {
@@ -44,8 +37,12 @@ export default class SettingsScreen extends React.Component {
           onPressLeft={() => this.props.navigation.goBack()}
         />
         <View style={styles.preferences}>
-          <Text style={styles.textSetting}>Settings</Text>
-          <Text style={styles.textPreferences}>Update your preferences</Text>
+          <Text style={styles.textSetting}>
+            Settings
+          </Text>
+          <Text style={styles.textPreferences}>
+            Update your preferences
+          </Text>
         </View>
         <View style={styles.accountView}>
           <Text style={styles.accountText}>

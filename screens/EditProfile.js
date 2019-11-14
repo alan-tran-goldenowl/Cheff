@@ -1,41 +1,36 @@
 import React, { Component } from 'react';
 import {
-  View,
   Text,
+  View,
   Image,
-  TouchableHighlight,
-  BackHandler,
-  TextInput,
   Switch,
+  TextInput,
+  BackHandler,
+  TouchableHighlight,
 } from 'react-native';
 
-import styles from '../styles/EditProfileStyle';
 import Header from '../components/Header';
+
+import styles from '../styles/EditProfileStyle';
 
 export default class extends Component {
   static navigationOptions = {
     header: null,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      fullname: 'Kún Park',
-      email: 'Pikakun19@gmail.com',
-      toggleFacebook: true,
-      toggleGoogle: true,
-    };
-  }
+  state = {
+    toggleGoogle: false,
+    fullname: 'Kún Park',
+    toggleFacebook: false,
+    email: 'Pikakun19@gmail.com',
+  };
 
   componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      this.goBack();
-      return true;
-    });
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.props.navigation.goBack);
   }
 
   componentWillUnmount() {
-    this.backHandler.remove();
+    BackHandler.removeEventListener('hardwareBackPress', this.props.navigation.goBack);
   }
 
   render() {
@@ -59,11 +54,15 @@ export default class extends Component {
         </View>
 
         <View style={{ alignItems: 'center', marginTop: 15 }}>
-          <Text style={{ color: 'blue', fontSize: 15 }}>Change image profile</Text>
+          <Text style={{ color: 'blue', fontSize: 15 }}>
+Change image profile
+          </Text>
         </View>
 
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 14 }}>Your full name</Text>
+          <Text style={{ fontSize: 14 }}>
+Your full name
+          </Text>
           <TextInput
             underlineColorAndroid="transparent"
             multiline={false}
@@ -75,7 +74,9 @@ export default class extends Component {
         </View>
 
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 14 }}>Your email address</Text>
+          <Text style={{ fontSize: 14 }}>
+Your email address
+          </Text>
           <TextInput
             underlineColorAndroid="transparent"
             multiline={false}
@@ -87,7 +88,9 @@ export default class extends Component {
         </View>
 
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 19, color: '#999' }}>Link Account</Text>
+          <Text style={{ fontSize: 19, color: '#999' }}>
+Link Account
+          </Text>
         </View>
 
         <View style={{ flexDirection: 'row', height: 50 }}>
@@ -107,7 +110,9 @@ export default class extends Component {
               flex: 4,
             }}
           >
-            <Text style={{ fontSize: 16 }}>Facebook</Text>
+            <Text style={{ fontSize: 16 }}>
+Facebook
+            </Text>
           </View>
 
           <View
@@ -145,7 +150,9 @@ export default class extends Component {
               flex: 4,
             }}
           >
-            <Text style={{ fontSize: 16 }}>Google</Text>
+            <Text style={{ fontSize: 16 }}>
+Google
+            </Text>
           </View>
 
           <View
