@@ -1,6 +1,11 @@
 import React from 'react';
 import {
-  View, StyleSheet, TouchableOpacity, Image, Text,
+  Text,
+  View,
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { device, responsive } from '../utils';
 
@@ -11,7 +16,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#ffffff',
-    marginTop: responsive({ d: 30 }),
+    marginTop: responsive({ d: Platform.OS === 'ios' ? 30 : 60 }),
     height: device.height / 20,
     width: null,
     flexDirection: 'row',
