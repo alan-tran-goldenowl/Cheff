@@ -18,7 +18,7 @@ const SearchiewCheff = props => (
       <View style={{ display: 'flex', justifyContent: 'center' }}>
         <TextInput
           underlineColorAndroid="transparent"
-          autofocus={false}
+          autofocus={props.autofocus}
           placeholder="Search your recipes..."
           style={styles.text}
           autoCorrect={false}

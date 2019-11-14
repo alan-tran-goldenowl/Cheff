@@ -41,6 +41,7 @@ class SettingsScreen extends React.Component {
         />
         <View style={styles.searchView}>
           <SearchViewCheff
+            autoFocus
             value={searchText}
             overrideStyle={styles.search}
             onChangeText={this.onChangeText}
