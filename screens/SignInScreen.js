@@ -1,75 +1,89 @@
 import React from 'react';
 import {
-  View,
-  ImageBackground,
   Text,
-  TouchableOpacity,
+  View,
   Image,
+  ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
-import * as firebase from 'firebase';
-import Expo from 'expo';
+import * as Facebook from 'expo-facebook';
+
+import FireBase from '../firebase';
+import { storageHelper } from '../utils';
 
 import styles from '../styles/SignInStyle';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyCBcidAJQ-aQ2C213UZ5ZVxNc0WkpP4esg',
-  authDomain: 'cheff-f3d45.firebaseapp.com',
-  databaseURL: 'https://cheff-f3d45.firebaseio.com',
-  projectId: 'cheff-f3d45',
-  storageBucket: 'cheff-f3d45.appspot.com',
-  messagingSenderId: '1073567917248',
-};
-firebase.initializeApp(firebaseConfig);
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
-  checkUserAuthencation = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user != null) {
-        this.props.navigation.navigate('Main');
-      } else {
-        this.logIn();
+  state = {
+    showLoginOptions: false,
+  };
+
+  componentDidMount() {
+    FireBase.auth().onAuthStateChanged(async (user) => {
+      console.log(user);
+      if (!user) {
+        return this.setState({
+          showLoginOptions: true,
+        });
       }
+
+      storageHelper.setAsyncStorage('userInfo', {
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+      })
+        .then(() => this.props.navigation.navigate('Main'))
+        .catch(() => {});
     });
   }
 
-  logIn = async () => {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      '1704319859617231',
-      {
+  logInViaFacebook = async () => {
+    try {
+      const {
+        type,
+        token,
+      } = await Facebook.logInWithReadPermissionsAsync('1437417053081776', {
         permissions: ['public_profile'],
-      },
-    );
-    if (type === 'success') {
-      // Get the user's name using Facebook's Graph API
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`,
-      );
-      console.log(`Logged in! Hi ${(await response.json()).name}!`);
-      const credential = firebase.auth.FacebookAuthProvider.credential(token);
+      });
 
-      firebase
+      if (type !== 'success') {
+        throw new Error('Sorry, unexpected error');
+      }
+
+      const credential = FireBase.auth.FacebookAuthProvider.credential(token);
+      FireBase
         .auth()
         .signInAndRetrieveDataWithCredential(credential)
-        .catch((error) => {
-          console.log('Login Facebook failled', error);
+        .then(({ user }) => {
+          storageHelper.setAsyncStorage('userInfo', {
+            photoURL: user.photoURL,
+            displayName: user.displayName,
+          })
+            .then(() => this.props.navigation.navigate('Main'))
+            .catch(() => {});
+        })
+        .catch((err) => {
+          throw err;
         });
+    } catch (err) {
+      alert(`Login failed: ${err}`);
     }
   }
 
   render() {
     return (
       <ImageBackground
-        source={require('../assets/images/background.png')}
         style={{ flex: 1 }}
+        source={require('../assets/images/background.png')}
       >
         <View
           style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
         >
-          <TouchableOpacity
+          {/* login via Google */}
+          {/* <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Main')}
             style={styles.textSignInGG}
           >
@@ -77,19 +91,28 @@ export default class SignInScreen extends React.Component {
               source={require('../assets/images/btn_gg.png')}
               style={styles.image}
             />
-            <Text style={styles.textGG}>Google</Text>
-          </TouchableOpacity>
+            <Text style={styles.textGG}>
+              Google
+            </Text>
+          </TouchableOpacity> */}
 
-          <TouchableOpacity
-            onPress={this.checkUserAuthencation}
-            style={styles.textSignInFb}
-          >
-            <Image
-              source={require('../assets/images/btn_fb.png')}
-              style={styles.image}
-            />
-            <Text style={styles.textFB}>Facebook</Text>
-          </TouchableOpacity>
+          {/* login via Facebook */}
+          {
+            this.state.showLoginOptions && (
+            <TouchableOpacity
+              style={styles.textSignInFb}
+              onPress={this.logInViaFacebook}
+            >
+              <Image
+                style={styles.image}
+                source={require('../assets/images/btn_fb.png')}
+              />
+              <Text style={styles.textFB}>
+                Facebook
+              </Text>
+            </TouchableOpacity>
+            )
+          }
         </View>
       </ImageBackground>
     );
