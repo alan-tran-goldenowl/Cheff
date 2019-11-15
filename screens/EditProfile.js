@@ -65,7 +65,7 @@ export default class extends Component {
 
         <View style={{ alignItems: 'center', marginTop: 15 }}>
           <Text style={{ color: 'blue', fontSize: 15 }}>
-              Change image profile
+            Change image profile
           </Text>
         </View>
 
@@ -85,7 +85,7 @@ export default class extends Component {
 
         <View style={{ margin: 20 }}>
           <Text style={{ fontSize: 14 }}>
-              Your email address
+            Your email address
           </Text>
           <TextInput
             multiline={false}
