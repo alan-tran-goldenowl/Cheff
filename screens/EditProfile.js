@@ -55,13 +55,13 @@ export default class extends Component {
 
         <View style={{ alignItems: 'center', marginTop: 15 }}>
           <Text style={{ color: 'blue', fontSize: 15 }}>
-Change image profile
+            Change image profile
           </Text>
         </View>
 
         <View style={{ margin: 20 }}>
           <Text style={{ fontSize: 14 }}>
-Your full name
+            Your full name
           </Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -75,7 +75,7 @@ Your full name
 
         <View style={{ margin: 20 }}>
           <Text style={{ fontSize: 14 }}>
-Your email address
+            Your email address
           </Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -89,7 +89,7 @@ Your email address
 
         <View style={{ margin: 20 }}>
           <Text style={{ fontSize: 19, color: '#999' }}>
-Link Account
+            Link Account
           </Text>
         </View>
 
@@ -111,7 +111,7 @@ Link Account
             }}
           >
             <Text style={{ fontSize: 16 }}>
-Facebook
+              Facebook
             </Text>
           </View>
 
@@ -151,7 +151,7 @@ Facebook
             }}
           >
             <Text style={{ fontSize: 16 }}>
-Google
+              Google
             </Text>
           </View>
 
