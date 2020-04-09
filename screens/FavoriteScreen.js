@@ -9,7 +9,7 @@ import { connect } from '../recontext/store';
 
 class FavoriteScreen extends Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   constructor(props) {

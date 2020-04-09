@@ -7,7 +7,7 @@ import styles from '../styles/MealPlanStyle';
 
 export default class MealPlan extends Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   constructor(props) {

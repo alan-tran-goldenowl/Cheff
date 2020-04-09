@@ -1,8 +1,9 @@
 import {
   createAppContainer,
-  createStackNavigator,
   createSwitchNavigator,
 } from 'react-navigation';
+
+import { createStackNavigator } from 'react-navigation-stack';
 
 import Main from './MainTabNavigator';
 import Links from '../screens/LinksScreen';

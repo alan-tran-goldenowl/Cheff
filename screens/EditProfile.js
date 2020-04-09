@@ -17,7 +17,7 @@ import styles from '../styles/EditProfileStyle';
 
 export default class extends Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   state = {

@@ -4,9 +4,9 @@ import { Text } from 'react-native'
 export default class ActivityScreen extends Component {
 
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   }
-  
+
   render() {
     return <Text>Activity Screen</Text>
   }

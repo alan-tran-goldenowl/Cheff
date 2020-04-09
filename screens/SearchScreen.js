@@ -7,7 +7,7 @@ import styles from '../styles/SearchStyle';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   constructor(props) {

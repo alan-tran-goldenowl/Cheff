@@ -32,7 +32,7 @@ const months = [
 
 export default class CreatePlan extends Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   state = {
