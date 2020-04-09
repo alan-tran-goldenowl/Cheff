@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import * as Facebook from 'expo-facebook';
 
-import FireBase from '../firebase';
+import { FireBase, FbConfig } from '../constants';
 import { storageHelper } from '../utils';
 
 import styles from '../styles/SignInStyle';
@@ -24,7 +24,6 @@ export default class SignInScreen extends React.Component {
 
   componentDidMount() {
     FireBase.auth().onAuthStateChanged(async (user) => {
-      console.log(user);
       if (!user) {
         return this.setState({
           showLoginOptions: true,
@@ -42,13 +41,13 @@ export default class SignInScreen extends React.Component {
 
   logInViaFacebook = async () => {
     try {
+      await Facebook.initializeAsync(FbConfig.APP_ID, FbConfig.APP_NAME);
       const {
         type,
         token,
-      } = await Facebook.logInWithReadPermissionsAsync('1437417053081776', {
+      } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['public_profile'],
       });
-
       if (type !== 'success') {
         throw new Error('Sorry, unexpected error');
       }
@@ -56,7 +55,7 @@ export default class SignInScreen extends React.Component {
       const credential = FireBase.auth.FacebookAuthProvider.credential(token);
       FireBase
         .auth()
-        .signInAndRetrieveDataWithCredential(credential)
+        .signInWithCredential(credential)
         .then(({ user }) => {
           storageHelper.setAsyncStorage('userInfo', {
             photoURL: user.photoURL,
