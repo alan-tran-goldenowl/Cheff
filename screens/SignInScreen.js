@@ -5,16 +5,14 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import * as Facebook from 'expo-facebook';
 
-import FireBase from '../firebase';
+import { FireBase, FbConfig } from '../constants';
 import { storageHelper } from '../utils';
 
 import styles from '../styles/SignInStyle';
 
-const APP_ID = '534372374169887';
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
     headerShown: false,
@@ -43,7 +41,7 @@ export default class SignInScreen extends React.Component {
 
   logInViaFacebook = async () => {
     try {
-      await Facebook.initializeAsync(APP_ID, 'Cheff');
+      await Facebook.initializeAsync(FbConfig.APP_ID, FbConfig.APP_NAME);
       const {
         type,
         token,
@@ -70,7 +68,7 @@ export default class SignInScreen extends React.Component {
           throw err;
         });
     } catch (err) {
-      Alert(`Login failed: ${err}`);
+      alert(`Login failed: ${err}`);
     }
   }
 
