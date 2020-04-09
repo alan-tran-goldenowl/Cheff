@@ -1,93 +1,67 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
-  View,
   Text,
-  Dimensions,
+  View,
   Image,
-  TouchableOpacity,
-  TouchableHighlight,
-  StyleSheet,
-  BackHandler,
-  TextInput,
   Switch,
-} from 'react-native'
+  TextInput,
+  BackHandler,
+  TouchableHighlight,
+} from 'react-native';
+
+import Header from '../components/Header';
+
+import { storageHelper } from '../utils';
+
+import styles from '../styles/EditProfileStyle';
 
 export default class extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      fullname: 'Kún Park',
-      email: 'Pikakun19@gmail.com',
-      toggleFacebook: true,
-      toggleGoogle: true,
-    }
-  }
   static navigationOptions = {
-    header: null,
-  }
+    headerShown: false,
+  };
+
+  state = {
+    email: '',
+    photoURL: '',
+    displayName: '',
+    toggleGoogle: false,
+    toggleFacebook: false,
+  };
 
   componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      this.goBack() // works best when the goBack is async
-      return true
-    })
+    storageHelper.getAsyncStorage('userInfo')
+      .then(userInfo => this.setState({ ...userInfo }))
+      .catch(() => {});
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.props.navigation.goBack);
   }
 
   componentWillUnmount() {
-    this.backHandler.remove()
+    BackHandler.removeEventListener('hardwareBackPress', this.props.navigation.goBack);
   }
+
   render() {
     return (
-      <View style={style.container}>
-        <View style={style.header}>
-          <View
-            style={{ flex: 2, justifyContent: 'center', height: height / 20 }}
-          >
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+      <View style={styles.container}>
+        <Header
+          rightText="Save"
+          title="Edit Profile"
+          onPressLeft={() => this.props.navigation.goBack()}
+          iconLeft={require('../assets/images/icon_back.png')}
+        />
+        {
+          !!this.state.photoURL && (
+          <View style={{ alignItems: 'center', marginTop: 30 }}>
+            <TouchableHighlight style={styles.imageContainer2}>
               <Image
-                style={style.iconBack}
-                resizeMode={'center'}
-                source={require('../assets/images/icon_back.png')}
+                style={styles.image}
+                source={{
+                  uri: this.state.photoURL,
+                }}
               />
-            </TouchableOpacity>
+            </TouchableHighlight>
           </View>
-
-          <View
-            style={{
-              flex: 6,
-              height: height / 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ color: '#000000', fontSize: 17 }}>Edit Profile</Text>
-          </View>
-
-          <View
-            style={{
-              flex: 2,
-              height: height / 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <TouchableOpacity>
-              <Text style={{ color: '#2b2b2b', fontSize: 15 }}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={{ alignItems: 'center', marginTop: 30 }}>
-          <TouchableHighlight style={style.imageContainer2}>
-            <Image
-              style={style.image}
-              source={{
-                uri:
-                  'http://www.free-avatars.com/data/media/37/cat_avatar_0597.jpg',
-              }}
-            />
-          </TouchableHighlight>
-        </View>
+          )
+        }
 
         <View style={{ alignItems: 'center', marginTop: 15 }}>
           <Text style={{ color: 'blue', fontSize: 15 }}>
@@ -96,71 +70,75 @@ export default class extends Component {
         </View>
 
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 14 }}>Your full name</Text>
+          <Text style={{ fontSize: 14 }}>
+            Your full name
+          </Text>
           <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            underlineColorAndroid={'transparent'}
-            autofocus={false}
             multiline={false}
-            placeholder={'Enter your name'}
-            style={style.text}
-            onChangeText={text => this.setState({ fullname: text })}
-            value={this.state.fullname}
+            style={styles.text}
+            placeholder="Enter your name"
+            value={this.state.displayName}
+            underlineColorAndroid="transparent"
+            onChangeText={text => this.setState({ displayName: text })}
           />
         </View>
 
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 14 }}>Your email address</Text>
+          <Text style={{ fontSize: 14 }}>
+            Your email address
+          </Text>
           <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            underlineColorAndroid={'transparent'}
-            autofocus={false}
             multiline={false}
-            placeholder={'Enter your email'}
-            style={style.text}
-            onChangeText={text => this.setState({ email: text })}
+            style={styles.text}
             value={this.state.email}
+            underlineColorAndroid="transparent"
+            onChangeText={text => this.setState({ email: text })}
+            placeholder="Enter your email"
           />
         </View>
 
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 19, color: '#999' }}>Link Account</Text>
+          <Text style={{ fontSize: 19, color: '#999' }}>
+            Link Account
+          </Text>
         </View>
 
         <View style={{ flexDirection: 'row', height: 50 }}>
           <View style={{ height: '100%', justifyContent: 'center', flex: 1 }}>
             <Image
+              resizeMode="center"
               style={{ width: 30, height: 30, marginLeft: 12 }}
-              resizeMode={'center'}
               source={require('../assets/images/ic_facebook.png')}
             />
           </View>
 
           <View
             style={{
-              height: '100%',
-              justifyContent: 'center',
-              marginLeft: 30,
               flex: 4,
+              height: '100%',
+              marginLeft: 30,
+              justifyContent: 'center',
             }}
           >
-            <Text style={{ fontSize: 16 }}>Facebook</Text>
+            <Text style={{ fontSize: 16 }}>
+              Facebook
+            </Text>
           </View>
 
           <View
             style={{
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              marginRight: 20,
               flex: 5,
+              height: '100%',
+              marginRight: 20,
+              alignItems: 'flex-end',
+              justifyContent: 'center',
             }}
           >
             <Switch
-              onValueChange={value => this.setState({ toggleFacebook: value })}
+              thumbColor="white"
+              trackColor="#45db5e"
               value={this.state.toggleFacebook}
-              thumbTintColor={'white'}
-              onTintColor={'#45db5e'}
+              onValueChange={value => this.setState({ toggleFacebook: value })}
             />
           </View>
         </View>
@@ -168,76 +146,43 @@ export default class extends Component {
         <View style={{ flexDirection: 'row', height: 50 }}>
           <View style={{ height: '100%', justifyContent: 'center', flex: 1 }}>
             <Image
+              resizeMode="center"
               style={{ width: 30, height: 30, marginLeft: 20 }}
-              resizeMode={'center'}
               source={require('../assets/images/ic_google.png')}
             />
           </View>
 
           <View
             style={{
-              height: '100%',
-              justifyContent: 'center',
-              marginLeft: 30,
               flex: 4,
+              height: '100%',
+              marginLeft: 30,
+              justifyContent: 'center',
             }}
           >
-            <Text style={{ fontSize: 16 }}>Google</Text>
+            <Text style={{ fontSize: 16 }}>
+              Google
+            </Text>
           </View>
 
           <View
             style={{
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              marginRight: 20,
               flex: 5,
+              height: '100%',
+              marginRight: 20,
+              alignItems: 'flex-end',
+              justifyContent: 'center',
             }}
           >
             <Switch
-              onValueChange={value => this.setState({ toggleGoogle: value })}
+              thumbColor="white"
+              trackColor="#45db5e"
               value={this.state.toggleGoogle}
-              thumbTintColor={'white'}
-              onTintColor={'#45db5e'}
+              onValueChange={value => this.setState({ toggleGoogle: value })}
             />
           </View>
         </View>
       </View>
-    )
+    );
   }
 }
-const { height, width } = Dimensions.get('window')
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flex: 1,
-  },
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: 20,
-    height: height / 20,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-  },
-  iconBack: {
-    height: 30,
-    width: 30,
-    marginLeft: 10,
-  },
-  imageContainer: {
-    height: 128,
-    width: 128,
-    borderRadius: 64,
-  },
-  image: {
-    height: 128,
-    width: 128,
-    borderRadius: 64,
-  },
-  text: {
-    width: 200,
-    fontSize: 17,
-    color: 'black',
-  },
-})

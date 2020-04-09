@@ -1,57 +1,66 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TextInput,
-  Switch,
-  TouchableOpacity,
-} from 'react-native'
-import SearchViewCheff from '../components/SearchViewCheff'
+import React from 'react';
+import { View, FlatList } from 'react-native';
+import SearchViewCheff from '../components/SearchViewCheff';
+import SearchItem from '../components/SearchItem';
+import Header from '../components/Header';
+import styles from '../styles/SearchStyle';
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
   static navigationOptions = {
-    header: null,
-  }
-  render() {
-    return (
-      <View style={style.container}>
-        <View style={style.header}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Image
-              style={style.iconBack}
-              resizeMode={'center'}
-              source={require('../assets/images/icon_back.png')}
-            />
-          </TouchableOpacity>
-        </View>
+    headerShown: false,
+  };
 
-        <View style={{ marginLeft: 20, marginRight: 20 }}>
-          <SearchViewCheff moveToSeacrh={() => console.log('OnFocus')} />
+  constructor(props) {
+    super(props);
+    const filterData = props.navigation.getParam('data');
+    this.state = {
+      searchText: '',
+      filterData,
+    };
+  }
+
+  onChangeText = (searchText) => {
+    let filterData = [];
+    const data = this.props.navigation.getParam('data');
+    if (searchText.length > 0) {
+      filterData = data.filter(
+        i => i.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+          || i.ingredients.map(e => e.name.toLowerCase()).indexOf(searchText.toLowerCase()) > -1,
+      );
+    }
+    this.setState({ filterData, searchText });
+  };
+
+  render() {
+    const { searchText, filterData } = this.state;
+    return (
+      <View style={styles.container}>
+        <Header
+          iconLeft={require('../assets/images/icon_back.png')}
+          onPressLeft={() => this.props.navigation.goBack()}
+        />
+        <View style={styles.searchView}>
+          <SearchViewCheff
+            autoFocus
+            value={searchText}
+            overrideStyle={styles.search}
+            onChangeText={this.onChangeText}
+          />
+          <FlatList
+            data={searchText.length > 0 ? filterData : []}
+            renderItem={({ item }) => (
+              <SearchItem
+                item={item}
+                onPressItem={() => this.props.navigation.navigate('FoodDetail', { data: item })}
+              />
+            )}
+            keyExtractor={item => String(item.key)}
+            extraData={this.state.searchText}
+          />
         </View>
       </View>
-    )
+    );
   }
 }
 
-const { height, width } = Dimensions.get('window')
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flex: 1,
-  },
-
-  header: {
-    backgroundColor: '#ffffff',
-    marginTop: 30,
-    height: height / 20,
-  },
-
-  iconBack: {
-    height: 30,
-    width: 30,
-    marginLeft: 10,
-  },
-})
+export default SettingsScreen;

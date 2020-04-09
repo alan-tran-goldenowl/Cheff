@@ -1,102 +1,39 @@
-import React, { Component, Fragment } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-  ScrollView
-} from "react-native";
-import SearchViewCheff from "../components/SearchViewCheff";
-import HomeTab from "../components/HomeTab/HomeTab";
+import React, { Component, Fragment } from 'react';
+import { View, Image } from 'react-native';
+import SearchViewCheff from '../components/SearchViewCheff';
+import HomeTab from '../components/HomeTab/HomeTab';
+import Header from '../components/Header';
 
-export default class HomeScreen extends Component {
+import styles from '../styles/HomeStyle';
+import { connect } from '../recontext/store';
+
+class HomeScreen extends Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   renderHeader() {
     return (
       <Fragment>
-        <View style={styles.header}>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Settings")}
-            >
-              <Image
-                style={styles.icon}
-                resizeMode={"center"}
-                source={require("../assets/images/icon_side_menu.png")}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{ flex: 7, justifyContent: "center", alignItems: "center" }}
-          >
-            <Image
-              style={{ resizeMode: "center", width: 100 }}
-              source={require("../assets/images/logo_cheff.png")}
-            />
-          </View>
-
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Settings")}
-            >
-              <Image
-                style={{
-                  height: 30,
-                  width: 30,
-                  marginLeft: 10,
-                  marginRight: 10
-                }}
-                resizeMode={"center"}
-                source={require("../assets/images/ic_push_notification.png")}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View
-          style={{
-            position: "relative",
-            height: 150,
-            backgroundColor: "white",
-            marginTop: 10
-          }}
-        >
+        <Header
+          logoVisible
+          iconLeft={require('../assets/images/icon_side_menu.png')}
+          onPressLeft={() => this.props.navigation.navigate('Settings')}
+          iconRight={require('../assets/images/ic_push_notification.png')}
+        />
+        <View style={styles.searchView}>
           <Image
-            resizeMode={"stretch"}
-            source={require("../assets/images/img1.jpg")}
-            style={{
-              top: 0,
-              left: 0,
-              zIndex: 1,
-              position: "absolute",
-              height: 130,
-              width: "100%"
-            }}
+            resizeMode="stretch"
+            source={require('../assets/images/img1.jpg')}
+            style={styles.backgroundImage}
           />
-          <View
-            style={{
-              marginLeft: 20,
-              marginRight: 10,
-              position: "absolute",
-              zIndex: 2,
-              height: 150,
-              justifyContent: "flex-end",
-              width: "100%"
-            }}
-          >
+          <View style={styles.search}>
             <SearchViewCheff
-              moveToSeacrh={() => this.props.navigation.navigate("Search")}
+              moveToSeacrh={() => this.props.navigation.navigate('Search', {
+                data: this.props.listFood,
+              })
+              }
+              pointerEvents="none"
             />
           </View>
         </View>
@@ -109,29 +46,20 @@ export default class HomeScreen extends Component {
       <View style={styles.container}>
         {this.renderHeader()}
         <HomeTab
-          moveToDetail={() => this.props.navigation.navigate("FoodDetail")}
+          recommendFoods={this.props.listFood.filter(i => i.type === 'recommend')}
+          breakfastFoods={this.props.listFood.filter(i => i.type === 'breakfast')}
+          lunchFoods={this.props.listFood.filter(i => i.type === 'lunch')}
+          brunchFoods={this.props.listFood.filter(i => i.type === 'brunch')}
+          dinnerFoods={this.props.listFood.filter(i => i.type === 'dinner')}
+          navigation={this.props.navigation}
         />
       </View>
     );
   }
 }
 
-const { height, width } = Dimensions.get("window");
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white"
-  },
-  header: {
-    backgroundColor: "#ffffff",
-    marginTop: 30,
-    height: height / 20,
-    width: null,
-    flexDirection: "row"
-  },
-  icon: {
-    height: 30,
-    width: 30,
-    marginLeft: 10
-  }
+const mapStateToProps = state => ({
+  listFood: state.listFood,
 });
+
+export default connect(mapStateToProps)(HomeScreen);
