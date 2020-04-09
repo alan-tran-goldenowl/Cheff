@@ -1,14 +1,13 @@
 import * as Firebase from 'firebase';
 
 const config = {
-  apiKey: 'AIzaSyBjWCJBOdKholf07iBzx1n_SwYCFa1FKYk',
-  authDomain: 'goldenowl-cheff.firebaseapp.com',
-  databaseURL: 'https://goldenowl-cheff.firebaseio.com',
-  projectId: 'goldenowl-cheff',
-  storageBucket: 'goldenowl-cheff.appspot.com',
-  messagingSenderId: '910907954370',
-  appId: '1:910907954370:web:e8bb2ddd5e5d7548f6d75b',
-  measurementId: 'G-JRZ0N09XS3',
+  apiKey: 'AIzaSyDYRE921ZLqxw2bgoBVRq_uswE6_nqm5ZQ',
+  authDomain: 'cheff-app-mobile.firebaseapp.com',
+  databaseURL: 'https://cheff-app-mobile.firebaseio.com',
+  projectId: 'cheff-app-mobile',
+  storageBucket: 'cheff-app-mobile.appspot.com',
+  messagingSenderId: '895663982996',
+  appId: '1:895663982996:web:7c9a0d65e7c10c1da12781',
 };
 
 Firebase.initializeApp(config);
