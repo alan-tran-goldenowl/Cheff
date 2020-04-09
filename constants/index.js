@@ -1,7 +1,2 @@
-import FireBase from './firebase';
-import FbConfig from './facebook';
-
-export {
-  FireBase,
-  FbConfig,
-};
+export { default as FireBase } from './firebase';
+export { default as FbConfig } from './facebook';
