@@ -7,7 +7,7 @@ import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
 
-import NavigationRoot from './navigation/SwitchNavigation';
+import NavigationRoot from 'navigation/SwitchNavigation';
 import { Provider } from './recontext/store';
 
 const styles = StyleSheet.create({
@@ -24,12 +24,12 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => Promise.all([
     Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
+      require('assets/images/robot-dev.png'),
+      require('assets/images/robot-prod.png'),
     ]),
     Font.loadAsync({
       ...Ionicons.font,
-      'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'space-mono': require('assets/fonts/SpaceMono-Regular.ttf'),
     }),
   ]);
 
