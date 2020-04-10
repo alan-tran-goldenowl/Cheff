@@ -23,8 +23,20 @@ export default class SignInScreen extends React.Component {
   };
 
   componentDidMount() {
-    // 3
-    this.props.navigation.navigate('Main');
+    FireBase.auth().onAuthStateChanged(async (user) => {
+      if (!user) {
+        return this.setState({
+          showLoginOptions: true,
+        });
+      }
+
+      storageHelper.setAsyncStorage('userInfo', {
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+      })
+        .then(() => this.props.navigation.navigate('Main'))
+        .catch(() => {});
+    });
   }
 
   logInViaFacebook = async () => {
