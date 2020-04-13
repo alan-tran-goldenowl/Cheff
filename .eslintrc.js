@@ -14,5 +14,20 @@ module.exports = {
       "default-case": 0,
       "consistent-return": 0,
       "camelcase": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {
+        "alias": {
+          "constants": "./src/constants/",
+          "assets": "./assets/",
+          "utils": './src/utils/',
+          "components": './src/components/',
+          "apis": './src/apis/',
+          "navigation": './src/navigation/',
+          "screens": './src/screens'
+        }
+      }
+    }
   }
 };

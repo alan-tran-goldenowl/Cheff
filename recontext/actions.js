@@ -1,4 +1,4 @@
-import { actionNameToTypes } from '../utils';
+import { actionNameToTypes } from 'utils';
 
 const actions = {
   setListFood: (state, listFood) => ({

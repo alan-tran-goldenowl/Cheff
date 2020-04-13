@@ -1,6 +1,24 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
+    env: {
+      development: {
+        plugins: ['@babel/plugin-transform-react-jsx-source'],
+      },
+    },
+    plugins: [
+      ['module-resolver', {
+        alias: {
+          constants: './src/constants/',
+          assets: './assets/',
+          utils: './src/utils/',
+          components: './src/components/',
+          apis: './src/apis/',
+          navigation: './src/navigation/',
+          screens: './src/screens',
+        },
+      }],
+    ],
   };
 };
