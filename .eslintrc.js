@@ -13,7 +13,8 @@ module.exports = {
       "react/jsx-no-bind": 0,
       "default-case": 0,
       "consistent-return": 0,
-      "camelcase": 0
+      "camelcase": 0,
+      'react/jsx-props-no-spreading': 0,
   },
   "settings": {
     "import/resolver": {
