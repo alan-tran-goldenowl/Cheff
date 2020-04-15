@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     fontSize: responsive({ f: 15 }),
   },
   logo: {
-    resizeMode: 'center',
-    width: responsive({ h: 80 }),
+    resizeMode: 'contain',
+    width: responsive({ h: 40 }),
   },
   rightText: {
     fontSize: responsive({ f: 14 }),
