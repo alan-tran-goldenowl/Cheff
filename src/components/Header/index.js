@@ -11,12 +11,12 @@ import { device, responsive } from 'utils';
 
 const styles = StyleSheet.create({
   icon: {
-    height: responsive({ h: 20 }),
-    width: responsive({ h: 20 }),
+    height: responsive({ h: 15 }),
+    width: responsive({ h: 15 }),
   },
   header: {
     backgroundColor: '#ffffff',
-    marginTop: responsive({ d: Platform.OS === 'ios' ? 30 : 60 }),
+    marginTop: responsive({ d: Platform.OS === 'ios' ? 32 : 60 }),
     height: device.height / 20,
     width: null,
     flexDirection: 'row',
@@ -26,15 +26,15 @@ const styles = StyleSheet.create({
     fontSize: responsive({ f: 15 }),
   },
   logo: {
-    resizeMode: 'center',
-    width: responsive({ h: 80 }),
+    resizeMode: 'contain',
+    width: responsive({ h: 40 }),
   },
   rightText: {
     fontSize: responsive({ f: 14 }),
   },
 });
 
-const Header = props => (
+const Header = (props) => (
   <View style={styles.header}>
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity onPress={props.onPressLeft}>
