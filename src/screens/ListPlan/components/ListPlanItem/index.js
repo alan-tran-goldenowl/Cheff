@@ -4,8 +4,10 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import SwipeRow from 'components/SwipeRow';
 
 import styles from './styles';
 
@@ -21,35 +23,68 @@ export default withNavigation(({
 }) => {
   const goToMealPlan = () => navigation.navigate('PlanDetails', { id });
 
+  const showAlertDelete = () => {
+    Alert.alert(
+      'Warning',
+      'Are you want to delete this meal plan ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('cancel'),
+        },
+        {
+          text: 'Delete',
+          onPress: () => console.log('delete'),
+        },
+      ],
+    );
+  };
+
   return (
-    <View
-      style={styles.container}
+    <SwipeRow
+      listAction={[
+        {
+          text: 'Edit',
+          color: '#C8C7CD',
+          action: () => navigation.navigate('CreatePlan'),
+          x: 192,
+        },
+        {
+          text: 'Delete',
+          color: '#dd2c00',
+          action: showAlertDelete,
+          x: 300,
+        },
+      ]}
     >
-      <View style={styles.textViewTime}>
-        <Text>
-          {time}
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={goToMealPlan}
-        style={styles.touchable}
-      >
-        <View style={styles.iconView}>
-          <Image
-            source={icon[type]}
-            resizeMode="center"
-            style={styles.iconViewImage}
-          />
-        </View>
-        <View style={styles.textViewSummary}>
+      <View style={styles.container}>
+        <View style={styles.textViewTime}>
           <Text>
-            {title}
-          </Text>
-          <Text style={styles.textViewDescription}>
-            {description}
+            {time}
           </Text>
         </View>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          onPress={goToMealPlan}
+          style={styles.touchable}
+        >
+          <View style={styles.iconView}>
+            <Image
+              source={icon[type]}
+              resizeMode="center"
+              style={styles.iconViewImage}
+            />
+          </View>
+          <View style={styles.textViewSummary}>
+            <Text>
+              {title}
+            </Text>
+            <Text style={styles.textViewDescription}>
+              {description}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </SwipeRow>
+
   );
 });

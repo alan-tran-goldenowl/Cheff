@@ -51,7 +51,6 @@ export default class CreatePlan extends Component {
     };
   }
 
-
   _showDateTimePicker = () => this.setState({
     modeDateTime: 'date',
     isDateTimePickerVisible: true,
@@ -78,6 +77,13 @@ export default class CreatePlan extends Component {
     });
     this._hideDateTimePicker();
   };
+
+  _gotoListPlanScreen = () => {
+    const { data } = this.props.navigation.state.params || {};
+    this.props.navigation.navigate(data ? 'PlanDetails' : 'MealPlan', {
+      message: data ? 'edit' : 'add',
+    });
+  }
 
   render() {
     return (
@@ -279,7 +285,7 @@ export default class CreatePlan extends Component {
         </KeyboardAvoidingView>
 
         {/* submit button */}
-        <TouchableOpacity style={styles.buttonView}>
+        <TouchableOpacity style={styles.buttonView} onPress={this._gotoListPlanScreen}>
           <Text style={styles.buttonText}>
             CREATE A PLAN
           </Text>
