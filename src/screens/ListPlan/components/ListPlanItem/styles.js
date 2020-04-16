@@ -7,6 +7,7 @@ export default {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    flex: 1,
   },
   textViewTime: {
     width: '25%',
