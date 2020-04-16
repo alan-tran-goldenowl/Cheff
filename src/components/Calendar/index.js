@@ -39,7 +39,7 @@ class MyCalendar extends Component {
           width: 6,
           height: 6,
           marginTop: -30,
-          marginLeft: 35,
+          marginLeft: 30,
           borderRadius: 3,
           opacity: 1,
         },
@@ -50,7 +50,8 @@ class MyCalendar extends Component {
     };
   }
 
-  // loadCustomNameCalendar() {
+
+  // loadCustomNameCalendar = () => {
   //   // custom text month and day on calendar
   //   LocaleConfig.locales.en = {
   //     monthNames: [
@@ -73,35 +74,31 @@ class MyCalendar extends Component {
   //   LocaleConfig.defaultLocale = 'en';
   // }
 
-  // loadMarkedDates(dates) {
-  //   const currentDateKey = dates.format('YYYY-MM-DD');
-  //   const markedDates = {
-  //     [currentDateKey]: {
-  //       selected: true,
-  //       marked: true,
-  //       selectedColor: 'black',
-  //       dotColor: 'red',
-  //     },
-  //     '2018-08-05': {
-  //       //  selected: true,
-  //       marked: true,
-  //       //  selectedColor: "black",
-  //       dotColor: 'red',
-  //     },
-  //     '2018-08-03': {
-  //       selected: true,
-  //       //  marked: true,
-  //       selectedColor: 'black',
-  //       //  dotColor: "red"
-  //     },
-  // //   };
+  loadMarkedDates = (dates) => {
+    const currentDateKey = dates.format('YYYY-MM-DD');
+    const markedDates = {
+      [currentDateKey]: {
+        selected: true,
+        // marked: true,
+        selectedColor: 'black',
+        // dotColor: 'red',
+      },
+      '2020-04-05': {
+        marked: true,
+        dotColor: 'red',
+      },
+      '2020-04-03': {
+        marked: true,
+        dotColor: 'red',
+      },
+    };
 
-  //   return markedDates;
-  // }
+    return markedDates;
+  }
 
   render() {
     const { currentMonth } = this.state;
-    // const markedDates = this.loadMarkedDates(currentMonth);
+    const markedDates = this.loadMarkedDates(currentMonth);
 
     return (
       <Calendar
@@ -109,34 +106,31 @@ class MyCalendar extends Component {
         style={{ width: '100%', paddingLeft: 0, paddingRight: 0 }}
         theme={this.themeCalendar}
         monthFormat="MMMM, yyyy"
-        // current={currentMonth.toDate()}
-        //  markingType={"custom"}
-        // markedDates={markedDates}
+        current={currentMonth.toDate()}
+        markedDates={markedDates}
         // handle press day
-        onDayPress={(day) => {
-          console.log('selected day', day);
+        onDayPress={() => {
           this.props.moveToListPlan();
         }}
         // Handler which gets executed on day long press. Default = undefined
-        onDayLongPress={(day) => {
-          console.log('selected day', day);
+        onDayLongPress={() => {
         }}
         // Replace default arrows with custom ones (direction can be 'left' or 'right')
-        // renderArrow={direction => (
-        //   <CustomArrow direction={direction} currentMonth={currentMonth} />
-        // )}
-        // onPressArrowLeft={(substractMonth) => {
-        //   substractMonth();
-        //   this.setState((prevState) => {
-        //     prevState.currentMonth.subtract(1, 'months');
-        //   });
-        // }}
-        // onPressArrowRight={(addMonth) => {
-        //   addMonth();
-        //   this.setState((prevState) => {
-        //     prevState.currentMonth.add(1, 'months');
-        //   });
-        // }}
+        renderArrow={(direction) => (
+          <CustomArrow direction={direction} currentMonth={currentMonth} />
+        )}
+        onPressArrowLeft={(substractMonth) => {
+          substractMonth();
+          this.setState((prevState) => {
+            prevState.currentMonth.subtract(1, 'months');
+          });
+        }}
+        onPressArrowRight={(addMonth) => {
+          addMonth();
+          this.setState((prevState) => {
+            prevState.currentMonth.add(1, 'months');
+          });
+        }}
       />
     );
   }
