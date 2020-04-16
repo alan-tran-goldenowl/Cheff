@@ -14,13 +14,16 @@ import styles from './styles';
 
 
 export default class SignInScreen extends React.Component {
-  // static navigationOptions = {
-  //   headerShown: false,
-  // };
-
-  state = {
-    showLoginOptions: false,
+  static navigationOptions = {
+    headerShown: false,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showLoginOptions: false,
+    };
+  }
 
   componentDidMount() {
     FireBase.auth().onAuthStateChanged(async (user) => {

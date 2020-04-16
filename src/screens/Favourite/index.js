@@ -15,7 +15,7 @@ class FavoriteScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listFavoriteFood: props.listFood.filter(i => i.favorite) || [],
+      listFavoriteFood: props.listFood.filter((i) => i.favorite) || [],
     };
   }
 
@@ -23,16 +23,16 @@ class FavoriteScreen extends Component {
     this.props.navigation.addListener('didFocus', () => {
       if (
         JSON.stringify(this.state.listFavoriteFood)
-        !== JSON.stringify(this.props.listFood.filter(i => i.favorite))
+        !== JSON.stringify(this.props.listFood.filter((i) => i.favorite))
       ) {
-        this.setState({ listFavoriteFood: this.props.listFood.filter(i => i.favorite) });
+        this.setState({ listFavoriteFood: this.props.listFood.filter((i) => i.favorite) });
       }
     });
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (this.state.listFavoriteFood.length === 0) {
-      this.setState({ listFavoriteFood: newProps.listFood.filter(i => i.favorite) });
+      this.setState({ listFavoriteFood: newProps.listFood.filter((i) => i.favorite) });
     }
   }
 
@@ -49,9 +49,8 @@ class FavoriteScreen extends Component {
         <View style={styles.searchView}>
           <SearchViewCheff
             moveToSeacrh={() => this.props.navigation.navigate('Search', {
-              data: this.props.listFood.filter(i => i.favorite),
-            })
-            }
+              data: this.props.listFood.filter((i) => i.favorite),
+            })}
             pointerEvents="none"
           />
         </View>
@@ -63,14 +62,14 @@ class FavoriteScreen extends Component {
               onPressItem={() => this.props.navigation.navigate('FoodDetail', { data: item })}
             />
           )}
-          keyExtractor={item => String(item.key)}
+          keyExtractor={(item) => String(item.key)}
         />
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   listFood: state.listFood,
 });
 
