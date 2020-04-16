@@ -57,4 +57,13 @@ export default {
     borderBottomWidth: 1,
     borderBottomColor: 'hsl(0, 0%, 95%)',
   },
+  notification: {
+    paddingLeft: 17,
+    paddingRight: 17,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#65DB5E',
+    flexDirection: 'row',
+    paddingVertical: 10,
+  },
 };
