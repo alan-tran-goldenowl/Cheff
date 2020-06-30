@@ -3,39 +3,24 @@ import {
   View, Text, TouchableOpacity, Image as RNImage,
 } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
-import lodash from 'lodash';
+import { connect } from 'react-redux';
+
+import { onFavoriteChange } from 'actions/food';
 
 import styles from './styles';
-import { connect, dispatch } from '../../../recontext/store';
-import { actionTypes } from '../../../recontext/actions';
 
 class FoodItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLike: props.item.favorite,
-      likeNumber: props.item.like,
-    };
-  }
-
   onPressLikeUnLike = () => {
-    this.setState(prevState => ({
-      isLike: !prevState.isLike,
-      likeNumber: prevState.isLike ? prevState.likeNumber - 1 : prevState.likeNumber + 1,
-    }), () => {
-      const arrayFood = this.props.listFood;
-      const newItem = {
-        ...this.props.item,
-        favorite: this.state.isLike,
-        like: this.state.likeNumber,
-      };
-      const index = lodash.findIndex(arrayFood, { key: this.props.item.key });
-      arrayFood.splice(index, 1, newItem);
-      dispatch(actionTypes.setListFood, arrayFood);
-    });
+    const { item: { key }, onChangItem } = this.props;
+    onChangItem(key);
   }
 
   render() {
+    const {
+      item: {
+        like, favorite, name, imageLink, timeStamp,
+      },
+    } = this.props;
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.itemFood} onPress={this.props.onPressItem}>
@@ -43,12 +28,12 @@ class FoodItem extends Component {
             <Image
               style={styles.imageFoodCover}
               resizeMode="cover"
-              uri={this.props.item.imageLink}
+              uri={imageLink}
             />
           </View>
           <View style={styles.infomationFood}>
             <Text style={styles.foodName}>
-              {this.props.item.name}
+              {name}
             </Text>
             <View style={{ flex: 5, flexDirection: 'row' }}>
               <View
@@ -65,7 +50,7 @@ class FoodItem extends Component {
                   source={require('assets/images/ic_clock.png')}
                 />
                 <Text style={styles.timeStamp}>
-                  {this.props.item.timeStamp}
+                  {timeStamp}
                 </Text>
               </View>
               <TouchableOpacity
@@ -78,13 +63,13 @@ class FoodItem extends Component {
                 onPress={this.onPressLikeUnLike}
               >
                 <Text style={styles.like}>
-                  {this.state.likeNumber}
+                  {like}
                 </Text>
                 <RNImage
                   style={styles.icon}
                   resizeMode="contain"
                   source={
-                    this.state.isLike
+                    favorite
                       ? require('assets/images/ic_love.png')
                       : require('assets/images/ic_nonlove.png')
                   }
@@ -99,8 +84,12 @@ class FoodItem extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  listFood: state.listFood,
+const mapStateToProps = ({ food }) => ({
+  listFood: food.listFood,
 });
 
-export default connect(mapStateToProps)(FoodItem);
+const mapDispatchtoProps = (dispatch) => ({
+  onChangItem: (foodId) => dispatch(onFavoriteChange(foodId)),
+});
+
+export default connect(mapStateToProps, mapDispatchtoProps)(FoodItem);

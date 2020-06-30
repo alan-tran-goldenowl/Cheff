@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
+import { connect } from 'react-redux';
 import SearchViewCheff from 'components/SearchViewCheff';
 import HomeTab from 'components/HomeTab/HomeTab';
 import Header from 'components/Header';
 import styles from './styles';
-import { connect } from '../../../recontext/store';
 
 
 class HomeScreen extends Component {
@@ -57,8 +57,8 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  listFood: state.listFood,
+const mapStateToProps = ({ food }) => ({
+  listFood: food.listFood,
 });
 
 export default connect(mapStateToProps)(HomeScreen);

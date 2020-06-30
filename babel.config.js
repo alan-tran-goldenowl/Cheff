@@ -9,6 +9,7 @@ module.exports = function (api) {
     },
     plugins: [
       ['module-resolver', {
+        root: ['./src'],
         alias: {
           constants: './src/constants/',
           assets: './assets/',
@@ -17,6 +18,9 @@ module.exports = function (api) {
           apis: './src/apis/',
           navigation: './src/navigation/',
           screens: './src/screens',
+          actions: './src/actions',
+          reducers: './src/reducers/',
+          store: './src/stores',
         },
       }],
     ],

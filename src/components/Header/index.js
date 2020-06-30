@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#ffffff',
-    marginTop: responsive({ d: Platform.OS === 'ios' ? 32 : 60 }),
+    marginTop: responsive({ d: Platform.OS === 'ios' ? 50 : 60 }),
     height: device.height / 20,
     width: null,
     flexDirection: 'row',

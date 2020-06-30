@@ -13,11 +13,14 @@ import styles from './styles';
 
 
 class FoodDetail extends Component {
-  state = {
-    like: 0,
-    userLike: false,
-    serveForPeople: 0,
-    ingredientsExpand: true,
+  constructor(props) {
+    super(props);
+    this.state = {
+      like: 0,
+      userLike: false,
+      serveForPeople: 0,
+      ingredientsExpand: true,
+    };
   }
 
   componentDidMount() {
@@ -34,16 +37,16 @@ class FoodDetail extends Component {
     });
   }
 
-  handleToggleLike = () => this.setState(prevState => ({
+  handleToggleLike = () => this.setState((prevState) => ({
     userLike: !prevState.userLike,
     like: prevState.like + (prevState.userLike ? -1 : 1),
   }))
 
-  handleAddServe = () => this.setState(prevState => ({
+  handleAddServe = () => this.setState((prevState) => ({
     serveForPeople: prevState.serveForPeople + 1,
   }))
 
-  handleSubtractServe = () => this.setState(prevState => ({
+  handleSubtractServe = () => this.setState((prevState) => ({
     serveForPeople: prevState.serveForPeople > 1 ? prevState.serveForPeople - 1 : 1,
   }))
 

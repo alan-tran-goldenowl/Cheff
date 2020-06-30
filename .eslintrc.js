@@ -15,6 +15,14 @@ module.exports = {
       "consistent-return": 0,
       "camelcase": 0,
       'react/jsx-props-no-spreading': 0,
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
+      "max-len": [
+        "error",
+        150,
+        {
+          "ignoreTemplateLiterals": true
+        }
+      ],
   },
   "settings": {
     "import/resolver": {
@@ -27,7 +35,6 @@ module.exports = {
           "apis": './src/apis/',
           "navigation": './src/navigation/',
           "screens": './src/screens'
-        }
       }
     }
   }
