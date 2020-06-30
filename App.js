@@ -6,9 +6,10 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from 'react-redux';
 
 import NavigationRoot from 'navigation/SwitchNavigation';
-import { Provider } from './recontext/store';
+import { store } from 'stores';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,9 +19,12 @@ const styles = StyleSheet.create({
 });
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+    };
+  }
 
   _loadResourcesAsync = async () => Promise.all([
     Asset.loadAsync([
@@ -52,7 +56,7 @@ export default class App extends React.Component {
       );
     }
     return (
-      <Provider>
+      <Provider store={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <NavigationRoot />
