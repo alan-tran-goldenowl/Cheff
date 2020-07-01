@@ -3,9 +3,9 @@ import { FlatList } from 'react-native';
 
 import FoodItem from '../FoodItem';
 
-const Lunch = props => (
+const Tab = ({ data }) => (
   <FlatList
-    data={props.lunchFoods}
+    data={data}
     renderItem={({ item }) => (
       <FoodItem
         item={item}
@@ -16,4 +16,4 @@ const Lunch = props => (
   />
 );
 
-export default Lunch;
+export default Tab;

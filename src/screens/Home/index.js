@@ -14,7 +14,7 @@ class HomeScreen extends Component {
 
   renderHeader() {
     return (
-      <>
+      <React.Fragment>
         <Header
           logoVisible
           iconLeft={require('assets/images/icon_side_menu.png')}
@@ -36,20 +36,17 @@ class HomeScreen extends Component {
             />
           </View>
         </View>
-      </>
+      </React.Fragment>
     );
   }
 
   render() {
+    const { typeFood } = this.props;
     return (
       <View style={styles.container}>
         {this.renderHeader()}
         <HomeTab
-          recommendFoods={this.props.listFood.filter((i) => i.type === 'recommend')}
-          breakfastFoods={this.props.listFood.filter((i) => i.type === 'breakfast')}
-          lunchFoods={this.props.listFood.filter((i) => i.type === 'lunch')}
-          brunchFoods={this.props.listFood.filter((i) => i.type === 'brunch')}
-          dinnerFoods={this.props.listFood.filter((i) => i.type === 'dinner')}
+          tab={typeFood}
           navigation={this.props.navigation}
         />
       </View>
@@ -57,8 +54,9 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ food }) => ({
+const mapStateToProps = ({ food, TypeFood }) => ({
   listFood: food.listFood,
+  typeFood: TypeFood.list,
 });
 
 export default connect(mapStateToProps)(HomeScreen);
