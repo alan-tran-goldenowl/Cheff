@@ -2,23 +2,20 @@ import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity, Image as RNImage,
 } from 'react-native';
+import moment from 'moment';
 import { Image } from 'react-native-expo-image-cache';
 import { connect } from 'react-redux';
-
-import { onFavoriteChange } from 'actions/food';
 
 import styles from './styles';
 
 class FoodItem extends Component {
   onPressLikeUnLike = () => {
-    const { item: { key }, onChangItem } = this.props;
-    onChangItem(key);
   }
 
   render() {
     const {
       item: {
-        like, favorite, name, imageLink, timeStamp,
+        like, favorite, name, imageLink, createdAt,
       },
     } = this.props;
     return (
@@ -50,7 +47,7 @@ class FoodItem extends Component {
                   source={require('assets/images/ic_clock.png')}
                 />
                 <Text style={styles.timeStamp}>
-                  {timeStamp}
+                  {moment(createdAt).fromNow()}
                 </Text>
               </View>
               <TouchableOpacity
@@ -84,12 +81,11 @@ class FoodItem extends Component {
   }
 }
 
-const mapStateToProps = ({ food }) => ({
-  listFood: food.listFood,
+const mapStateToProps = ({ Food }) => ({
+  listFood: Food.list,
 });
 
 const mapDispatchtoProps = (dispatch) => ({
-  onChangItem: (foodId) => dispatch(onFavoriteChange(foodId)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(FoodItem);

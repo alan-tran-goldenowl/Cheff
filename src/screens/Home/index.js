@@ -41,12 +41,13 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { typeFood } = this.props;
+    const { typeFood, listFood } = this.props;
     return (
       <View style={styles.container}>
         {this.renderHeader()}
         <HomeTab
           tab={typeFood}
+          listFood={listFood}
           navigation={this.props.navigation}
         />
       </View>
@@ -54,8 +55,8 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ food, TypeFood }) => ({
-  listFood: food.listFood,
+const mapStateToProps = ({ Food, TypeFood }) => ({
+  listFood: Food.list,
   typeFood: TypeFood.list,
 });
 

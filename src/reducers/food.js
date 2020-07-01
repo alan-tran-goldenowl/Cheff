@@ -1,36 +1,29 @@
 import lodash from 'lodash';
-import dinner from 'assets/fakeDatas/dinner';
-import breakfast from 'assets/fakeDatas/breakfast';
-import brunch from 'assets/fakeDatas/brunch';
-import lunch from 'assets/fakeDatas/lunch';
-import recommend from 'assets/fakeDatas/recommend';
-import { FAVORITE_FOOD_CHANGE } from 'actions/constants';
+import {
+  GET_ALL_FOOD_FAILURE,
+  GET_ALL_FOOD_SUCCESS,
+} from 'actions/constants';
 
 export const INIT_STATE = {
-  listFood: [
-    ...recommend,
-    ...dinner,
-    ...breakfast,
-    ...brunch,
-    ...lunch,
-  ],
+  list: [],
+  error: '',
 };
 
 const food = (state = INIT_STATE, action) => {
   switch (action.type) {
-    case FAVORITE_FOOD_CHANGE: {
-      const index = lodash.findIndex(state.listFood, { key: action.foodId });
-      const item = state.listFood[index];
-      const newItem = {
-        ...item,
-        favorite: !item.favorite,
-        like: !item.favorite ? item.like + 1 : item.like - 1,
-      };
-      const newList = state.listFood.map((element) => (element.key === action.foodId ? newItem : element));
+    case GET_ALL_FOOD_SUCCESS: {
+      const list = Object.keys(action.payload).map(key => ({ key, ...action.payload[key] }));
       return {
         ...state,
-        listFood: newList,
+        list,
+        error: ''
       };
+    }
+    case GET_ALL_FOOD_FAILURE: {
+      return {
+        ...state,
+        error: action.error,
+      }
     }
     default:
       return state;

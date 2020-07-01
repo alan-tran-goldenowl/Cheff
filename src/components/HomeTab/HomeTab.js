@@ -6,7 +6,7 @@ import { responsive } from 'utils';
 import Tab from './Tab';
 
 
-const HomeTab = props => (
+const HomeTab = ({ tab, listFood, navigation }) => (
   <ScrollableTabView
     initialPage={0}
     renderTabBar={tabBarProps => (
@@ -29,7 +29,14 @@ const HomeTab = props => (
       height: 2,
     }}
   >
-    {props.tab.map(item => <Tab tabLabel={lodash.capitalize(item.name)} />)}
+    {tab.map(item =>
+      <Tab
+        key={item.key}
+        tabLabel={lodash.capitalize(item.name)}
+        data={listFood.filter(food => food.type === item.key)}
+        navigation={navigation}
+      />
+    )}
   </ScrollableTabView>
 );
 

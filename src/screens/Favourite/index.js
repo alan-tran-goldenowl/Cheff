@@ -46,8 +46,8 @@ class FavoriteScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ food }) => ({
-  listFavoriteFood: food.listFood.filter((item) => item.favorite) || [],
+const mapStateToProps = ({ Food }) => ({
+  listFavoriteFood: Food.list.filter((item) => item.favorite) || [],
 });
 
 export default connect(mapStateToProps)(FavoriteScreen);
