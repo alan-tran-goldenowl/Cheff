@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import { connect } from 'react-redux';
+
 import SearchViewCheff from 'components/SearchViewCheff';
 import HomeTab from 'components/HomeTab/HomeTab';
 import Header from 'components/Header';
@@ -41,13 +42,12 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { typeFood, listFood } = this.props;
+    const { typeFood } = this.props;
     return (
       <View style={styles.container}>
         {this.renderHeader()}
         <HomeTab
           tab={typeFood}
-          listFood={listFood}
           navigation={this.props.navigation}
         />
       </View>
@@ -55,9 +55,11 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ Food, TypeFood }) => ({
-  listFood: Food.list,
+const mapStateToProps = ({ TypeFood }) => ({
   typeFood: TypeFood.list,
 });
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = dispatch => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

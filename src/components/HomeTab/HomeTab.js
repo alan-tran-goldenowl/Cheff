@@ -5,8 +5,7 @@ import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab
 import { responsive } from 'utils';
 import Tab from './Tab';
 
-
-const HomeTab = ({ tab, listFood, navigation }) => (
+const HomeTab = ({ tab, navigation }) => (
   <ScrollableTabView
     initialPage={0}
     renderTabBar={tabBarProps => (
@@ -33,11 +32,11 @@ const HomeTab = ({ tab, listFood, navigation }) => (
       <Tab
         key={item.key}
         tabLabel={lodash.capitalize(item.name)}
-        data={listFood.filter(food => food.type === item.key)}
+        typeId={item.key}
         navigation={navigation}
       />
     )}
   </ScrollableTabView>
-);
+)
 
 export default HomeTab;
