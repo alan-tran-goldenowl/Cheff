@@ -81,8 +81,7 @@ class FoodItem extends Component {
   }
 }
 
-const mapStateToProps = ({ Food }) => ({
-  listFood: Food.list,
+const mapStateToProps = () => ({
 });
 
 const mapDispatchtoProps = (dispatch) => ({

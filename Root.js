@@ -6,7 +6,7 @@ import NavigationRoot from 'navigation/SwitchNavigation';
 
 class Root extends React.Component {
   componentDidMount() {
-    const { getAllTypeFood, getAllFood } = this.props;
+    const { getAllTypeFood } = this.props;
     getAllTypeFood();
   }
 

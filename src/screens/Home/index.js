@@ -30,9 +30,7 @@ class HomeScreen extends Component {
           />
           <View style={styles.search}>
             <SearchViewCheff
-              moveToSeacrh={() => this.props.navigation.navigate('Search', {
-                data: this.props.listFood,
-              })}
+              moveToSeacrh={() => this.props.navigation.navigate('Search')}
               pointerEvents="none"
             />
           </View>

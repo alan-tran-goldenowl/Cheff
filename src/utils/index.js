@@ -2,6 +2,7 @@ import { Dimensions, PixelRatio } from 'react-native';
 
 import authHelper from './authHelper';
 import storageHelper from './storageHelper';
+import handle from './handle';
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,3 +31,4 @@ export const actionNameToTypes = actionName => actionName
 
 export { authHelper };
 export { storageHelper };
+export { handle };
