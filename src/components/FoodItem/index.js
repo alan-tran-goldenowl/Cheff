@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { Image } from 'react-native-expo-image-cache';
-import { connect } from 'react-redux';
 
 import styles from './styles';
 
@@ -81,10 +80,4 @@ class FoodItem extends Component {
   }
 }
 
-const mapStateToProps = () => ({
-});
-
-const mapDispatchtoProps = (dispatch) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchtoProps)(FoodItem);
+export default FoodItem;

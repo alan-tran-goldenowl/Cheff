@@ -12,7 +12,7 @@ const rrfConfig = {
   userProfile: 'users'
 }
 export const rrfProps = {
-   firebase: FireBase,
+  firebase: FireBase,
   config: rrfConfig,
   dispatch: store.dispatch
 }

@@ -1,8 +1,7 @@
 import { Dimensions, PixelRatio } from 'react-native';
 
-import authHelper from './authHelper';
-import storageHelper from './storageHelper';
-import handle from './handle';
+export { authHelper } from './authHelper';
+export { storageHelper } from './storageHelper';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,7 +27,3 @@ export const actionNameToTypes = actionName => actionName
   .replace(/([A-Z])/g, '_$1')
   .trim()
   .toUpperCase();
-
-export { authHelper };
-export { storageHelper };
-export { handle };

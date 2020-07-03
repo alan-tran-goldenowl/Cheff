@@ -10,7 +10,7 @@ import SearchItem from 'components/SearchItem';
 import Header from 'components/Header';
 import styles from './styles';
 
-const SearchScreen = ({ listFood, navigation }) => {
+const SearchScreen = ({ listFood = [], navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [dataSearch, setDataSearch] = useState([]);
 
@@ -23,7 +23,7 @@ const SearchScreen = ({ listFood, navigation }) => {
     }
   }
 
-  const delayedQuery = useCallback(lodash.debounce(search => handleSearch(search), 1000));
+  const delayedQuery = useCallback(lodash.debounce(search => handleSearch(search), 1000), []);
 
   const onChangeText = (searchText) => {
     setSearchText(searchText);
@@ -64,7 +64,8 @@ const enhance = compose(
     { path: '/Food'}
   ]),
   connect(({ firebase: { ordered: { Food }} }) => ({
-    listFood: Food || [],
+    listFood: Food,
   }))
 )
+
 export default enhance(SearchScreen);
