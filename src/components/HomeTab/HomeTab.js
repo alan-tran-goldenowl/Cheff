@@ -31,7 +31,7 @@ const HomeTab = ({ tab, navigation }) => (
     {tab.map(item =>
       <Tab
         key={item.key}
-        tabLabel={lodash.capitalize(item.name)}
+        tabLabel={lodash.capitalize(item?.value?.name)}
         typeId={item.key}
         navigation={navigation}
       />

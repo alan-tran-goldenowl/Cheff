@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firebaseConnect } from 'react-redux-firebase';
 
-import { onGetFoodByType } from 'actions/food';
 import FoodItem from '../FoodItem';
 
-const Tab = ({ navigation, getFood, listFood, typeId }) => {
-  useEffect (() => {
-    getFood(typeId);
-  }, []);
-
+const Tab = ({ navigation, listFood, typeId }) => {
   return (
     <FlatList
       data={listFood}
       renderItem={({ item }) => (
         <FoodItem
-          item={item}
-          onPressItem={() => navigation.navigate('FoodDetail', { data: item })}
+          item={item.value}
+          onPressItem={() => navigation.navigate('FoodDetail', { data: item.value })}
         />
       )}
       keyExtractor={item => String(item.key)}
@@ -25,12 +22,13 @@ const Tab = ({ navigation, getFood, listFood, typeId }) => {
   )
 };
 
-const mapStateToProps = ({ Food }, { typeId }) => ({
-  listFood: Food[typeId],
-});
+const enhance = compose(
+  firebaseConnect(({ typeId }) => [
+    { path: '/Food', storeAs: typeId, queryParams: [ 'orderByChild=type',  `equalTo=${typeId}`  ] }
+  ]),
+  connect(({ firebase }, { typeId }) => ({
+    listFood: firebase.ordered[typeId] || [],
+  }))
+)
 
-const mapDispatchtoProps = (dispatch) => ({
-  getFood: (typeId) => dispatch(onGetFoodByType(typeId)),
-});
-
-export default connect(mapStateToProps, mapDispatchtoProps)(Tab);
+export default enhance(Tab);

@@ -1,20 +1,18 @@
 import {
-  createStore, applyMiddleware, compose,
+  createStore
 } from 'redux';
-import thunk from 'redux-thunk';
-import logger from 'redux-logger';
 
-import reducers from 'reducers';
+import { FireBase } from 'constants';
+import { reducers } from 'reducers';
 
-const middlewares = [];
-middlewares.push(thunk);
-if (__DEV__) {
-  middlewares.push(logger);
+const initialState = {}
+export const store = createStore(reducers, initialState);
+
+const rrfConfig = {
+  userProfile: 'users'
 }
-
-export const store = createStore(
-  reducers,
-  compose(
-    applyMiddleware(...middlewares),
-  ),
-);
+export const rrfProps = {
+   firebase: FireBase,
+  config: rrfConfig,
+  dispatch: store.dispatch
+}
