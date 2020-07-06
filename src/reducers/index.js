@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
+import { firebaseReducer } from 'react-redux-firebase';
 
-import food from './food';
-
-export default combineReducers({
-  food,
+export const reducers = combineReducers({
+  firebase: firebaseReducer,
 });

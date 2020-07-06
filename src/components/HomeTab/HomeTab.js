@@ -1,15 +1,11 @@
 import React from 'react';
+import lodash from 'lodash';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 import { responsive } from 'utils';
-import Dinner from './Dinner';
-import Breakfast from './Breakfast';
-import Lunch from './Lunch';
-import Brunch from './Brunch';
-import Recommend from './Recommend';
+import Tab from './Tab';
 
-
-const HomeTab = props => (
+const HomeTab = ({ tab, navigation }) => (
   <ScrollableTabView
     initialPage={0}
     renderTabBar={tabBarProps => (
@@ -32,12 +28,15 @@ const HomeTab = props => (
       height: 2,
     }}
   >
-    <Recommend tabLabel="Recommend" {...props} />
-    <Breakfast tabLabel="Breakfast" {...props} />
-    <Brunch tabLabel="Brunch" {...props} />
-    <Lunch tabLabel="Lunch" {...props} />
-    <Dinner tabLabel="Dinner" {...props} />
+    {tab.map(item =>
+      <Tab
+        key={item.key}
+        tabLabel={lodash.capitalize(item?.value?.name)}
+        typeId={item.key}
+        navigation={navigation}
+      />
+    )}
   </ScrollableTabView>
-);
+)
 
 export default HomeTab;

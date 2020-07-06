@@ -7,9 +7,10 @@ import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
+import { store, rrfProps } from 'stores';
 import NavigationRoot from 'navigation/SwitchNavigation';
-import { store } from 'stores';
 
 const styles = StyleSheet.create({
   container: {
@@ -57,10 +58,12 @@ export default class App extends React.Component {
     }
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <NavigationRoot />
-        </View>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <NavigationRoot />
+          </View>
+        </ReactReduxFirebaseProvider>
       </Provider>
     );
   }

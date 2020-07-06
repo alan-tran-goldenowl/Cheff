@@ -16,31 +16,17 @@ class FoodDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      like: 0,
-      userLike: false,
       serveForPeople: 0,
       ingredientsExpand: true,
     };
   }
 
   componentDidMount() {
-    const {
-      like = 0,
-      userLike = false,
-      serveForPeople = 0,
-    } = this.props.navigation.getParam('data') || {};
-
+    const { serveForPeople = 0 } = this.props.navigation.getParam('data') || {};
     this.setState({
-      like,
-      userLike,
       serveForPeople,
     });
   }
-
-  handleToggleLike = () => this.setState((prevState) => ({
-    userLike: !prevState.userLike,
-    like: prevState.like + (prevState.userLike ? -1 : 1),
-  }))
 
   handleAddServe = () => this.setState((prevState) => ({
     serveForPeople: prevState.serveForPeople + 1,
@@ -65,10 +51,9 @@ class FoodDetail extends Component {
           customRight={() => (
             <TouchableOpacity
               style={styles.likeView}
-              onPress={this.handleToggleLike}
             >
               <Text style={styles.likeNumber}>
-                {this.state.like}
+                {data.like || 0}
               </Text>
               <RNImage
                 resizeMode="center"
@@ -82,7 +67,9 @@ class FoodDetail extends Component {
             </TouchableOpacity>
           )}
         />
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.nameView}>
             <Text style={styles.nameText}>
               {data.name}
@@ -114,7 +101,7 @@ class FoodDetail extends Component {
                   source={require('assets/images/ic_clock.png')}
                 />
                 <Text style={styles.infoText}>
-                  {data.timeCook}
+                  {data.timeCook / 60} mins
                 </Text>
               </View>
               <View style={[styles.flexRowCenter, { marginLeft: 10 }]}>
@@ -216,6 +203,7 @@ class FoodDetail extends Component {
                     {`${index + 1}. ${item}`}
                   </Text>
                 )}
+                showsVerticalScrollIndicator={false}
               />
             </CollapseView>
           </View>

@@ -1,66 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, FlatList } from 'react-native';
+import lodash from 'lodash';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firebaseConnect } from 'react-redux-firebase';
+
 import SearchViewCheff from 'components/SearchViewCheff';
 import SearchItem from 'components/SearchItem';
 import Header from 'components/Header';
 import styles from './styles';
 
-class SettingsScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+const SearchScreen = ({ listFood, navigation }) => {
+  const [searchText, setSearchText] = useState('');
+  const [dataSearch, setDataSearch] = useState([]);
 
-  constructor(props) {
-    super(props);
-    const filterData = props.navigation.getParam('data');
-    this.state = {
-      searchText: '',
-      filterData,
-    };
-  }
-
-  onChangeText = (searchText) => {
-    let filterData = [];
-    const data = this.props.navigation.getParam('data');
-    if (searchText.length > 0) {
-      filterData = data.filter(
-        i => i.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
-          || i.ingredients.map(e => e.name.toLowerCase()).indexOf(searchText.toLowerCase()) > -1,
+  const handleSearch = (searchText) => {
+    if (searchText.trim() !== '') {
+      const data = listFood.filter(
+        i => i?.value?.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
       );
+      setDataSearch(data);
     }
-    this.setState({ filterData, searchText });
+  }
+
+  const delayedQuery = useCallback(lodash.debounce(search => handleSearch(search), 1000), []);
+
+  const onChangeText = (searchText) => {
+    setSearchText(searchText);
+    delayedQuery(searchText);
   };
 
-  render() {
-    const { searchText, filterData } = this.state;
-    return (
-      <View style={styles.container}>
-        <Header
-          iconLeft={require('assets/images/icon_back.png')}
-          onPressLeft={() => this.props.navigation.goBack()}
+  return (
+    <View style={styles.container}>
+      <Header
+        iconLeft={require('assets/images/icon_back.png')}
+        onPressLeft={() => navigation.goBack()}
+      />
+      <View style={styles.searchView}>
+        <SearchViewCheff
+          autoFocus
+          value={searchText}
+          overrideStyle={styles.search}
+          onChangeText={onChangeText}
         />
-        <View style={styles.searchView}>
-          <SearchViewCheff
-            autoFocus
-            value={searchText}
-            overrideStyle={styles.search}
-            onChangeText={this.onChangeText}
-          />
-          <FlatList
-            data={searchText.length > 0 ? filterData : []}
-            renderItem={({ item }) => (
-              <SearchItem
-                item={item}
-                onPressItem={() => this.props.navigation.navigate('FoodDetail', { data: item })}
-              />
-            )}
-            keyExtractor={item => String(item.key)}
-            extraData={this.state.searchText}
-          />
-        </View>
+        <FlatList
+          data={searchText.trim() !== '' ? dataSearch : listFood}
+          renderItem={({ item }) => (
+            <SearchItem
+              item={item.value}
+              onPressItem={() => navigation.navigate('FoodDetail', { data: item.value })}
+            />
+          )}
+          keyExtractor={item => String(item.key)}
+          extraData={searchText}
+        />
       </View>
-    );
-  }
+    </View>
+  );
 }
 
-export default SettingsScreen;
+const enhance = compose(
+  firebaseConnect(({ typeId }) => [
+    { path: '/Food'}
+  ]),
+  connect(({ firebase: { ordered: { Food }} }) => ({
+    listFood: Food || [],
+  }))
+)
+
+export default enhance(SearchScreen);
