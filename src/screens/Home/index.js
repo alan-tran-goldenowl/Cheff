@@ -10,7 +10,7 @@ import Header from 'components/Header';
 import styles from './styles';
 
 
-const HomeScreen = ({ navigation, typeFood = [] }) => {
+const HomeScreen = ({ navigation, typeFood }) => {
   const renderHeader = () => (
     <React.Fragment>
       <Header
@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation, typeFood = [] }) => {
 const enhance = compose(
   firebaseConnect(['Type_Food']),
   connect(({ firebase: { ordered: { Type_Food } } }) => ({
-    typeFood: Type_Food,
+    typeFood: Type_Food || [],
   }))
 )
 

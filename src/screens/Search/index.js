@@ -10,7 +10,7 @@ import SearchItem from 'components/SearchItem';
 import Header from 'components/Header';
 import styles from './styles';
 
-const SearchScreen = ({ listFood = [], navigation }) => {
+const SearchScreen = ({ listFood, navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [dataSearch, setDataSearch] = useState([]);
 
@@ -64,7 +64,7 @@ const enhance = compose(
     { path: '/Food'}
   ]),
   connect(({ firebase: { ordered: { Food }} }) => ({
-    listFood: Food,
+    listFood: Food || [],
   }))
 )
 

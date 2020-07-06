@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import FoodItem from '../FoodItem';
 
-const Tab = ({ navigation, listFood = [], typeId }) => {
+const Tab = ({ navigation, listFood, typeId }) => {
   return (
     <FlatList
       data={listFood}
@@ -27,7 +27,7 @@ const enhance = compose(
     { path: '/Food', storeAs: typeId, queryParams: [ 'orderByChild=type',  `equalTo=${typeId}`  ] }
   ]),
   connect(({ firebase }, { typeId }) => ({
-    listFood: firebase.ordered[typeId],
+    listFood: firebase.ordered[typeId] || [],
   }))
 )
 
