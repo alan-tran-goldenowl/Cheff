@@ -10,7 +10,6 @@ import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 
 import { FireBase, FbConfig, GgConfig } from 'constants';
-import { storageHelper } from 'utils';
 import styles from './styles';
 
 const  SignInScreen = ({ navigation }) =>  {
@@ -20,21 +19,12 @@ const  SignInScreen = ({ navigation }) =>  {
     onAuthStateChanged();
   }, []);
 
-  const saveUserInfo = (user) => {
-    storageHelper.setAsyncStorage('userInfo', {
-      photoURL: user.photoURL,
-      displayName: user.displayName,
-    })
-    .then(() => navigation.navigate('Main'))
-    .catch(() => {});
-  }
-
   const onAuthStateChanged = () => {
     FireBase.auth().onAuthStateChanged(async (user) => {
       if (!user) {
         return setShowLoginOptions(true);
       }
-      saveUserInfo(user);
+      navigation.navigate('Main')
     });
   };
 
@@ -43,7 +33,7 @@ const  SignInScreen = ({ navigation }) =>  {
       .auth()
       .signInWithCredential(credential)
       .then(({ user }) => {
-        saveUserInfo(user);
+        navigation.navigate('Main')
       })
       .catch((err) => {
         return err;
