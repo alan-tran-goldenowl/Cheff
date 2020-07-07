@@ -1,7 +1,7 @@
 import { Dimensions, PixelRatio } from 'react-native';
 
-export { authHelper } from './authHelper';
-export { storageHelper } from './storageHelper';
+export authHelper from './authHelper';
+export storageHelper from './storageHelper';
 
 const { width, height } = Dimensions.get('window');
 

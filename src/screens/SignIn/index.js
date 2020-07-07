@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -13,48 +13,40 @@ import { storageHelper } from 'utils';
 import styles from './styles';
 
 
-export default class SignInScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+const  SignInScreen = ({ navigation }) =>  {
+  const [showLoginOptions, setShowLoginOptions] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showLoginOptions: false,
-    };
-  }
-
-  componentDidMount() {
+  const onAuthStateChanged = () => {
     FireBase.auth().onAuthStateChanged(async (user) => {
       if (!user) {
-        return this.setState({
-          showLoginOptions: true,
-        });
+        return setShowLoginOptions(true);
       }
 
       storageHelper.setAsyncStorage('userInfo', {
         photoURL: user.photoURL,
         displayName: user.displayName,
       })
-        .then(() => this.props.navigation.navigate('Main'))
+        .then(() => navigation.navigate('Main'))
         .catch(() => {});
     });
-  }
+  };
 
-  logInViaFacebook = async () => {
+  useEffect(() => {
+    onAuthStateChanged()
+  }, []);
+
+  const logInViaFacebook = async () => {
     try {
       await Facebook.initializeAsync(FbConfig.APP_ID, FbConfig.APP_NAME);
       const {
         type,
         token,
       } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
+        permissions: ['public_profile', 'email'],
       });
       if (type !== 'success') {
         throw new Error('Sorry, unexpected error');
       }
-      console.log('type');
 
       const credential = FireBase.auth.FacebookAuthProvider.credential(token);
       FireBase
@@ -74,50 +66,47 @@ export default class SignInScreen extends React.Component {
     } catch (err) {
       alert(`Login failed: ${err}`);
     }
-  }
+  };
 
-  render() {
-    return (
-      <ImageBackground
-        style={{ flex: 1 }}
-        source={require('assets/images/background.png')}
+  return (
+    <ImageBackground
+      style={{ flex: 1 }}
+      source={require('assets/images/background.png')}
+    >
+    { showLoginOptions &&
+      <View
+        style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
       >
-        <View
-          style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
+        {/* login via Google */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.textSignInGG}
         >
-          {/* login via Google */}
-          {/* <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Main')}
-            style={styles.textSignInGG}
-          >
-            <Image
-              source={require('assets/images/btn_gg.png')}
-              style={styles.image}
-            />
-            <Text style={styles.textGG}>
-              Google
-            </Text>
-          </TouchableOpacity> */}
-
-          {/* login via Facebook */}
-          {
-            this.state.showLoginOptions && (
-            <TouchableOpacity
-              style={styles.textSignInFb}
-              onPress={this.logInViaFacebook}
-            >
-              <Image
-                style={styles.image}
-                source={require('assets/images/btn_fb.png')}
-              />
-              <Text style={styles.textFB}>
-                Facebook
-              </Text>
-            </TouchableOpacity>
-            )
-          }
-        </View>
-      </ImageBackground>
-    );
-  }
+          <Image
+            source={require('assets/images/btn_gg.png')}
+            style={styles.image}
+          />
+          <Text style={styles.textGG}>
+            Google
+          </Text>
+        </TouchableOpacity>
+        {/* login via Facebook */}
+        <TouchableOpacity
+          style={styles.textSignInFb}
+          onPress={logInViaFacebook}
+        >
+          <Image
+            style={styles.image}
+            source={require('assets/images/btn_fb.png')}
+          />
+          <Text style={styles.textFB}>
+            Facebook
+          </Text>
+        </TouchableOpacity>
+      </View>
+    }
+    </ImageBackground>
+  );
 }
+
+export default SignInScreen;
