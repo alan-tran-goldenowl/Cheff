@@ -38,7 +38,7 @@ const AppSwitch = createSwitchNavigator(
   {
     AuthLoading,
     App: AppStack,
-    Auth: createStackNavigator({ SignIn }),
+    Auth: createStackNavigator({ SignIn }, { headerMode: 'none' }),
   },
   {
     initialRouteName: 'AuthLoading',
