@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -7,117 +7,119 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as Facebook from 'expo-facebook';
+import * as Google from 'expo-google-app-auth';
 
-import { FireBase, FbConfig } from 'constants';
-import { storageHelper } from 'utils';
+import { FireBase, FbConfig, GgConfig } from 'constants';
+import images from 'assets/images';
 import styles from './styles';
 
+const  SignInScreen = ({ navigation }) =>  {
+  const [showLoginOptions, setShowLoginOptions] = useState(false);
 
-export default class SignInScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+  useEffect(() => {
+    onAuthStateChanged();
+  }, []);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showLoginOptions: false,
-    };
-  }
-
-  componentDidMount() {
+  const onAuthStateChanged = () => {
     FireBase.auth().onAuthStateChanged(async (user) => {
       if (!user) {
-        return this.setState({
-          showLoginOptions: true,
-        });
+        return setShowLoginOptions(true);
       }
-
-      storageHelper.setAsyncStorage('userInfo', {
-        photoURL: user.photoURL,
-        displayName: user.displayName,
-      })
-        .then(() => this.props.navigation.navigate('Main'))
-        .catch(() => {});
+      navigation.navigate('Main')
     });
+  };
+
+  const handleLoginSuccess = async (credential) => {
+    FireBase
+      .auth()
+      .signInWithCredential(credential)
+      .then(({ user }) => {
+        navigation.navigate('Main')
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 
-  logInViaFacebook = async () => {
+  const logInViaFacebook = async () => { // TODO: failure with iOS
     try {
       await Facebook.initializeAsync(FbConfig.APP_ID, FbConfig.APP_NAME);
       const {
         type,
         token,
       } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
+        permissions: ['public_profile', 'email'],
       });
       if (type !== 'success') {
         throw new Error('Sorry, unexpected error');
       }
-      console.log('type');
 
       const credential = FireBase.auth.FacebookAuthProvider.credential(token);
-      FireBase
-        .auth()
-        .signInWithCredential(credential)
-        .then(({ user }) => {
-          storageHelper.setAsyncStorage('userInfo', {
-            photoURL: user.photoURL,
-            displayName: user.displayName,
-          })
-            .then(() => this.props.navigation.navigate('Main'))
-            .catch(() => {});
-        })
-        .catch((err) => {
-          throw err;
-        });
+      handleLoginSuccess(credential);
     } catch (err) {
       alert(`Login failed: ${err}`);
     }
+  };
+
+  const logInViaGoogle = async () => {
+    try {
+      const { type, accessToken, user, idToken} = await Google.logInAsync({
+        iosClientId: GgConfig.IOS_CLIENT_ID,
+        androidClientId: GgConfig.ANDROID_CLIENT_ID,
+        scopes: ['profile', 'email'],
+      });
+      if (type !== 'success') {
+        throw new Error('Sorry, unexpected error');
+      }
+      const credential = FireBase.auth.GoogleAuthProvider.credential(
+        idToken,
+        accessToken
+      );
+      handleLoginSuccess(credential);
+    } catch(err) {
+      alert(`Login failed: ${err}`);
+    };
   }
 
-  render() {
-    return (
-      <ImageBackground
-        style={{ flex: 1 }}
-        source={require('assets/images/background.png')}
+  return (
+    <ImageBackground
+      style={styles.container}
+      source={images.background}
+    >
+    { showLoginOptions &&
+      <View
+        style={styles.viewBtn}
       >
-        <View
-          style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
+        {/* login via Google */}
+        <TouchableOpacity
+          onPress={logInViaGoogle}
+          style={styles.textSignInGG}
         >
-          {/* login via Google */}
-          {/* <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Main')}
-            style={styles.textSignInGG}
-          >
-            <Image
-              source={require('assets/images/btn_gg.png')}
-              style={styles.image}
-            />
-            <Text style={styles.textGG}>
-              Google
-            </Text>
-          </TouchableOpacity> */}
-
-          {/* login via Facebook */}
-          {
-            this.state.showLoginOptions && (
-            <TouchableOpacity
-              style={styles.textSignInFb}
-              onPress={this.logInViaFacebook}
-            >
-              <Image
-                style={styles.image}
-                source={require('assets/images/btn_fb.png')}
-              />
-              <Text style={styles.textFB}>
-                Facebook
-              </Text>
-            </TouchableOpacity>
-            )
-          }
-        </View>
-      </ImageBackground>
-    );
-  }
+          <Image
+            source={images.btn_gg}
+            style={styles.image}
+          />
+          <Text style={styles.textGG}>
+            Google
+          </Text>
+        </TouchableOpacity>
+        {/* login via Facebook */}
+        <TouchableOpacity
+          style={styles.textSignInFb}
+          onPress={logInViaFacebook}
+        >
+          <Image
+            style={styles.image}
+            source={images.btn_fb}
+          />
+          <Text style={styles.textFB}>
+            Facebook
+          </Text>
+        </TouchableOpacity>
+      </View>
+    }
+    </ImageBackground>
+  );
 }
+
+export default SignInScreen;

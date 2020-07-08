@@ -1,188 +1,109 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
   Image,
-  Switch,
-  TextInput,
   BackHandler,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 
-import { storageHelper } from 'utils';
 import Header from 'components/Header';
-
+import Loading from 'components/Loading';
+import TextInput from 'components/TextInput';
+import Switch from 'components/Switch';
+import { FireBase } from 'constants';
+import images from 'assets/images';
 
 import styles from './styles';
 
-export default class extends Component {
-  static navigationOptions = {
-    headerShown: false,
-  };
+const EditProfile = ({ navigation }) => {
+  const [user, setUser] = useState({ email: '', photoURL: '', displayName: '', providerId: '' });
+  const [loading, setLoading] = useState(false);
 
-  state = {
-    email: '',
-    photoURL: '',
-    displayName: '',
-    toggleGoogle: false,
-    toggleFacebook: false,
-  };
+  useEffect(() => {
+    const user =  FireBase.auth().currentUser;
+    setUser({
+      email: user.email,
+      photoURL: user.photoURL,
+      displayName: user.displayName,
+      providerId: user.providerData[0].providerId,
+    })
+    BackHandler.addEventListener('hardwareBackPress', navigation.goBack);
+    return () => BackHandler.removeEventListener('hardwareBackPress', navigation.goBack);
+  }, [])
 
-  componentDidMount() {
-    storageHelper.getAsyncStorage('userInfo')
-      .then(userInfo => this.setState({ ...userInfo }))
-      .catch(() => {});
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.props.navigation.goBack);
+  const updateProfile = () => {
+    setLoading(true);
+    const userFirebase =  FireBase.auth().currentUser;
+    userFirebase.updateProfile({
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      email: user.email,
+    }).then(res => Alert.alert('Update Profile', 'Profile updated!'))
+    .catch(error => Alert.alert('Update Profile', 'Update profile failure!'))
+    .finally(() => setLoading(false));
   }
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.props.navigation.goBack);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header
-          rightText="Save"
-          title="Edit Profile"
-          onPressLeft={() => this.props.navigation.goBack()}
-          iconLeft={require('assets/images/icon_back.png')}
-        />
-        {
-          !!this.state.photoURL && (
-          <View style={{ alignItems: 'center', marginTop: 30 }}>
-            <TouchableHighlight style={styles.imageContainer2}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: this.state.photoURL,
-                }}
-              />
-            </TouchableHighlight>
-          </View>
-          )
-        }
-
-        <View style={{ alignItems: 'center', marginTop: 15 }}>
-          <Text style={{ color: 'blue', fontSize: 15 }}>
-            Change image profile
-          </Text>
-        </View>
-
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 14 }}>
-            Your full name
-          </Text>
-          <TextInput
-            multiline={false}
-            style={styles.text}
-            placeholder="Enter your name"
-            value={this.state.displayName}
-            underlineColorAndroid="transparent"
-            onChangeText={text => this.setState({ displayName: text })}
-          />
-        </View>
-
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 14 }}>
-            Your email address
-          </Text>
-          <TextInput
-            multiline={false}
-            style={styles.text}
-            value={this.state.email}
-            underlineColorAndroid="transparent"
-            onChangeText={text => this.setState({ email: text })}
-            placeholder="Enter your email"
-          />
-        </View>
-
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 19, color: '#999' }}>
-            Link Account
-          </Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', height: 50 }}>
-          <View style={{ height: '100%', justifyContent: 'center', flex: 1 }}>
+  return (
+    <View style={styles.container}>
+      { loading && <Loading/> }
+      <Header
+        rightText="Save"
+        title="Edit Profile"
+        onPressLeft={() => navigation.goBack()}
+        iconLeft={require('assets/images/icon_back.png')}
+        onPressRight={updateProfile}
+      />
+      {
+        !!user.photoURL && (
+        <View style={styles.viewImage}>
+          <TouchableHighlight>
             <Image
-              resizeMode="center"
-              style={{ width: 30, height: 30, marginLeft: 12 }}
-              source={require('assets/images/ic_facebook.png')}
+              style={styles.image}
+              source={{
+                uri: user.photoURL,
+              }}
             />
-          </View>
-
-          <View
-            style={{
-              flex: 4,
-              height: '100%',
-              marginLeft: 30,
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 16 }}>
-              Facebook
-            </Text>
-          </View>
-
-          <View
-            style={{
-              flex: 5,
-              height: '100%',
-              marginRight: 20,
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-            }}
-          >
-            <Switch
-              thumbColor="white"
-              trackColor="#45db5e"
-              value={this.state.toggleFacebook}
-              onValueChange={value => this.setState({ toggleFacebook: value })}
-            />
-          </View>
+          </TouchableHighlight>
         </View>
-
-        <View style={{ flexDirection: 'row', height: 50 }}>
-          <View style={{ height: '100%', justifyContent: 'center', flex: 1 }}>
-            <Image
-              resizeMode="center"
-              style={{ width: 30, height: 30, marginLeft: 20 }}
-              source={require('assets/images/ic_google.png')}
-            />
-          </View>
-
-          <View
-            style={{
-              flex: 4,
-              height: '100%',
-              marginLeft: 30,
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 16 }}>
-              Google
-            </Text>
-          </View>
-
-          <View
-            style={{
-              flex: 5,
-              height: '100%',
-              marginRight: 20,
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-            }}
-          >
-            <Switch
-              thumbColor="white"
-              trackColor="#45db5e"
-              value={this.state.toggleGoogle}
-              onValueChange={value => this.setState({ toggleGoogle: value })}
-            />
-          </View>
-        </View>
+        )
+      }
+      <TouchableHighlight style={styles.btnChangeImage}>
+        <Text style={styles.textChangeImage}>
+          Change image profile
+        </Text>
+      </TouchableHighlight>
+      <TextInput
+        title='Your full name'
+        placeholder="Enter your name"
+        value={user.displayName}
+        onChangeText={text => setUser({...user, displayName: text })}
+      />
+      <TextInput
+        title='Your email address'
+        placeholder="Enter your email"
+        value={user.email}
+        onChangeText={text => setUser({...user, email: text })}
+      />
+      <View style={styles.viewTextInput}>
+        <Text style={styles.textLinkAcc}>
+          Link Account
+        </Text>
       </View>
-    );
-  }
+
+      <Switch
+        image={images.ic_facebook}
+        title='Facebook'
+        valueSwitch={user.providerId === 'facebook.com'}
+      />
+      <Switch
+        image={images.ic_google}
+        title='Google'
+        valueSwitch={user.providerId === 'google.com'}
+      />
+    </View>
+  );
 }
+
+export default EditProfile;

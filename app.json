@@ -12,8 +12,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "facebookScheme": "fb534372374169887",
-    "facebookAppId": "534372374169887",
+    "facebookScheme": "fb3080639668723170",
+    "facebookAppId": "3080639668723170",
     "facebookDisplayName": "Cheff",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -28,10 +28,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.goldenowl.cheff"
+      "bundleIdentifier": "com.goldenowl.cheff",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.720924385775-q5f2dcmf0q1v6qied2igtmqcu0id95pr"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "package": "com.goldenowl.cheff"
+      "package": "com.goldenowl.cheff",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

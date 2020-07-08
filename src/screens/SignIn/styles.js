@@ -7,8 +7,8 @@ export default StyleSheet.create({
   },
   textSignInGG: {
     flexDirection: 'row',
-    height: responsive({ h: 35 }),
-    width: '75%',
+    height: responsive({ h: 40 }),
+    width: '90%',
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -17,9 +17,9 @@ export default StyleSheet.create({
     borderWidth: 1,
   },
   textSignInFb: {
-    height: responsive({ h: 35 }),
-    width: '75%',
-    margin: responsive({ d: 20 }),
+    height: responsive({ h: 40 }),
+    width: '90%',
+    margin: responsive({ d: 35 }),
     backgroundColor: '#295eb5',
     alignItems: 'center',
     justifyContent: 'center',
@@ -42,4 +42,9 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: responsive({ f: 16 }),
   },
+  viewBtn: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  }
 });

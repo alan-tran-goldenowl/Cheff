@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "720924385775",
+    "firebase_url": "https://cheff-app-mobile-4e38e.firebaseio.com",
+    "project_id": "cheff-app-mobile-4e38e",
+    "storage_bucket": "cheff-app-mobile-4e38e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720924385775:android:eb45aaf6ec83d23798d61a",
+        "android_client_info": {
+          "package_name": "com.goldenowl.cheff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720924385775-q1eoc3hdvijjbn7j3v2u1lo7jniui75i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjtbH--JGycBNgpN6deYR5nIYrZBxFoc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720924385775-q1eoc3hdvijjbn7j3v2u1lo7jniui75i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "720924385775-q5f2dcmf0q1v6qied2igtmqcu0id95pr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.goldenowl.cheff"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

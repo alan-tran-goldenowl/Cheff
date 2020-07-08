@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
 import { store, rrfProps } from 'stores';
+import images from 'assets/images';
 import NavigationRoot from 'navigation/SwitchNavigation';
 
 const styles = StyleSheet.create({
@@ -28,10 +29,7 @@ export default class App extends React.Component {
   }
 
   _loadResourcesAsync = async () => Promise.all([
-    Asset.loadAsync([
-      require('assets/images/robot-dev.png'),
-      require('assets/images/robot-prod.png'),
-    ]),
+    Asset.loadAsync([images.robot_dev, images.robot_prod]),
     Font.loadAsync({
       ...Ionicons.font,
       'space-mono': require('assets/fonts/SpaceMono-Regular.ttf'),

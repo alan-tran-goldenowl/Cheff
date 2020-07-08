@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -9,177 +9,82 @@ import {
 } from 'react-native';
 
 import Header from 'components/Header';
-
+import ButtonSetting from 'components/ButtonSetting';
+import images from 'assets/images';
 import styles from './styles';
 
-export default class SettingsScreen extends React.Component {
-  static navigationOptions = {
-    headerShown: false,
-  }
+const SettingsScreen = ( { navigation }) => {
+  const [toggleNotification, setToggleNotification] = useState(true);
 
-  state = {
-    toggleNotification: true,
-  };
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', navigation.goBack);
+    return () => BackHandler.removeEventListener('hardwareBackPress', navigation.goBack);
+  }, [])
 
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.props.navigation.goBack);
-  }
-
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.props.navigation.goBack);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header
-          iconLeft={require('assets/images/icon_back.png')}
-          onPressLeft={() => this.props.navigation.goBack()}
-        />
-        <View style={styles.preferences}>
-          <Text style={styles.textSetting}>
-            Settings
-          </Text>
-          <Text style={styles.textPreferences}>
-            Update your preferences
-          </Text>
-        </View>
-        <View style={styles.accountView}>
-          <Text style={styles.accountText}>
-            Account
-          </Text>
-        </View>
-        <Text style={styles.underLine} />
-        <View style={styles.content}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_user.png')}
-              />
-            </View>
-            <View style={styles.centerViewFlex8}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('EditProfile')}
-              >
-                <Text style={styles.commonText}>
-                  Edit Profile
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_move.png')}
-              />
-            </View>
-          </View>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_push_notification.png')}
-              />
-            </View>
-            <View style={styles.centerViewFlex8}>
-              <Text style={styles.commonText}>
-                Push Notification
-              </Text>
-            </View>
-            <View style={styles.centerFlex1}>
-              <Switch
-                onValueChange={value => this.setState({ toggleNotification: value })}
-                value={this.state.toggleNotification}
-                thumbColor="white"
-                trackColor="#45db5e"
-              />
-            </View>
-          </View>
-        </View>
-        <Text style={styles.underLine} />
-        <View style={styles.accountView}>
-          <Text style={styles.otherText}>
-            Others
-          </Text>
-        </View>
-        <View style={styles.subContent}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_star.png')}
-              />
-            </View>
-            <View style={styles.centerViewFlex8}>
-              <TouchableOpacity>
-                <Text style={styles.commonText}>
-                  Rate our app
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_move.png')}
-              />
-            </View>
-          </View>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_chat.png')}
-              />
-            </View>
-            <View style={styles.centerViewFlex8}>
-              <TouchableOpacity>
-                <Text style={styles.commonText}>
-                  Send us feedback
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_move.png')}
-              />
-            </View>
-          </View>
-
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_privacy.png')}
-              />
-            </View>
-            <View style={styles.centerViewFlex8}>
-              <TouchableOpacity>
-                <Text style={styles.commonText}>
-                  Privacy Policy
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.centerFlex1}>
-              <Image
-                resizeMode="center"
-                style={{ alignItems: 'center' }}
-                source={require('assets/images/ic_move.png')}
-              />
-            </View>
-          </View>
-        </View>
+  return (
+    <View style={styles.container}>
+      <Header
+        iconLeft={images.icon_back}
+        onPressLeft={() => navigation.goBack()}
+      />
+      <View style={styles.preferences}>
+        <Text style={styles.textSetting}>
+          Settings
+        </Text>
+        <Text style={styles.textPreferences}>
+          Update your preferences
+        </Text>
       </View>
-    );
-  }
+      <View style={styles.accountView}>
+        <Text style={styles.accountText}>
+          Account
+        </Text>
+      </View>
+      <Text style={styles.underLine} />
+      <View style={styles.content}>
+        <ButtonSetting
+          image={images.ic_user}
+          onPress={() => navigation.navigate('EditProfile')}
+          text='Edit Profile'
+        />
+        <ButtonSetting
+          image={images.ic_push_notification}
+          text='Push Notification'
+          rightContent={() =>
+            <Switch
+              onValueChange={value => setToggleNotification(value)}
+              value={toggleNotification}
+              thumbColor="white"
+              trackColor="#45db5e"
+            />
+          }
+        />
+      </View>
+      <Text style={styles.underLine} />
+      <View style={styles.accountView}>
+        <Text style={styles.otherText}>
+          Others
+        </Text>
+      </View>
+      <View style={styles.subContent}>
+        <ButtonSetting
+          image={images.ic_star}
+          onPress={() => {}}
+          text='Rate our app'
+        />
+        <ButtonSetting
+          image={images.ic_chat}
+          onPress={() => {}}
+          text='Send us feedback'
+        />
+        <ButtonSetting
+          image={images.ic_privacy}
+          onPress={() => {}}
+          text='Privacy Policy'
+        />
+      </View>
+    </View>
+  );
 }
+
+export default SettingsScreen;
