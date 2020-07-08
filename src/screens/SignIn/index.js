@@ -10,6 +10,7 @@ import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 
 import { FireBase, FbConfig, GgConfig } from 'constants';
+import images from 'assets/images';
 import styles from './styles';
 
 const  SignInScreen = ({ navigation }) =>  {
@@ -82,12 +83,12 @@ const  SignInScreen = ({ navigation }) =>  {
 
   return (
     <ImageBackground
-      style={{ flex: 1 }}
-      source={require('assets/images/background.png')}
+      style={styles.container}
+      source={images.background}
     >
     { showLoginOptions &&
       <View
-        style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
+        style={styles.viewBtn}
       >
         {/* login via Google */}
         <TouchableOpacity
@@ -95,7 +96,7 @@ const  SignInScreen = ({ navigation }) =>  {
           style={styles.textSignInGG}
         >
           <Image
-            source={require('assets/images/btn_gg.png')}
+            source={images.btn_gg}
             style={styles.image}
           />
           <Text style={styles.textGG}>
@@ -109,7 +110,7 @@ const  SignInScreen = ({ navigation }) =>  {
         >
           <Image
             style={styles.image}
-            source={require('assets/images/btn_fb.png')}
+            source={images.btn_fb}
           />
           <Text style={styles.textFB}>
             Facebook

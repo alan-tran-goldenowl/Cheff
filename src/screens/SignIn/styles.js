@@ -42,4 +42,9 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: responsive({ f: 16 }),
   },
+  viewBtn: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  }
 });

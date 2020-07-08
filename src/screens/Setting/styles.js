@@ -50,17 +50,6 @@ export default StyleSheet.create({
     marginRight: responsive({ d: 20 }),
     justifyContent: 'space-around',
   },
-  commonText: {
-    textAlignVertical: 'center',
-    fontSize: responsive({ f: 17 }),
-    color: '#5E5E5E',
-    paddingLeft: responsive({ d: 10 }),
-  },
-  centerFlex1: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
   otherText: {
     color: '#000000',
     fontSize: responsive({ f: 17 }),
@@ -71,10 +60,5 @@ export default StyleSheet.create({
     marginLeft: responsive({ d: 20 }),
     marginRight: responsive({ d: 20 }),
     justifyContent: 'space-around',
-  },
-  centerViewFlex8: {
-    flex: 8,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
   },
 });
