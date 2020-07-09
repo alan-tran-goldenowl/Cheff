@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   icon: {
     height: responsive({ h: 15 }),
     width: responsive({ h: 15 }),
+    padding:15,
   },
   header: {
     backgroundColor: '#ffffff',

@@ -55,4 +55,5 @@ export default {
   robot_dev: require('./robot-dev.png'),
   robot_prod: require('./robot-prod.png'),
   splash: require('./splash.png'),
+  icon_logout: require('./logout.png')
 }
