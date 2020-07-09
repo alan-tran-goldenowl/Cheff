@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
   BackHandler,
   Alert,
   TouchableOpacity,
@@ -10,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
+import { Image } from 'react-native-expo-image-cache';
 
 import Header from 'components/Header';
 import Loading from 'components/Loading';
@@ -31,14 +31,14 @@ import styles from './styles';
 const EditProfile = ({ navigation }) => {
   const [user, setUser] = useState({ email: '', photoURL: '', displayName: '', providerId: '' });
   const [loading, setLoading] = useState(false);
+  const userFirebase =  FireBase.auth().currentUser;
 
   useEffect(() => {
-    const user =  FireBase.auth().currentUser;
     setUser({
-      email: user.email,
-      photoURL: user.photoURL,
-      displayName: user.displayName,
-      providerId: user.providerData[0].providerId,
+      email: userFirebase.email,
+      photoURL: userFirebase.photoURL,
+      displayName: userFirebase.displayName,
+      providerId: userFirebase.providerData[0].providerId,
     })
 
     getPermissionAsync();
@@ -59,7 +59,6 @@ const EditProfile = ({ navigation }) => {
   const updateProfile = async() => {
 
     setLoading(true);
-    const userFirebase =  FireBase.auth().currentUser;
 
     let photoURL = user.photoURL
     if(user.photoURL !== userFirebase.photoURL){
@@ -101,7 +100,9 @@ const EditProfile = ({ navigation }) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
-    var ref = firebase.storage().ref().child("images/" + imageName);
+    var ref = firebase.storage()
+                      .ref()
+                      .child(`images/avatars/${userFirebase.uid}/` + imageName);
     await ref.put(blob).catch((error) => { throw error });
 
     const url = await ref.getDownloadURL().catch((error) => { throw error });
@@ -122,7 +123,7 @@ const EditProfile = ({ navigation }) => {
             rightText="Save"
             title="Edit Profile"
             onPressLeft={() => navigation.goBack()}
-            iconLeft={require('assets/images/icon_back.png')}
+            iconLeft={images.icon_back}
             onPressRight={updateProfile}
           />
           {
@@ -131,9 +132,7 @@ const EditProfile = ({ navigation }) => {
               <TouchableOpacity onPress={handlePickAvatar}>
                 <Image
                   style={styles.image}
-                  source={{
-                    uri: user.photoURL,
-                  }}
+                   {...{uri:user.photoURL,preview:{}}}
                 />
               </TouchableOpacity>
             </View>
