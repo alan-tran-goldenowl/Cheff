@@ -35,10 +35,13 @@ export default StyleSheet.create({
   },
   welcomeView2: {
     height: responsive({ h: 40 }),
-    marginLeft: responsive({ d: 55 }),
+    marginLeft: responsive({ d: 80 }),
   },
   welcomeText: {
     fontSize: responsive({ f: 14 }),
     color: '#999',
   },
+  center: {
+    justifyContent: 'center',
+  }
 });

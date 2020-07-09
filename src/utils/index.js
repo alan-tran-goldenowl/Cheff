@@ -1,4 +1,4 @@
-import { Dimensions, PixelRatio } from 'react-native';
+import { Dimensions, PixelRatio, Platform } from 'react-native';
 
 export authHelper from './authHelper';
 export storageHelper from './storageHelper';
@@ -27,3 +27,8 @@ export const actionNameToTypes = actionName => actionName
   .replace(/([A-Z])/g, '_$1')
   .trim()
   .toUpperCase();
+
+export const isIOS = Platform.OS === 'ios';
+export const convertDataPicker = (list = []) => (
+  list.map(item => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
+)

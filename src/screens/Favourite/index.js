@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
-import { connect } from 'react-redux';
 
 import SearchViewCheff from 'components/SearchViewCheff';
 import FoodItem from 'components/FoodItem';
@@ -13,7 +12,7 @@ class FavoriteScreen extends Component {
   };
 
   render() {
-    const { listFavoriteFood } = this.props;
+    const { listFavoriteFood=[] } = this.props;
     return (
       <View style={{ backgroundColor: 'white', flex: 1 }}>
         <Header
@@ -46,8 +45,5 @@ class FavoriteScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ Food }) => ({
-  listFavoriteFood: Food.list.filter((item) => item.favorite) || [],
-});
 
-export default connect(mapStateToProps)(FavoriteScreen);
+export default FavoriteScreen;
