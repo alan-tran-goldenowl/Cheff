@@ -9,7 +9,14 @@ import {
 
 import styles from './styles';
 
-const CustomTextInput = ({ title, placeholder, value, onChangeText,icon }) => {
+const CustomTextInput = ({ 
+  title, 
+  placeholder, 
+  value, 
+  onChangeText,
+  icon,
+  error 
+}) => {
   const inputRef = useRef(null)
 
   const onTouchInput = ()=>{
@@ -42,6 +49,7 @@ const CustomTextInput = ({ title, placeholder, value, onChangeText,icon }) => {
         )
       }
       </TouchableOpacity>
+      {!!error && <Text style={styles.errorText}>{error}</Text> }
     </View>
   )
 }

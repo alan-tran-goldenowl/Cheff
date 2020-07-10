@@ -21,5 +21,8 @@ export default StyleSheet.create({
   icon:{
     width:responsive({ h:10 }),
     height:responsive({ h:10 })
+  },
+  errorText:{
+    color:'red'
   }
 });

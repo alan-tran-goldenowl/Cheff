@@ -18,7 +18,7 @@ import Switch from 'components/Switch';
 import { FireBase } from 'constants';
 import images from 'assets/images';
 
-import {uuid} from 'utils'
+import { uuid, validateEditProfile} from 'utils'
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -31,6 +31,8 @@ import styles from './styles';
 const EditProfile = ({ navigation }) => {
   const [user, setUser] = useState({ email: '', photoURL: '', displayName: '', providerId: '' });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({})
+
   const userFirebase =  FireBase.auth().currentUser;
   useEffect(() => {
     setUser({
@@ -57,8 +59,9 @@ const EditProfile = ({ navigation }) => {
 
   const updateProfile = async() => {
 
-    if(!user.displayName){
-      alert("Your full name cannot be blank !!!")
+    const err = validateEditProfile(user)
+    if(Object.keys(err).length){
+      setError(err)
       return
     }
 
@@ -113,6 +116,19 @@ const EditProfile = ({ navigation }) => {
     return url
   }
 
+  const handleChangeText = (name,value) => {
+    if(error[name]){
+      setError({
+        ...error,
+        [name]:''
+      })
+    }
+    setUser({
+      ...user,
+      [name]:value
+    })
+  }
+
   return (
     <>
     { loading && <Loading/> }
@@ -151,8 +167,9 @@ const EditProfile = ({ navigation }) => {
             title='Your full name'
             placeholder="Enter your name"
             value={user.displayName}
-            onChangeText={text => setUser({...user, displayName: text })}
+            onChangeText={text => handleChangeText('displayName',text)}
             icon={images.icon_pen}
+            error={error?.displayName}
           />
           <TextInput
             title='Your email address'
