@@ -1,296 +1,211 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
   Image,
-  Switch,
   TextInput,
   ScrollView,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Switch
 } from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import RNPickerSelect from 'react-native-picker-select';
-import Header from 'components/Header';
 import AntIcon from '@expo/vector-icons/AntDesign';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+
+import Header from 'components/Header';
+import DatePicker from 'components/DatePicker';
+import PickerSelect from 'components/PickerSelect';
+import Button from 'components/Button';
+import CustomTextInput from 'components/TextInput';
+import images from 'assets/images';
+import { isIOS , convertDataPicker } from 'utils';
+
 import styles from './styles';
 
+const CreatePlan = ({ navigation }) => {
+  const firebase = useFirebase();
+  const user = firebase.auth().currentUser;
+  useFirebaseConnect(['Type_Food', 'Food']);
+  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } }}) => convertDataPicker(Type_Food));
+  const [titlePlan, setTitlePlan] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [toggleAlarm, setToggleAlarm] = useState(true);
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+  const [mealType, setMealType] = useState(typeFood[0]?.value);
+  const listFood = useSelector(({ firebase: { ordered: { Food } }}) => {
+    const list = (Food || []).filter(item => item?.value?.type === mealType);
+    return convertDataPicker(list);
+  });
 
-export default class CreatePlan extends Component {
-  static navigationOptions = {
-    headerShown: false,
+  const [recipe, setRecipe] = useState('');
+  const [note, setNote] = useState('');
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
+  const [error, setError] = useState({});
+
+  const handleDatePicked = (date) => {
+    setDate(date);
+    setDatePickerVisible(false);
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      recipe: 1,
-      titlePlan: '',
-      time: '2h30 PM',
-      toggleAlarm: true,
-      date: '2018-July-27',
-      modeDateTime: 'date',
-      mealType: 'breakfast',
-      isDateTimePickerVisible: false,
+  const handleTimePicked = (time) => {
+    const hour = time.getHours();
+    const minutes = time.getMinutes();
+    date.setHours(hour);
+    date.setMinutes(minutes);
+    setTimePickerVisible(false);
+  };
+
+  const onChangeTypeMeal = (value) => {
+    setMealType(value);
+    setError({ ...error, typeMeal: '' });
+  }
+
+  const onValidateInput = () => {
+    const err = {};
+    if (!titlePlan) {
+      err.title = 'Please enter title of the meal plan';
+    }
+    if (!mealType) {
+      err.mealtype = 'Please choose your meal';
+    }
+    if (!recipe) {
+      err.recipe = 'Please choose your recipe';
+    }
+    return err;
+  }
+
+  const onCreatePlan = () => {
+    const err = onValidateInput();
+    if (Object.keys(err).length) {
+      setError(err);
+      return;
+    }
+    const data = {
+      title: titlePlan,
+      date: date.getTime(),
+      isAlarm: toggleAlarm,
+      food: recipe,
+      note,
+      createdAt: Date.now(),
     };
-  }
-
-  _showDateTimePicker = () => this.setState({
-    modeDateTime: 'date',
-    isDateTimePickerVisible: true,
-  });
-
-  _showTimePicker = () => this.setState({
-    modeDateTime: 'time',
-    isDateTimePickerVisible: true,
-  });
-
-  _hideDateTimePicker = () => this.setState({
-    modeDateTime: 'time',
-    isDateTimePickerVisible: false,
-  });
-
-  _handleDatePicked = (selectedDate) => {
-    this.setState({
-      date:
-        `${selectedDate.getDate()
-        } ${
-          months[selectedDate.getMonth()]
-        }, ${
-          selectedDate.getFullYear()}`,
-    });
-    this._hideDateTimePicker();
+    firebase.push(`Meal_Plan/${user.uid}`, data );
+    navigation.navigate('MealPlan');
   };
 
-  _gotoListPlanScreen = () => {
-    const { data } = this.props.navigation.state.params || {};
-    this.props.navigation.navigate(data ? 'PlanDetails' : 'MealPlan', {
-      message: data ? 'edit' : 'add',
-    });
+  const onChangeTitle = (text) => {
+    setTitlePlan(text);
+    setError({ ...error, title: '' });
   }
 
-  render() {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-        <Header
-          onPressLeft={() => this.props.navigation.goBack()}
-          iconLeft={require('assets/images/ic_exist.png')}
-        />
-        <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }} behavior={Platform.OS === 'ios' ? 'height' : 'padding'} enabled={Platform.OS === 'ios'}>
-          <ScrollView style={styles.container}>
-            {/* title */}
-            <Text style={styles.titleText}>
-              Title of the meal plan
-            </Text>
+  const onChangeRecipe = (value) => {
+    setRecipe(value);
+    setError({ ...error, recipe: '' });
+  }
 
+  return (
+    <View style={styles.main}>
+      <Header
+        onPressLeft={() => navigation.goBack()}
+        iconLeft={images.ic_exist}
+      />
+      <KeyboardAvoidingView
+        style={styles.keyboard}
+        behavior={isIOS ? 'height' : 'padding'}
+        enabled={isIOS}
+      >
+        <ScrollView style={styles.container}>
+          <CustomTextInput
+            multiline
+            title='Title of the meal plan'
+            placeholder='Write your plan...'
+            value={titlePlan}
+            onChangeText={text => onChangeTitle(text)}
+            containerStyles={styles.containerTitle}
+            titleStyles={styles.titleText}
+            error={error.title}
+          />
+          {/* date time picker */}
+          <View style={styles.viewDate}>
+            <DatePicker
+              title='Date'
+              onPress={() => setDatePickerVisible(true)}
+              value={moment(date).format('DD MMMM, YYYY')}
+              isVisible={isDatePickerVisible}
+              onConfirm={handleDatePicked}
+              onCancel={() => setDatePickerVisible(false)}
+              mode='date'
+              containerStyle={styles.pickerDate}
+              date={date}
+            />
+            <DatePicker
+              title='Time'
+              onPress={() => setTimePickerVisible(true)}
+              value={moment(date).format('LT')}
+              isVisible={isTimePickerVisible}
+              onConfirm={handleTimePicked}
+              onCancel={() => setTimePickerVisible(false)}
+              mode='time'
+              date={date}
+            />
+          </View>
+          {/* alarm */}
+          <View style={styles.alarm}>
+            <Text style={styles.textAlarm}>
+              Set Alarm to notify your meal plan
+            </Text>
+            <Switch
+              value={toggleAlarm}
+              onValueChange={(value) => setToggleAlarm(value)}
+              thumbColor="white"
+              trackColor='#45db5e'
+            />
+          </View>
+          {/* meal type picker */}
+          <PickerSelect
+            title="What's your meal?"
+            onValueChange={value => onChangeTypeMeal(value)}
+            value={mealType}
+            items={typeFood}
+            containerStyle={styles.picker}
+            error={error.mealType}
+          />
+          <PickerSelect
+            title='Choose your recipe'
+            onValueChange={(value) => onChangeRecipe(value)}
+            value={recipe}
+            items={listFood}
+            containerStyle={styles.picker}
+            error={error.recipe}
+          />
+          {/* notes */}
+          <View style={styles.note}>
+            <Text style={styles.textNote}>Note{' '}
+              <Text style={styles.textOptional}>(Optional)</Text>
+            </Text>
             <TextInput
               underlineColorAndroid="transparent"
               autofocus={false}
               multiline
-              placeholder="Write your plan..."
-              style={[styles.text, { minHeight: '10%' }]}
-              value={this.state.fullname}
+              placeholder="Add any Additional information"
+              style={styles.textNote}
+              value={note}
+              onChangeText={text => setNote(text)}
             />
-            {/* date time picker */}
-            <View
-              style={{
-                marginTop: 20,
-                marginLeft: 20,
-                marginRight: 20,
-                flexDirection: 'row',
-              }}
-            >
-              {/* date picker */}
-              <View style={{ flex: 1, paddingRight: 20 }}>
-                <Text style={{ flex: 1 }}>
-                  Date
-                </Text>
-                <TouchableOpacity
-                  onPress={this._showDateTimePicker}
-                  style={{
-                    ...styles.picker, ...styles.hasBottomBorder,
-                  }}
-                >
-                  <Text style={{ flex: 5 }}>
-                    {this.state.date}
-                  </Text>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      flex: 2,
-                    }}
-                  >
-                    <Image
-                      resizeMode="center"
-                      style={{ height: 10, width: 10, marginRight: 20 }}
-                      source={require('assets/images/ic_pulldown.png')}
-                    />
-                  </View>
-                </TouchableOpacity>
-                <DateTimePicker
-                  isVisible={this.state.isDateTimePickerVisible}
-                  onConfirm={this._handleDatePicked}
-                  onCancel={this._hideDateTimePicker}
-                  mode={this.state.modeDateTime}
-                  is24Hour={false}
-                />
-              </View>
-              {/* time picker */}
-              <View style={{ flex: 1, paddingLeft: 20 }}>
-                <Text style={{ flex: 1 }}>
-                  Time
-                </Text>
-                <TouchableOpacity
-                  onPress={this._showTimePicker}
-                  style={{
-                    ...styles.picker, ...styles.hasBottomBorder,
-                  }}
-                >
-                  <Text style={{ flex: 5 }}>
-                    {this.state.time}
-                  </Text>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      flex: 2,
-                    }}
-                  >
-                    <Image
-                      resizeMode="center"
-                      style={{ height: 10, width: 10, marginRight: 20 }}
-                      source={require('assets/images/ic_pulldown.png')}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-            {/* alarm */}
-            <View style={{ flexDirection: 'row', height: 50, marginTop: 10 }}>
-              <View
-                style={{
-                  flex: 6,
-                  height: '100%',
-                  marginLeft: 20,
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ fontSize: 13, color: 'gray' }}>
-                  Set Alarm to notify your meal plan
-                </Text>
-              </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
-              <View
-                style={{
-                  flex: 3,
-                  height: '100%',
-                  marginRight: 20,
-                  alignItems: 'flex-end',
-                  justifyContent: 'center',
-                }}
-              >
-                <Switch
-                  value={this.state.toggleAlarm}
-                  onValueChange={(value) => this.setState({ toggleAlarm: value })}
-                />
-              </View>
-            </View>
-            {/* meal type picker */}
-            <View style={{ ...styles.pickMealTypeView }}>
-              <Text style={{ marginBottom: 10 }}>
-                What's your meal?
-              </Text>
-              <View style={{
-                border: 'none',
-              }}
-              >
-                <RNPickerSelect
-                  onValueChange={(value) => {
-                    this.setState({ mealType: value });
-                  }}
-                  value="-1"
-                  placeholder={{}}
-                  Icon={() => <AntIcon name="down" />}
-                  items={[
-                    { label: 'Breakfast', value: 'breakfast' },
-                    { label: 'Lunch', value: 'lunch' },
-                    { label: 'Brunch', value: 'brunch' },
-                    { label: 'Dinner', value: 'dinner' },
-                  ]}
-                />
-              </View>
-
-            </View>
-            {/* recipe picker */}
-            <View style={{ ...styles.pickMealTypeView }}>
-              <Text style={{ marginBottom: 10 }}>
-                Choose your recipe
-              </Text>
-              <View style={{
-                border: 'none',
-              }}
-              >
-                <RNPickerSelect
-                  onValueChange={(value) => {
-                    this.setState({ recipe: value });
-                    console.log(value);
-                  }}
-                  value="-1"
-                  placeholder={{}}
-                  Icon={() => <AntIcon name="down" />}
-                  items={[
-                    { label: 'Vegetarian Fried Rice', value: '1' },
-                    { label: 'Hot dog', value: '2' },
-                    { label: 'Grab Soup', value: '3' },
-                  ]}
-                />
-              </View>
-            </View>
-            {/* notes */}
-            <View style={styles.note}>
-              <Text style={{ marginBottom: 10 }}>
-                Note
-                {' '}
-                <Text style={{ color: '#ddd' }}>
-                  (Optional)
-                </Text>
-              </Text>
-              <TextInput
-                underlineColorAndroid="transparent"
-                autofocus={false}
-                multiline
-                placeholder="Add any Additional information"
-                style={{}}
-                value={this.state.fullname}
-              />
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-
-        {/* submit button */}
-        <TouchableOpacity style={styles.buttonView} onPress={this._gotoListPlanScreen}>
-          <Text style={styles.buttonText}>
-            CREATE A PLAN
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+      <Button
+        buttonStyle={styles.btnCreate}
+        title='CREATE A PLAN'
+        onPress={onCreatePlan}
+      />
+    </View>
+  );
 }
+
+export default CreatePlan;

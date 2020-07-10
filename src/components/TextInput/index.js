@@ -9,13 +9,16 @@ import {
 
 import styles from './styles';
 
-const CustomTextInput = ({ 
-  title, 
-  placeholder, 
-  value, 
+const CustomTextInput = ({
+  title,
+  placeholder,
+  value,
   onChangeText,
   icon,
-  error 
+  error,
+  containerStyles,
+  titleStyles,
+  multiline
 }) => {
   const inputRef = useRef(null)
 
@@ -24,18 +27,18 @@ const CustomTextInput = ({
   }
 
   return (
-    <View style={styles.viewTextInput}>
-      <Text style={styles.textInput}>
+    <View style={containerStyles}>
+      <Text style={[styles.textInput, titleStyles]}>
         {title}
       </Text>
-      <TouchableOpacity 
-        onPress={onTouchInput} 
+      <TouchableOpacity
+        onPress={onTouchInput}
         style={styles.row}
         activeOpacity={1}
       >
       <TextInput
-        multiline={false}
-        style={{...styles.text,width:icon ? '90%':'100%'}}
+        multiline={multiline}
+        style={{ ...styles.text, width: icon ? '90%':'100%' }}
         placeholder={placeholder}
         value={value}
         underlineColorAndroid="transparent"

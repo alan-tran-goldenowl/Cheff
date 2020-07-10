@@ -1,68 +1,72 @@
 import { StyleSheet } from 'react-native';
-import { device } from 'utils';
+import { responsive, device } from 'utils';
+import themeStyles from 'styles/theme';
 
 export default StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
+  main: {
     flex: 1,
-    paddingBottom: 20,
-    marginBottom: 20,
+    backgroundColor: themeStyles.COLOR.WHITE_COLOR,
   },
-  iconBack: {
-    height: 15,
-    width: 15,
-    marginLeft: 10,
-  },
-  text: {
-    minHeight: 40,
-    marginLeft: 20,
-    marginTop: 0,
-    paddingTop: 10,
-    fontSize: 15,
-  },
-  buttonView: {
-    height: 50,
-    color: '#fff',
-    display: 'flex',
-    borderRadius: 4,
-    paddingVertical: 0,
-    alignItems: 'center',
-    marginHorizontal: 20,
-    paddingHorizontal: 20,
+  keyboard: {
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    width: device.width - 40,
-    backgroundColor: '#377AFD',
-    marginBottom: 20,
-
   },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 15,
+  container: {
+    backgroundColor: themeStyles.COLOR.WHITE_COLOR,
+    flex: 1,
+    paddingBottom: responsive({ d: 20 }),
+    marginBottom: responsive({ d: 20 }),
+    paddingHorizontal: responsive({ d: 30 }),
   },
   titleText: {
-    fontSize: 20,
-    color: '#777',
-    marginTop: 40,
-    marginLeft: 20,
+    fontSize: responsive({ f: 20 }),
+    color: themeStyles.COLOR.TEXT_SECONDARY_COLOR,
+    marginBottom: responsive({ d: 30 }),
   },
-  hasBottomBorder: {
-    paddingBottom: 9,
-    borderBottomWidth: 0.7,
-    borderBottomColor: '#ddd',
+  containerTitle: {
+    marginTop: responsive({ d: 40 }),
   },
-  pickMealTypeView: {
-    marginTop: 25,
-    marginHorizontal: 20,
+  text: {
+    paddingTop: responsive({ d: 40 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
+    color: 'black',
   },
   picker: {
-    flexDirection: 'row',
-    flex: 1,
-    paddingTop: 10,
+    marginTop: responsive({ d: 30 })
   },
   note: {
-    marginTop: 25,
-    marginBottom: 50,
-    marginHorizontal: 20,
+    marginTop: responsive({ d: 30 }),
   },
+  textNote: {
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
+    color: 'black',
+  },
+  textOptional: {
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
+    color: 'gray',
+  },
+  viewDate: {
+    marginTop: responsive({ d: 40 }),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  btnCreate: {
+    marginBottom: responsive({ d: 35 }),
+    marginHorizontal: responsive({ d: 30 }),
+  },
+  pickerDate: {
+    marginRight: responsive({ d: 30 }),
+  },
+  alarm: {
+    flexDirection: 'row',
+    marginTop: responsive({ d: 30 }),
+    alignContent: 'center',
+    justifyContent: 'center'
+  },
+  textAlarm: {
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
+    color: themeStyles.COLOR.TEXT_SECONDARY_COLOR,
+    flex: 1,
+  }
 });
