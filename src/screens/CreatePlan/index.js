@@ -19,6 +19,7 @@ import Header from 'components/Header';
 import DatePicker from 'components/DatePicker';
 import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
+import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
 import { isIOS , convertDataPicker } from 'utils';
 
@@ -43,6 +44,7 @@ const CreatePlan = ({ navigation }) => {
   const [note, setNote] = useState('');
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
+  const [error, setError] = useState({});
 
   const handleDatePicked = (date) => {
     setDate(date);
@@ -59,15 +61,32 @@ const CreatePlan = ({ navigation }) => {
 
   const onChangeTypeMeal = (value) => {
     setMealType(value);
+    setError({ ...error, typeMeal: '' });
   }
 
   const onValidateInput = () => {
+    const err = {};
+    if (!titlePlan) {
+      err.title = 'Please enter title of the meal plan';
+    }
+    if (!mealType) {
+      err.mealtype = 'Please choose your meal';
+    }
+    if (!recipe) {
+      err.recipe = 'Please choose your recipe';
+    }
+    return err;
   }
 
   const onCreatePlan = () => {
+    const err = onValidateInput();
+    if (Object.keys(err).length) {
+      setError(err);
+      return;
+    }
     const data = {
       title: titlePlan,
-      date,
+      date: date.getTime(),
       isAlarm: toggleAlarm,
       food: recipe,
       note,
@@ -76,6 +95,16 @@ const CreatePlan = ({ navigation }) => {
     firebase.push(`Meal_Plan/${user.uid}`, data );
     navigation.navigate('MealPlan');
   };
+
+  const onChangeTitle = (text) => {
+    setTitlePlan(text);
+    setError({ ...error, title: '' });
+  }
+
+  const onChangeRecipe = (value) => {
+    setRecipe(value);
+    setError({ ...error, recipe: '' });
+  }
 
   return (
     <View style={styles.main}>
@@ -89,15 +118,15 @@ const CreatePlan = ({ navigation }) => {
         enabled={isIOS}
       >
         <ScrollView style={styles.container}>
-          <Text style={styles.titleText}>Title of the meal plan</Text>
-          <TextInput
-            underlineColorAndroid="transparent"
-            autofocus={false}
+          <CustomTextInput
             multiline
-            placeholder="Write your plan..."
-            style={styles.text}
+            title='Title of the meal plan'
+            placeholder='Write your plan...'
             value={titlePlan}
-            onChangeText={text => setTitlePlan(text)}
+            onChangeText={text => onChangeTitle(text)}
+            containerStyles={styles.containerTitle}
+            titleStyles={styles.titleText}
+            error={error.title}
           />
           {/* date time picker */}
           <View style={styles.viewDate}>
@@ -142,13 +171,15 @@ const CreatePlan = ({ navigation }) => {
             value={mealType}
             items={typeFood}
             containerStyle={styles.picker}
+            error={error.mealType}
           />
           <PickerSelect
             title='Choose your recipe'
-            onValueChange={(value) => setRecipe(value)}
+            onValueChange={(value) => onChangeRecipe(value)}
             value={recipe}
             items={listFood}
             containerStyle={styles.picker}
+            error={error.recipe}
           />
           {/* notes */}
           <View style={styles.note}>

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { responsive } from 'utils';
+import themeStyles from 'styles/theme';
 
 export default StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ export default StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
     fontWeight: '500',
   },
   date: {
@@ -20,11 +21,11 @@ export default StyleSheet.create({
   value: {
     flex: 1,
     color: 'black',
-    fontSize: responsive({ f: 15 })
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL })
   },
   errorText: {
     color: 'red',
-    fontSize: responsive({ f: 12 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_SMALL }),
     marginTop: responsive({ d: 10 })
   },
 

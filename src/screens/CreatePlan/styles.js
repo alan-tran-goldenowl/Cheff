@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { responsive, device } from 'utils';
+import themeStyles from 'styles/theme';
 
 export default StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: themeStyles.COLOR.WHITE_COLOR,
   },
   keyboard: {
     flex: 1,
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: themeStyles.COLOR.WHITE_COLOR,
     flex: 1,
     paddingBottom: responsive({ d: 20 }),
     marginBottom: responsive({ d: 20 }),
@@ -20,12 +21,15 @@ export default StyleSheet.create({
   },
   titleText: {
     fontSize: responsive({ f: 20 }),
-    color: '#777',
+    color: themeStyles.COLOR.TEXT_SECONDARY_COLOR,
+    marginBottom: responsive({ d: 30 }),
+  },
+  containerTitle: {
     marginTop: responsive({ d: 40 }),
   },
   text: {
     paddingTop: responsive({ d: 40 }),
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
     color: 'black',
   },
   picker: {
@@ -35,11 +39,11 @@ export default StyleSheet.create({
     marginTop: responsive({ d: 30 }),
   },
   textNote: {
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
     color: 'black',
   },
   textOptional: {
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
     color: 'gray',
   },
   viewDate: {
@@ -61,8 +65,8 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   textAlarm: {
-    fontSize: responsive({ f: 15 }),
-    color: 'gray',
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
+    color: themeStyles.COLOR.TEXT_SECONDARY_COLOR,
     flex: 1,
   }
 });

@@ -31,7 +31,7 @@ import styles from './styles';
 const EditProfile = ({ navigation }) => {
   const [user, setUser] = useState({ email: '', photoURL: '', displayName: '', providerId: '' });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({})
+  const [error, setError] = useState({});
 
   const userFirebase =  FireBase.auth().currentUser;
   useEffect(() => {
@@ -76,7 +76,7 @@ const EditProfile = ({ navigation }) => {
       photoURL,
       email: user.email,
     }).then(res => Alert.alert(
-      'Update Profile', 
+      'Update Profile',
       'Profile updated!',
       [
         { text: "OK", onPress: () => navigation.navigate('Settings') }
@@ -152,7 +152,7 @@ const EditProfile = ({ navigation }) => {
               <TouchableOpacity onPress={handlePickAvatar}>
                 <Image
                   style={styles.image}
-                   {...{uri:user.photoURL,preview:{}}}
+                  {...{uri:user.photoURL,preview:{}}}
                 />
               </TouchableOpacity>
             </View>
@@ -170,11 +170,13 @@ const EditProfile = ({ navigation }) => {
             onChangeText={text => handleChangeText('displayName',text)}
             icon={images.icon_pen}
             error={error?.displayName}
+            containerStyles={styles.viewTextInput}
           />
           <TextInput
             title='Your email address'
-            placeholder="Enter your email"
+            placeholder='Enter your email'
             value={user.email}
+            containerStyles={styles.viewTextInput}
           />
           <View style={styles.viewTextInput}>
             <Text style={styles.textLinkAcc}>

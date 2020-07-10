@@ -1,28 +1,27 @@
 import { StyleSheet } from 'react-native';
 import { responsive } from 'utils';
+import themeStyles from 'styles/theme';
+import theme from 'styles/theme';
 
 export default StyleSheet.create({
-  viewTextInput: {
-    margin: responsive({ d: 20 }),
-  },
   textInput: {
-    fontSize: responsive({ f: 14 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
   },
   text: {
-    width: responsive({ h: 200 }),
-    fontSize: responsive({ f: 17 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_MEDIUM }),
     color: 'black',
   },
   row:{
-    flexDirection:'row', 
-    justifyContent:'space-between', 
-    paddingVertical:responsive({ h: 3.5 })
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: responsive({ h: 3.5 }),
   },
   icon:{
-    width:responsive({ h:10 }),
-    height:responsive({ h:10 })
+    width: responsive({ h: 10 }),
+    height: responsive({ h: 10 })
   },
   errorText:{
-    color:'red'
+    color: 'red',
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_SMALL }),
   }
 });

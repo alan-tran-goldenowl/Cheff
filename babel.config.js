@@ -21,6 +21,7 @@ module.exports = function (api) {
           actions: './src/actions',
           reducers: './src/reducers/',
           store: './src/stores',
+          styles: './src/styles',
         },
       }],
     ],
