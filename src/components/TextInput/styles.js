@@ -19,7 +19,7 @@ export default StyleSheet.create({
     paddingVertical:responsive({ h: 3.5 })
   },
   icon:{
-    width:15,
-    height:15
+    width:responsive({ h:10 }),
+    height:responsive({ h:10 })
   }
 });
