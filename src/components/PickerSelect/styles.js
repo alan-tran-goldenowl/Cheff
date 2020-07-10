@@ -12,4 +12,9 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: responsive({ f: 15 })
   },
+  errorText: {
+    color: 'red',
+    fontSize: responsive({ f: 12 }),
+    marginTop:  responsive({ d: 10 })
+  }
 });

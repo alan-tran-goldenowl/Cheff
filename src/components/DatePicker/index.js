@@ -21,7 +21,8 @@ const CustomDatePicker = ({
   onCancel,
   mode,
   onPress,
-  containerStyle
+  containerStyle,
+  error,
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
@@ -45,6 +46,7 @@ const CustomDatePicker = ({
         date={date}
         minimumDate={new Date()}
       />
+      {!!error && <Text style={styles.errorText}>{error}</Text> }
     </View>
   )
 }

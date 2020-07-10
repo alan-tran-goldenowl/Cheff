@@ -17,17 +17,22 @@ const CustomSwitch = ({
   value,
   items,
   onValueChange,
-  containerStyle
+  containerStyle,
+  error,
 }) => {
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Text style={styles.title}>{title}</Text>
-      <RNPickerSelect
-        onValueChange={onValueChange}
-        value={value}
-        Icon={() => <AntIcon name="down" />}
-        items={items}
-      />
+    <View>
+      <View style={[styles.container, containerStyle]}>
+        <Text style={styles.title}>{title}</Text>
+        <RNPickerSelect
+          onValueChange={onValueChange}
+          value={value}
+          Icon={() => <AntIcon name="down" />}
+          items={items}
+          textInputProps={{ style: styles.title }}
+        />
+      </View>
+      {!!error && <Text style={styles.errorText}>{error}</Text> }
     </View>
   )
 }

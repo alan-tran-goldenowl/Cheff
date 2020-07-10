@@ -12,9 +12,8 @@ import {
 } from 'react-native';
 import AntIcon from '@expo/vector-icons/AntDesign';
 import moment from 'moment';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 
 import Header from 'components/Header';
 import DatePicker from 'components/DatePicker';
@@ -25,13 +24,22 @@ import { isIOS , convertDataPicker } from 'utils';
 
 import styles from './styles';
 
-const CreatePlan = ({ navigation, typeFood, listFood }) => {
-
+const CreatePlan = ({ navigation }) => {
+  const firebase = useFirebase();
+  const user = firebase.auth().currentUser;
+  useFirebaseConnect(['Type_Food', 'Food']);
+  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } }}) => convertDataPicker(Type_Food));
   const [titlePlan, setTitlePlan] = useState('');
   const [date, setDate] = useState(new Date());
   const [toggleAlarm, setToggleAlarm] = useState(true);
-  const [mealType, setMealType] = useState(typeFood[0].value);
-  const [recipe, setRecipe] = useState(1);
+
+  const [mealType, setMealType] = useState(typeFood[0]?.value);
+  const listFood = useSelector(({ firebase: { ordered: { Food } }}) => {
+    const list = (Food || []).filter(item => item?.value?.type === mealType);
+    return convertDataPicker(list);
+  });
+
+  const [recipe, setRecipe] = useState('');
   const [note, setNote] = useState('');
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
@@ -47,14 +55,27 @@ const CreatePlan = ({ navigation, typeFood, listFood }) => {
     date.setHours(hour);
     date.setMinutes(minutes);
     setTimePickerVisible(false);
+  };
+
+  const onChangeTypeMeal = (value) => {
+    setMealType(value);
   }
 
-  const gotoListPlanScreen = () => {
-    const { data } = navigation.state.params || {};
-    navigation.navigate(data ? 'PlanDetails' : 'MealPlan', {
-      message: data ? 'edit' : 'add',
-    });
+  const onValidateInput = () => {
   }
+
+  const onCreatePlan = () => {
+    const data = {
+      title: titlePlan,
+      date,
+      isAlarm: toggleAlarm,
+      food: recipe,
+      note,
+      createdAt: Date.now(),
+    };
+    firebase.push(`Meal_Plan/${user.uid}`, data );
+    navigation.navigate('MealPlan');
+  };
 
   return (
     <View style={styles.main}>
@@ -117,7 +138,7 @@ const CreatePlan = ({ navigation, typeFood, listFood }) => {
           {/* meal type picker */}
           <PickerSelect
             title="What's your meal?"
-            onValueChange={(value) => setMealType(value)}
+            onValueChange={value => onChangeTypeMeal(value)}
             value={mealType}
             items={typeFood}
             containerStyle={styles.picker}
@@ -125,12 +146,8 @@ const CreatePlan = ({ navigation, typeFood, listFood }) => {
           <PickerSelect
             title='Choose your recipe'
             onValueChange={(value) => setRecipe(value)}
-            value="-1"
-            items={[
-              { label: 'Vegetarian Fried Rice', value: '1' },
-              { label: 'Hot dog', value: '2' },
-              { label: 'Grab Soup', value: '3' },
-            ]}
+            value={recipe}
+            items={listFood}
             containerStyle={styles.picker}
           />
           {/* notes */}
@@ -154,18 +171,10 @@ const CreatePlan = ({ navigation, typeFood, listFood }) => {
       <Button
         buttonStyle={styles.btnCreate}
         title='CREATE A PLAN'
-        onPress={gotoListPlanScreen}
+        onPress={onCreatePlan}
       />
     </View>
   );
 }
 
-const enhance = compose(
-  firebaseConnect(['Type_Food', 'Food']),
-  connect(({ firebase: { ordered: { Type_Food, Food } } }) => ({
-    typeFood: convertDataPicker(Type_Food),
-    listFood: convertDataPicker(Food),
-  }))
-)
-
-export default enhance(CreatePlan);
+export default CreatePlan;
