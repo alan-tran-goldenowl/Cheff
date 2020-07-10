@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { responsive } from 'utils';
+import themeStyles from 'styles/theme';
 
 export default StyleSheet.create({
   button: {
@@ -12,6 +13,6 @@ export default StyleSheet.create({
   text: {
     color: '#ffff',
     fontWeight: 'bold',
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
   },
 });

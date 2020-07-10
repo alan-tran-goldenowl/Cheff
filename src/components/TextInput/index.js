@@ -38,7 +38,7 @@ const CustomTextInput = ({
       >
       <TextInput
         multiline={multiline}
-        style={{...styles.text,width:icon ? '90%':'100%'}}
+        style={{ ...styles.text, width: icon ? '90%':'100%' }}
         placeholder={placeholder}
         value={value}
         underlineColorAndroid="transparent"
