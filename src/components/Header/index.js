@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   icon: {
     height: responsive({ h: 15 }),
     width: responsive({ h: 15 }),
+    padding:15,
   },
   header: {
     backgroundColor: '#ffffff',
@@ -23,26 +24,33 @@ const styles = StyleSheet.create({
     marginHorizontal: responsive({ d: 10 }),
   },
   title: {
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({ f: 17 }),
   },
   logo: {
     resizeMode: 'contain',
     width: responsive({ h: 40 }),
   },
   rightText: {
-    fontSize: responsive({ f: 14 }),
+    fontSize: responsive({ f: 17 }),
   },
+  button:{
+    justifyContent: 'center', 
+    alignItems: 'center',
+    width:'30%',
+    paddingHorizontal:responsive({ h: 10 }),
+  }
 });
 
 const Header = (props) => (
   <View style={styles.header}>
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={props.onPressLeft}>
+      <TouchableOpacity 
+        style={[styles.button,{alignItems:'flex-start'}]} 
+        onPress={props.onPressLeft}
+      >
         {props.iconLeft && (
           <Image style={styles.icon} resizeMode="center" source={props.iconLeft} />
         )}
       </TouchableOpacity>
-    </View>
     <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
       {props.logoVisible && (
         <Image style={styles.logo} source={require('assets/images/logo_cheff.png')} />
@@ -53,8 +61,10 @@ const Header = (props) => (
       </Text>
       )}
     </View>
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={props.onPressRight}>
+      <TouchableOpacity 
+        style={[styles.button,{alignItems:'flex-end'}]} 
+        onPress={props.onPressRight}
+      >
         {props.iconRight && (
           <Image style={styles.icon} resizeMode="center" source={props.iconRight} />
         )}
@@ -65,7 +75,6 @@ const Header = (props) => (
         )}
         {props.customRight && props.customRight()}
       </TouchableOpacity>
-    </View>
   </View>
 );
 

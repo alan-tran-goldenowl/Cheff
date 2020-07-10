@@ -20,7 +20,7 @@ const ButtonSetting = ({ image, onPress, text, rightContent }) => {
   )
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <View style={styles.center}>
         <Image
           resizeMode="center"
@@ -29,18 +29,16 @@ const ButtonSetting = ({ image, onPress, text, rightContent }) => {
         />
       </View>
       <View style={styles.btn}>
-        <TouchableOpacity
-          onPress={onPress}
-        >
+        <View>
           <Text style={styles.commonText}>
             {text}
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.center}>
         { rightContent ? rightContent() : renderRight()}
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
