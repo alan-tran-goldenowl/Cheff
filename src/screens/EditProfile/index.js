@@ -32,7 +32,6 @@ const EditProfile = ({ navigation }) => {
   const [user, setUser] = useState({ email: '', photoURL: '', displayName: '', providerId: '' });
   const [loading, setLoading] = useState(false);
   const userFirebase =  FireBase.auth().currentUser;
-
   useEffect(() => {
     setUser({
       email: userFirebase.email,
@@ -57,6 +56,11 @@ const EditProfile = ({ navigation }) => {
   };
 
   const updateProfile = async() => {
+
+    if(!user.displayName){
+      alert("Your full name cannot be blank !!!")
+      return
+    }
 
     setLoading(true);
 
