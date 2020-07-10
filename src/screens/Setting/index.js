@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
-  Image,
   Switch,
   BackHandler,
-  TouchableOpacity,
+  ScrollView,
+  Alert
 } from 'react-native';
 
 import Header from 'components/Header';
 import ButtonSetting from 'components/ButtonSetting';
 import images from 'assets/images';
 import styles from './styles';
+import { useFirebase } from 'react-redux-firebase'
+
 
 const SettingsScreen = ( { navigation }) => {
+  const firebase = useFirebase()
   const [toggleNotification, setToggleNotification] = useState(true);
 
   useEffect(() => {
@@ -21,8 +24,21 @@ const SettingsScreen = ( { navigation }) => {
     return () => BackHandler.removeEventListener('hardwareBackPress', navigation.goBack);
   }, [])
 
+  const handleLogOut = () => {
+    Alert.alert(
+      'Opps', 
+      'You wanna log out ???',
+      [
+        { text: "Yes", onPress: () => 
+          firebase.logout().then(()=> navigation.navigate('Auth'))
+        },
+        {text:'No',onPress:()=>{}}
+      ]
+    )
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Header
         iconLeft={images.icon_back}
         onPressLeft={() => navigation.goBack()}
@@ -82,8 +98,13 @@ const SettingsScreen = ( { navigation }) => {
           onPress={() => {}}
           text='Privacy Policy'
         />
+        <ButtonSetting
+          image={images.icon_logout}
+          onPress={handleLogOut}
+          text='Log out'
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

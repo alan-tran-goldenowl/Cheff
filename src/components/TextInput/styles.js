@@ -13,4 +13,16 @@ export default StyleSheet.create({
     fontSize: responsive({ f: 17 }),
     color: 'black',
   },
+  row:{
+    flexDirection:'row', 
+    justifyContent:'space-between', 
+    paddingVertical:responsive({ h: 3.5 })
+  },
+  icon:{
+    width:responsive({ h:10 }),
+    height:responsive({ h:10 })
+  },
+  errorText:{
+    color:'red'
+  }
 });

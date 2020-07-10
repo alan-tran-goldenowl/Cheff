@@ -14,27 +14,13 @@ import images from 'assets/images';
 import styles from './styles';
 
 const  SignInScreen = ({ navigation }) =>  {
-  const [showLoginOptions, setShowLoginOptions] = useState(false);
-
-  useEffect(() => {
-    onAuthStateChanged();
-  }, []);
-
-  const onAuthStateChanged = () => {
-    FireBase.auth().onAuthStateChanged(async (user) => {
-      if (!user) {
-        return setShowLoginOptions(true);
-      }
-      navigation.navigate('Main')
-    });
-  };
 
   const handleLoginSuccess = async (credential) => {
     FireBase
       .auth()
       .signInWithCredential(credential)
       .then(({ user }) => {
-        navigation.navigate('Main')
+        navigation.navigate('App')
       })
       .catch((err) => {
         return err;
@@ -86,7 +72,6 @@ const  SignInScreen = ({ navigation }) =>  {
       style={styles.container}
       source={images.background}
     >
-    { showLoginOptions &&
       <View
         style={styles.viewBtn}
       >
@@ -117,7 +102,6 @@ const  SignInScreen = ({ navigation }) =>  {
           </Text>
         </TouchableOpacity>
       </View>
-    }
     </ImageBackground>
   );
 }

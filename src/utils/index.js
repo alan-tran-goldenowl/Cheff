@@ -32,3 +32,20 @@ export const isIOS = Platform.OS === 'ios';
 export const convertDataPicker = (list = []) => (
   list.map(item => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
 )
+
+export const uuid = (name) => {
+    const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    return (name + S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
+export const validateEditProfile = fields => {
+  const {
+    displayName,
+  } = fields
+
+  const errors = {}
+
+  if (!displayName) errors.displayName = 'Please enter your full name'
+
+  return errors
+}
