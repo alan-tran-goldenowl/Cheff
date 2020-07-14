@@ -1,83 +1,87 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View, Text, TouchableOpacity, Image as RNImage,
 } from 'react-native';
 import moment from 'moment';
 import { Image } from 'react-native-expo-image-cache';
+import { addFavourite } from 'services';
+import { useDispatch } from 'react-redux';
+import { FireBase } from 'constants';
+import images from 'assets/images';
 
 import styles from './styles';
 
-class FoodItem extends Component {
-  onPressLikeUnLike = () => {
-  }
+const FoodItem = ({ item, keyFood, onPressItem }) => {
+  const dispatch = useDispatch();
+  const userFirebase = FireBase.auth().currentUser;
 
-  render() {
-    const {
-      item: {
-        like, favorite, name, imageLink, createdAt,
+  const onPressLikeUnLike = () => {
+    const temp = {
+      userId: userFirebase.uid,
+      food: {
+        key: keyFood,
+        value: item,
       },
-    } = this.props;
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.itemFood} onPress={this.props.onPressItem}>
-          <View style={styles.imageFood}>
-            <Image
-              style={styles.imageFoodCover}
-              resizeMode="cover"
-              uri={imageLink}
-            />
-          </View>
-          <View style={styles.infomationFood}>
-            <Text style={styles.foodName}>
-              {name}
-            </Text>
-            <View style={{ flex: 5, flexDirection: 'row' }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flex: 1,
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}
-              >
-                <RNImage
-                  style={styles.icon}
-                  resizeMode="contain"
-                  source={require('assets/images/ic_clock.png')}
-                />
-                <Text style={styles.timeStamp}>
-                  {moment(createdAt).fromNow()}
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  flex: 1,
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}
-                onPress={this.onPressLikeUnLike}
-              >
-                <Text style={styles.like}>
-                  {like}
-                </Text>
-                <RNImage
-                  style={styles.icon}
-                  resizeMode="contain"
-                  source={
-                    favorite
-                      ? require('assets/images/ic_love.png')
-                      : require('assets/images/ic_nonlove.png')
-                  }
-                />
-              </TouchableOpacity>
+    };
+    dispatch(addFavourite(temp));
+  };
+
+  const checkIsLiked = () => {
+    if (item?.listFavourites?.includes(userFirebase.uid)) {
+      return true;
+    }
+    return false;
+  };
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.itemFood} onPress={onPressItem}>
+        <View style={styles.imageFood}>
+          <Image
+            style={styles.imageFoodCover}
+            resizeMode="cover"
+            uri={item.imageLink}
+          />
+        </View>
+        <View style={styles.infomationFood}>
+          <Text style={styles.foodName}>
+            {item.name}
+          </Text>
+          <View style={{ flex: 5, flexDirection: 'row' }}>
+            <View
+              style={styles.timeStampContainer}
+            >
+              <RNImage
+                style={styles.icon}
+                resizeMode="contain"
+                source={images.ic_clock}
+              />
+              <Text style={styles.timeStamp}>
+                {moment(item.createdAt).fromNow()}
+              </Text>
             </View>
+            <TouchableOpacity
+              style={styles.likeContainer}
+              onPress={onPressLikeUnLike}
+            >
+              <Text style={styles.like}>
+                {item.listFavourites?.length}
+              </Text>
+              <RNImage
+                style={styles.icon}
+                resizeMode="contain"
+                source={
+                    checkIsLiked()
+                      ? images.ic_love
+                      : images.ic_nonlove
+                  }
+              />
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-        <View style={{ backgroundColor: '#dddddd', height: 1 }} />
-      </View>
-    );
-  }
-}
+        </View>
+      </TouchableOpacity>
+      <View style={styles.line} />
+    </View>
+  );
+};
 
 export default FoodItem;
