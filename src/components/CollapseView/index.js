@@ -1,5 +1,5 @@
 import React, {
-  memo, useEffect, useState, useRef,
+  memo, useState, useRef,
 } from 'react';
 import {
   View,
@@ -7,15 +7,15 @@ import {
   UIManager,
   LayoutAnimation,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import images from 'assets/images';
+import { isIOS } from 'utils';
 
 import styles from './styles';
 
 if (
-  Platform.OS === 'android'
+  !isIOS
     && UIManager.setLayoutAnimationEnabledExperimental
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -23,20 +23,21 @@ if (
 
 
 const CollapseView = ({
-  isCollapse, onExpand, onCollapse, children,
+  onExpand, onCollapse, children,
 }) => {
   const viewRef = useRef(null);
 
-  const [state, setState] = useState({ height: 0, isCollapse: isCollapse || false });
+  const [height, setHeight] = useState(0);
+  const [isCollapse, setIsCollapse] = useState(false);
 
   const expand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     viewRef.current?.setNativeProps({
       style: {
-        height: state.height,
+        height,
       },
     });
-    setState({ ...state, isCollapse: false });
+    setIsCollapse(false);
     onExpand && onExpand();
   };
 
@@ -44,10 +45,10 @@ const CollapseView = ({
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     viewRef?.current?.setNativeProps({
       style: {
-        height: state.height * 0.3,
+        height: height * 0.3,
       },
     });
-    setState({ ...state, isCollapse: true });
+    setIsCollapse(true);
     onCollapse && onCollapse();
   };
 
@@ -57,14 +58,14 @@ const CollapseView = ({
         ref={viewRef}
         style={{ flex: 1, overflow: 'hidden' }}
         onLayout={event => {
-          const { height } = event.nativeEvent.layout;
-          if (state.height === 0) {
-            setState({ ...state, height });
+          const { height: heightView } = event.nativeEvent.layout;
+          if (height === 0) {
+            setHeight(heightView);
           }
         }}
       >
         {children}
-        {state.isCollapse && (
+        {isCollapse && (
           <LinearGradient
             colors={['rgba(255,255,255,0.5)', 'rgba(255,255,255,0.6)']}
             style={styles.linearGradient}
@@ -74,15 +75,14 @@ const CollapseView = ({
       <TouchableOpacity
         style={styles.iconView}
         onPress={() => {
-          setState({ ...state, isCollapse: !state.isCollapse });
-          state.isCollapse ? expand() : collapse();
+          isCollapse ? expand() : collapse();
         }}
       >
         <Image
           style={styles.iconUpDown}
           resizeMode="contain"
           source={
-            state.isCollapse
+            isCollapse
               ? images.ic_pulldown
               : images.ic_pullup
         }

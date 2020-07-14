@@ -9,7 +9,6 @@ import { reducers } from 'reducers';
 
 import thunk from 'redux-thunk';
 import { getFirebase } from 'react-redux-firebase';
-import { createFirestoreInstance } from 'redux-firestore';
 
 const middlewares = [
   thunk.withExtraArgument(getFirebase),
@@ -27,5 +26,4 @@ export const rrfProps = {
   firebase: FireBase,
   config: rrfConfig,
   dispatch: store.dispatch,
-  createFirestoreInstance,
 };
