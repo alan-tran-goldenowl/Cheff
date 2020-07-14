@@ -1,7 +1,7 @@
 const COLOR = {
   WHITE_COLOR: '#FFFFFF',
   BLACK_COLOR: '#000000',
-  TEXT_SECONDARY_COLOR: '#777777'
+  TEXT_SECONDARY_COLOR: '#777777',
 };
 
 export default {

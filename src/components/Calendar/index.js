@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { Calendar } from 'react-native-calendars';
-import { useSelector } from 'react-redux';
-import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 
 import CustomArrow from './CustomArrow';
 import styles from './styles';
 
-const MyCalendar = ({ moveToListPlan }) => {
-  const [currentMonth, setCurrentMonth] = useState(moment());
-  const firebase = useFirebase();
-  const user = firebase.auth().currentUser;
-  useFirebaseConnect(`Meal_Plan/${user.uid}`);
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan = {} } } }) => (Meal_Plan[user.uid] || [])
-    .filter((item) => moment(item.value.date).month() === currentMonth.month())); // filter by month
-
+const MyCalendar = ({
+  moveToListPlan, mealPlan, onPressLeftCalendar, onPressRightCalendar, currentMonth,
+}) => {
   const getMarkedDays = () => {
     const marked = {};
     mealPlan.forEach((item) => {
@@ -53,18 +46,18 @@ const MyCalendar = ({ moveToListPlan }) => {
   };
 
   const onPressArrowLeft = () => {
-    setCurrentMonth(currentMonth.clone().subtract(1, 'months'));
+    onPressLeftCalendar();
   };
 
   const onPressArrowRight = () => {
-    setCurrentMonth(currentMonth.clone().add(1, 'months'));
+    onPressRightCalendar();
   };
 
   const markedDates = loadMarkedDates();
 
   const onDayPress = (day) => {
     if (markedDates[day.dateString]) {
-      moveToListPlan();
+      moveToListPlan(day.dateString);
     }
   };
 

@@ -77,7 +77,7 @@ const CreatePlan = ({ navigation }) => {
 
   const onCreatePlan = () => {
     const err = onValidateInput();
-    if (Object.keys(err).filter((item) => !item).length) {
+    if (Object.values(err).filter((item) => item !== '').length) {
       setError(err);
       return;
     }

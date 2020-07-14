@@ -1,9 +1,13 @@
-export default {
+import { StyleSheet } from 'react-native';
+import { responsive } from 'utils';
+import themeStyles from 'styles/theme';
+
+export default StyleSheet.create({
   container: {
-    minHeight: 50,
+    minHeight: responsive({ h: 50 }),
     width: '100%',
     height: 'auto',
-    paddingTop: 15,
+    paddingTop: responsive({ d: 20 }),
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
@@ -11,28 +15,33 @@ export default {
   },
   textViewTime: {
     width: '25%',
-    paddingLeft: 17,
   },
   touchable: {
     width: '75%',
     display: 'flex',
-    paddingBottom: 15,
+    paddingBottom: responsive({ d: 15 }),
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: 'hsl(0, 0%, 95%)',
   },
   iconView: {
-    paddingTop: 5,
+    paddingTop: responsive({ d: 5 }),
   },
   iconViewImage: {
-    width: 8, height: 8,
+    width: responsive({ h: 8 }),
+    height: responsive({ h: 8 }),
   },
   textViewSummary: {
     display: 'flex',
-    paddingLeft: 10,
-    paddingRight: 15,
+    paddingLeft: responsive({ d: 10 }),
   },
   textViewDescription: {
-    marginTop: 5, color: '#666',
+    marginTop: responsive({ d: 10 }),
+    color: themeStyles.COLOR.TEXT_SECONDARY_COLOR,
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
   },
-};
+  text: {
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
+    color: themeStyles.COLOR.BLACK_COLOR,
+  },
+});
