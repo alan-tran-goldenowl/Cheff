@@ -1,127 +1,95 @@
-import React, { PureComponent } from 'react';
+import React, {
+  memo, useEffect, useState, useRef,
+} from 'react';
 import {
   View,
   Image,
   UIManager,
-  StyleSheet,
   LayoutAnimation,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import images from 'assets/images';
 
-import { responsive } from 'utils';
+import styles from './styles';
 
-UIManager.setLayoutAnimationEnabledExperimental
-  && UIManager.setLayoutAnimationEnabledExperimental(true);
+if (
+  Platform.OS === 'android'
+    && UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
-const styles = StyleSheet.create({
-  linearGradient: {
-    left: 0,
-    right: 0,
-    bottom: 0,
-    position: 'absolute',
-    height: responsive({ h: 70 }),
-  },
-  iconUpDown: {
-    width: responsive({ h: 10 }),
-    height: responsive({ h: 10 }),
-  },
-  iconView: {
-    alignItems: 'center',
-    borderBottomWidth: 0.7,
-    justifyContent: 'center',
-    paddingVertical: responsive({ d: 10 }),
-    borderBottomColor: 'rgb(217,217,217)',
-  },
-});
 
-export default class CollapseView extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.panResponder = null;
-    this.viewStyle = {
-      style: {
-        marginBottom: 0,
-        height: '100%',
-      },
-    };
-    this.state = {
-      height: 0,
-      isCollapse: props.isCollapse || false,
-    };
-  }
+const CollapseView = ({
+  isCollapse, onExpand, onCollapse, children,
+}) => {
+  const viewRef = useRef(null);
 
-  componentDidMount() {
-    setTimeout(() => {
-      const isCollapse = this.props.isCollapse || false;
-      isCollapse && this.collapse();
-    }, 70);
-  }
+  const [state, setState] = useState({ height: 0, isCollapse: isCollapse || false });
 
-  expand = () => {
-    const { onExpand } = this.props;
+  const expand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.viewRef.setNativeProps({
+    viewRef.current?.setNativeProps({
       style: {
-        height: this.state.height,
+        height: state.height,
       },
     });
-    this.setState({ isCollapse: false });
+    setState({ ...state, isCollapse: false });
     onExpand && onExpand();
   };
 
-  collapse = () => {
-    const { onCollapse } = this.props;
+  const collapse = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.viewRef.setNativeProps({
+    viewRef?.current?.setNativeProps({
       style: {
-        height: this.state.height - this.state.height * 0.3,
+        height: state.height * 0.3,
       },
     });
-    this.setState({ isCollapse: true });
+    setState({ ...state, isCollapse: true });
     onCollapse && onCollapse();
   };
 
-  render() {
-    const { isCollapse } = this.state;
-    return (
+  return (
+    <>
       <View
-        ref={(ref) => {
-          this.viewRef = ref;
-        }}
-        style={{ flex: 1 }}
-        onLayout={(event) => {
+        ref={viewRef}
+        style={{ flex: 1, overflow: 'hidden' }}
+        onLayout={event => {
           const { height } = event.nativeEvent.layout;
-          if (this.state.height === 0) {
-            this.setState({ height });
+          if (state.height === 0) {
+            setState({ ...state, height });
           }
         }}
       >
-        {this.props.children}
-        {isCollapse && (
+        {children}
+        {state.isCollapse && (
           <LinearGradient
             colors={['rgba(255,255,255,0.5)', 'rgba(255,255,255,0.6)']}
             style={styles.linearGradient}
           />
         )}
-        <TouchableOpacity
-          style={styles.iconView}
-          onPress={() => {
-            this.setState({ isCollapse: !isCollapse });
-            isCollapse ? this.expand() : this.collapse();
-          }}
-        >
-          <Image
-            style={styles.iconUpDown}
-            resizeMode="contain"
-            source={
-              isCollapse
-                ? require('assets/images/ic_pulldown.png')
-                : require('assets/images/ic_pullup.png')
-            }
-          />
-        </TouchableOpacity>
       </View>
-    );
-  }
-}
+      <TouchableOpacity
+        style={styles.iconView}
+        onPress={() => {
+          setState({ ...state, isCollapse: !state.isCollapse });
+          state.isCollapse ? expand() : collapse();
+        }}
+      >
+        <Image
+          style={styles.iconUpDown}
+          resizeMode="contain"
+          source={
+            state.isCollapse
+              ? images.ic_pulldown
+              : images.ic_pullup
+        }
+        />
+      </TouchableOpacity>
+    </>
+  );
+};
+
+export default memo(CollapseView);
