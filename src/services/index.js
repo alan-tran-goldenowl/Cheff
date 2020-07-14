@@ -1,8 +1,8 @@
 export function likeFood({ food, userId, like }) {
   return (dispatch, getState, getFirebase) => getFirebase()
-    .ref(`Favourites/${userId}/${food.key}`)
+    .ref(`Favourites/${userId}`)
     .update({
-      isLiked: like,
+      [food.key]: like ? { isLiked: true } : null,
     })
     .then(() => {
       dispatch(updateTotalLikeFood({ food, like }));
