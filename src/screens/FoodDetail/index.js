@@ -40,8 +40,8 @@ const FoodDetail = ({ navigation }) => {
     return list[0].value;
   });
 
-  const isLiked = useSelector(({ firebase: { ordered: { Favourites } } }) => {
-    const listFavouritesOfUser = (Favourites || []).find(item => item.key === userFirebase.uid)?.value || {};
+  const isLiked = useSelector(({ firebase: { data: { Favourites } } }) => {
+    const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
 
     return listFavouritesOfUser && listFavouritesOfUser[foodKey]?.isLiked;
   });
@@ -102,13 +102,6 @@ const FoodDetail = ({ navigation }) => {
       }
     </View>
   );
-
-  const checkIsLiked = () => {
-    if (foodValue?.listFavourites?.includes(userFirebase.uid)) {
-      return true;
-    }
-    return false;
-  };
 
   const renderHeader = () => (
     <Header

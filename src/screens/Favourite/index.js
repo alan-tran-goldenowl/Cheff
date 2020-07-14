@@ -12,18 +12,24 @@ import styles from './styles';
 const FavoriteScreen = ({ navigation }) => {
   const userFirebase = FireBase.auth().currentUser;
 
-  const listFavouritesOfUser = useSelector(({ firebase: { ordered: { Favourites } } }) => {
-    const list = (Favourites || []).find(item => item.key === userFirebase.uid)?.value || {};
+  const listFavouritesOfUser = useSelector(({ firebase: { data: { Favourites } } }) => {
+    const list = (Favourites && Favourites[userFirebase.uid]) || {};
     return list;
   });
 
   const listFavoriteFood = useSelector(({ firebase: { ordered: { Food } } }) => {
-    const list = (Food || []).filter(item => Object.prototype.hasOwnProperty.call(listFavouritesOfUser, item.key));
+    const list = (Food || [])
+      .filter(
+        item => (
+          Object.prototype.hasOwnProperty.call(listFavouritesOfUser, item.key)
+        && listFavouritesOfUser[item.key].isLiked
+        ),
+      );
     return list;
   });
 
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
+    <View style={styles.container}>
       <Header
         iconLeft={images.icon_side_menu}
         onPressLeft={() => navigation.navigate('Settings')}

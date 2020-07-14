@@ -56,7 +56,7 @@ const CollapseView = ({
     <>
       <View
         ref={viewRef}
-        style={{ flex: 1, overflow: 'hidden' }}
+        style={styles.container}
         onLayout={event => {
           const { height: heightView } = event.nativeEvent.layout;
           if (height === 0) {

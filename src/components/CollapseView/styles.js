@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgb(217,217,217)',
     paddingRight: responsive({ d: 15 }),
   },
+  container: { flex: 1, overflow: 'hidden' },
 });
 
 export default styles;

@@ -73,11 +73,13 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  likeContainer:
-    {
-      flexDirection: 'row',
-      flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-    },
+  likeContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  footer: {
+    flex: 5, flexDirection: 'row',
+  },
 });

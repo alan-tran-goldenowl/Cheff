@@ -15,8 +15,8 @@ const FoodItem = ({ item, keyFood, onPressItem }) => {
   const dispatch = useDispatch();
   const userFirebase = FireBase.auth().currentUser;
 
-  const isLiked = useSelector(({ firebase: { ordered: { Favourites } } }) => {
-    const listFavouritesOfUser = (Favourites || []).find(test => test.key === userFirebase.uid)?.value || {};
+  const isLiked = useSelector(({ firebase: { data: { Favourites } } }) => {
+    const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
 
     return (listFavouritesOfUser && listFavouritesOfUser[keyFood]?.isLiked) || false;
   });
@@ -47,7 +47,7 @@ const FoodItem = ({ item, keyFood, onPressItem }) => {
           <Text style={styles.foodName}>
             {item.name}
           </Text>
-          <View style={{ flex: 5, flexDirection: 'row' }}>
+          <View style={styles.footer}>
             <View
               style={styles.timeStampContainer}
             >
