@@ -12,8 +12,13 @@ import styles from './styles';
 const FavoriteScreen = ({ navigation }) => {
   const userFirebase = FireBase.auth().currentUser;
 
+  const listFavouritesOfUser = useSelector(({ firebase: { ordered: { Favourites } } }) => {
+    const list = (Favourites || []).find(item => item.key === userFirebase.uid)?.value || {};
+    return list;
+  });
+
   const listFavoriteFood = useSelector(({ firebase: { ordered: { Food } } }) => {
-    const list = (Food || []).filter(item => item?.value?.listFavourites?.includes(userFirebase.uid));
+    const list = (Food || []).filter(item => Object.prototype.hasOwnProperty.call(listFavouritesOfUser, item.key));
     return list;
   });
 

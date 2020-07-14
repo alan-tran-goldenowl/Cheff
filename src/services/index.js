@@ -1,17 +1,21 @@
-export function addFavourite({ food, userId }) {
-  return (dispatch, getState, getFirebase) => {
-    let listFavourites = food.value.listFavourites || [];
-    const isLiked = listFavourites.findIndex(item => item === userId);
-    if (isLiked === -1) {
-      listFavourites.push(userId);
-    } else {
-      listFavourites = listFavourites.filter(item => item !== userId);
-    }
-    return getFirebase()
-      .ref(`Food/${food.key}`)
-      .update({ listFavourites })
-      .then(() => {
-        // alert('scucessssss');
-      });
-  };
+export function likeFood({ food, userId, like }) {
+  return (dispatch, getState, getFirebase) => getFirebase()
+    .ref(`Favourites/${userId}/${food.key}`)
+    .update({
+      isLiked: like,
+    })
+    .then(() => {
+      dispatch(updateTotalLikeFood({ food, like }));
+    })
+    .catch(() => alert('err'));
+}
+
+export function updateTotalLikeFood({ food, like }) {
+  let countLikes = food.value?.totalLikes || 0;
+  countLikes = like ? countLikes + 1 : countLikes - 1;
+  return (dispatch, getState, getFirebase) => getFirebase()
+    .ref(`Food/${food.key}/`)
+    .update({ totalLikes: countLikes })
+    .then(() => {
+    });
 }

@@ -4,8 +4,8 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { Image } from 'react-native-expo-image-cache';
-import { addFavourite } from 'services';
-import { useDispatch } from 'react-redux';
+import { likeFood } from 'services';
+import { useDispatch, useSelector } from 'react-redux';
 import { FireBase } from 'constants';
 import images from 'assets/images';
 
@@ -15,23 +15,24 @@ const FoodItem = ({ item, keyFood, onPressItem }) => {
   const dispatch = useDispatch();
   const userFirebase = FireBase.auth().currentUser;
 
+  const isLiked = useSelector(({ firebase: { ordered: { Favourites } } }) => {
+    const listFavouritesOfUser = (Favourites || []).find(test => test.key === userFirebase.uid)?.value || {};
+
+    return (listFavouritesOfUser && listFavouritesOfUser[keyFood]?.isLiked) || false;
+  });
+
   const onPressLikeUnLike = () => {
-    const temp = {
+    const params = {
       userId: userFirebase.uid,
       food: {
         key: keyFood,
         value: item,
       },
+      like: !isLiked,
     };
-    dispatch(addFavourite(temp));
+    dispatch(likeFood(params));
   };
 
-  const checkIsLiked = () => {
-    if (item?.listFavourites?.includes(userFirebase.uid)) {
-      return true;
-    }
-    return false;
-  };
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.itemFood} onPress={onPressItem}>
@@ -64,15 +65,15 @@ const FoodItem = ({ item, keyFood, onPressItem }) => {
               onPress={onPressLikeUnLike}
             >
               <Text style={styles.like}>
-                {item.listFavourites?.length}
+                {item?.totalLikes || 0}
               </Text>
               <RNImage
                 style={styles.icon}
                 resizeMode="contain"
                 source={
-                    checkIsLiked()
-                      ? images.ic_love
-                      : images.ic_nonlove
+                  isLiked
+                    ? images.ic_love
+                    : images.ic_nonlove
                   }
               />
             </TouchableOpacity>

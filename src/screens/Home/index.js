@@ -10,7 +10,7 @@ import images from 'assets/images';
 import styles from './styles';
 
 const HomeScreen = ({ navigation }) => {
-  useFirebaseConnect(['Food', 'Type_Food']);
+  useFirebaseConnect(['Food', 'Type_Food', 'Favourites']);
   const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => Type_Food || []);
 
   const renderHeader = () => (

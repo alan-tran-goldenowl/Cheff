@@ -23,9 +23,10 @@ import {
   isEmpty,
 } from 'react-redux-firebase';
 import { FireBase } from 'constants';
-import { addFavourite } from 'services';
+import { likeFood } from 'services';
 import images from 'assets/images';
 import styles from './styles';
+
 
 const FoodDetail = ({ navigation }) => {
   const userFirebase = FireBase.auth().currentUser;
@@ -39,6 +40,12 @@ const FoodDetail = ({ navigation }) => {
     return list[0].value;
   });
 
+  const isLiked = useSelector(({ firebase: { ordered: { Favourites } } }) => {
+    const listFavouritesOfUser = (Favourites || []).find(item => item.key === userFirebase.uid)?.value || {};
+
+    return listFavouritesOfUser && listFavouritesOfUser[foodKey]?.isLiked;
+  });
+
   const [serveForPeople, setServeForPeople] = useState(foodValue?.serveForPeople || 1);
 
   const handleAddServe = () => setServeForPeople(serveForPeople + 1);
@@ -48,14 +55,15 @@ const FoodDetail = ({ navigation }) => {
   };
 
   const handleLike = () => {
-    const temp = {
+    const params = {
       userId: userFirebase.uid,
       food: {
         key: foodKey,
         value: foodValue,
       },
+      like: !isLiked,
     };
-    dispatch(addFavourite(temp));
+    dispatch(likeFood(params));
   };
   const goBack = () => {
     navigation.dispatch(NavigationActions.back());
@@ -112,13 +120,13 @@ const FoodDetail = ({ navigation }) => {
           onPress={handleLike}
         >
           <Text style={styles.likeNumber}>
-            {foodValue?.listFavourites?.length || 0}
+            {foodValue?.totalLikes || 0}
           </Text>
           <RNImage
             resizeMode="center"
             style={styles.iconHeart}
             source={
-              checkIsLiked()
+              isLiked
                 ? images.ic_love
                 : images.ic_nonlove
                 }
