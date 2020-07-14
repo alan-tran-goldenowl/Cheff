@@ -1,18 +1,18 @@
 import {
-  createStore
+  createStore,
 } from 'redux';
 
 import { FireBase } from 'constants';
 import { reducers } from 'reducers';
 
-const initialState = {}
+const initialState = {};
 export const store = createStore(reducers, initialState);
 
 const rrfConfig = {
-  userProfile: 'users'
-}
+  userProfile: 'users',
+};
 export const rrfProps = {
   firebase: FireBase,
   config: rrfConfig,
-  dispatch: store.dispatch
-}
+  dispatch: store.dispatch,
+};

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
-  Image,
   TextInput,
   ScrollView,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  Platform,
-  Switch
+  Switch,
 } from 'react-native';
-import AntIcon from '@expo/vector-icons/AntDesign';
 import moment from 'moment';
+
 import { useSelector } from 'react-redux';
 import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 
@@ -21,7 +18,7 @@ import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
-import { isIOS , convertDataPicker } from 'utils';
+import { isIOS, convertDataPicker } from 'utils';
 
 import styles from './styles';
 
@@ -29,14 +26,14 @@ const CreatePlan = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect(['Type_Food', 'Food']);
-  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } }}) => convertDataPicker(Type_Food));
+  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => convertDataPicker(Type_Food));
   const [titlePlan, setTitlePlan] = useState('');
   const [date, setDate] = useState(new Date());
   const [toggleAlarm, setToggleAlarm] = useState(true);
 
   const [mealType, setMealType] = useState(typeFood[0]?.value);
-  const listFood = useSelector(({ firebase: { ordered: { Food } }}) => {
-    const list = (Food || []).filter(item => item?.value?.type === mealType);
+  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => {
+    const list = (Food || []).filter((item) => item?.value?.type === mealType);
     return convertDataPicker(list);
   });
 
@@ -46,8 +43,8 @@ const CreatePlan = ({ navigation }) => {
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [error, setError] = useState({});
 
-  const handleDatePicked = (date) => {
-    setDate(date);
+  const handleDatePicked = (value) => {
+    setDate(value);
     setDatePickerVisible(false);
   };
 
@@ -62,10 +59,10 @@ const CreatePlan = ({ navigation }) => {
   const onChangeTypeMeal = (value) => {
     setMealType(value);
     setError({ ...error, typeMeal: '' });
-  }
+  };
 
   const onValidateInput = () => {
-    const err = {};
+    const err = { ...error };
     if (!titlePlan) {
       err.title = 'Please enter title of the meal plan';
     }
@@ -76,11 +73,11 @@ const CreatePlan = ({ navigation }) => {
       err.recipe = 'Please choose your recipe';
     }
     return err;
-  }
+  };
 
   const onCreatePlan = () => {
     const err = onValidateInput();
-    if (Object.keys(err).length) {
+    if (Object.keys(err).filter((item) => !item).length) {
       setError(err);
       return;
     }
@@ -92,19 +89,19 @@ const CreatePlan = ({ navigation }) => {
       note,
       createdAt: Date.now(),
     };
-    firebase.push(`Meal_Plan/${user.uid}`, data );
+    firebase.push(`Meal_Plan/${user.uid}`, data);
     navigation.navigate('MealPlan');
   };
 
   const onChangeTitle = (text) => {
     setTitlePlan(text);
     setError({ ...error, title: '' });
-  }
+  };
 
   const onChangeRecipe = (value) => {
     setRecipe(value);
     setError({ ...error, recipe: '' });
-  }
+  };
 
   return (
     <View style={styles.main}>
@@ -120,10 +117,10 @@ const CreatePlan = ({ navigation }) => {
         <ScrollView style={styles.container}>
           <CustomTextInput
             multiline
-            title='Title of the meal plan'
-            placeholder='Write your plan...'
+            title="Title of the meal plan"
+            placeholder="Write your plan..."
             value={titlePlan}
-            onChangeText={text => onChangeTitle(text)}
+            onChangeText={(text) => onChangeTitle(text)}
             containerStyles={styles.containerTitle}
             titleStyles={styles.titleText}
             error={error.title}
@@ -131,24 +128,24 @@ const CreatePlan = ({ navigation }) => {
           {/* date time picker */}
           <View style={styles.viewDate}>
             <DatePicker
-              title='Date'
+              title="Date"
               onPress={() => setDatePickerVisible(true)}
               value={moment(date).format('DD MMMM, YYYY')}
               isVisible={isDatePickerVisible}
               onConfirm={handleDatePicked}
               onCancel={() => setDatePickerVisible(false)}
-              mode='date'
+              mode="date"
               containerStyle={styles.pickerDate}
               date={date}
             />
             <DatePicker
-              title='Time'
+              title="Time"
               onPress={() => setTimePickerVisible(true)}
               value={moment(date).format('LT')}
               isVisible={isTimePickerVisible}
               onConfirm={handleTimePicked}
               onCancel={() => setTimePickerVisible(false)}
-              mode='time'
+              mode="time"
               date={date}
             />
           </View>
@@ -161,20 +158,20 @@ const CreatePlan = ({ navigation }) => {
               value={toggleAlarm}
               onValueChange={(value) => setToggleAlarm(value)}
               thumbColor="white"
-              trackColor='#45db5e'
+              trackColor="#45db5e"
             />
           </View>
           {/* meal type picker */}
           <PickerSelect
             title="What's your meal?"
-            onValueChange={value => onChangeTypeMeal(value)}
+            onValueChange={(value) => onChangeTypeMeal(value)}
             value={mealType}
             items={typeFood}
             containerStyle={styles.picker}
             error={error.mealType}
           />
           <PickerSelect
-            title='Choose your recipe'
+            title="Choose your recipe"
             onValueChange={(value) => onChangeRecipe(value)}
             value={recipe}
             items={listFood}
@@ -183,7 +180,9 @@ const CreatePlan = ({ navigation }) => {
           />
           {/* notes */}
           <View style={styles.note}>
-            <Text style={styles.textNote}>Note{' '}
+            <Text style={styles.textNote}>
+              Note
+              {' '}
               <Text style={styles.textOptional}>(Optional)</Text>
             </Text>
             <TextInput
@@ -193,7 +192,7 @@ const CreatePlan = ({ navigation }) => {
               placeholder="Add any Additional information"
               style={styles.textNote}
               value={note}
-              onChangeText={text => setNote(text)}
+              onChangeText={(text) => setNote(text)}
             />
           </View>
         </ScrollView>
@@ -201,11 +200,11 @@ const CreatePlan = ({ navigation }) => {
 
       <Button
         buttonStyle={styles.btnCreate}
-        title='CREATE A PLAN'
+        title="CREATE A PLAN"
         onPress={onCreatePlan}
       />
     </View>
   );
-}
+};
 
 export default CreatePlan;

@@ -21,12 +21,12 @@ export default StyleSheet.create({
   value: {
     flex: 1,
     color: 'black',
-    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL })
+    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
   },
   errorText: {
     color: 'red',
     fontSize: responsive({ f: themeStyles.FONT_SIZE_SMALL }),
-    marginTop: responsive({ d: 10 })
+    marginTop: responsive({ d: 10 }),
   },
 
 });

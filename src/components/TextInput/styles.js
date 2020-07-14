@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { responsive } from 'utils';
 import themeStyles from 'styles/theme';
-import theme from 'styles/theme';
 
 export default StyleSheet.create({
   textInput: {
@@ -11,17 +10,17 @@ export default StyleSheet.create({
     fontSize: responsive({ f: themeStyles.FONT_SIZE_MEDIUM }),
     color: 'black',
   },
-  row:{
+  row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: responsive({ h: 3.5 }),
   },
-  icon:{
+  icon: {
     width: responsive({ h: 10 }),
-    height: responsive({ h: 10 })
+    height: responsive({ h: 10 }),
   },
-  errorText:{
+  errorText: {
     color: 'red',
     fontSize: responsive({ f: themeStyles.FONT_SIZE_SMALL }),
-  }
+  },
 });

@@ -35,7 +35,8 @@ module.exports = {
           "apis": './src/apis/',
           "navigation": './src/navigation/',
           "screens": './src/screens'
+        }
       }
     }
   }
-};
+}

@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { firebaseConnect } from 'react-redux-firebase';
 
 import MyCalendar from 'components/Calendar';
 import Header from 'components/Header';
@@ -22,7 +21,7 @@ const MealPlan = ({ navigation, user }) => {
   );
 
   const renderIntro = () => (
-    <Fragment>
+    <View>
       <View style={styles.welcomeView}>
         <View style={styles.center}>
           <Image
@@ -38,12 +37,12 @@ const MealPlan = ({ navigation, user }) => {
       <View style={styles.welcomeView2}>
         <Text style={styles.welcomeText}>{"Let's see what our recipes. \nfor the day are."}</Text>
       </View>
-    </Fragment>
+    </View>
   );
 
   const renderCalendar = () => (
     <MyCalendar moveToListPlan={() => navigation.navigate('ListPlan')} />
-  )
+  );
 
   return (
     <View style={styles.container}>
@@ -52,12 +51,12 @@ const MealPlan = ({ navigation, user }) => {
       {renderCalendar()}
     </View>
   );
-}
+};
 
 const enhance = compose(
   connect(({ firebase: { auth } }) => ({
     user: auth,
-  }))
-)
+  })),
+);
 
 export default enhance(MealPlan);

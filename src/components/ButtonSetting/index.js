@@ -3,21 +3,23 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
 } from 'react-native';
 
 import images from 'assets/images';
 
 import styles from './styles';
 
-const ButtonSetting = ({ image, onPress, text, rightContent }) => {
+const ButtonSetting = ({
+  image, onPress, text, rightContent,
+}) => {
   const renderRight = () => (
     <Image
       resizeMode="center"
       style={styles.image}
       source={images.ic_move}
     />
-  )
+  );
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -39,7 +41,7 @@ const ButtonSetting = ({ image, onPress, text, rightContent }) => {
         { rightContent ? rightContent() : renderRight()}
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 export default ButtonSetting;
