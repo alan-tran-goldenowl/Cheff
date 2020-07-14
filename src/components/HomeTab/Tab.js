@@ -1,34 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+
 
 import FoodItem from '../FoodItem';
 
-const Tab = ({ navigation, listFood, typeId }) => {
+const Tab = ({ navigation, typeId }) => {
+  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => {
+    const list = (Food || []).filter(item => item?.value?.type === typeId);
+    return list;
+  });
+
   return (
     <FlatList
       data={listFood}
       renderItem={({ item }) => (
         <FoodItem
           item={item.value}
-          onPressItem={() => navigation.navigate('FoodDetail', { data: item.value })}
+          keyFood={item.key}
+          onPressItem={() => navigation.navigate('FoodDetail', { key: item.key })}
         />
       )}
       keyExtractor={item => String(item.key)}
       showsVerticalScrollIndicator={false}
     />
-  )
+  );
 };
 
-const enhance = compose(
-  firebaseConnect(({ typeId }) => [
-    { path: '/Food', storeAs: typeId, queryParams: [ 'orderByChild=type',  `equalTo=${typeId}`  ] }
-  ]),
-  connect(({ firebase }, { typeId }) => ({
-    listFood: firebase.ordered[typeId] || [],
-  }))
-)
-
-export default enhance(Tab);
+export default (Tab);

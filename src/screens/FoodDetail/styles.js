@@ -14,7 +14,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingRight: responsive({ d: 30 }),
+    right: responsive({ d: -20 }),
   },
   likeNumber: {
     fontSize: responsive({ f: 15 }),
@@ -64,6 +64,7 @@ export default StyleSheet.create({
     marginRight: responsive({ d: 25 }),
     backgroundColor: 'rgb(226,226,226)',
     paddingHorizontal: responsive({ d: 5 }),
+    marginBottom: responsive({ d: 5 }),
   },
   tagText: {
     padding: responsive({ d: 10 }),
@@ -94,8 +95,12 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderColor: 'rgb(217,217,217)',
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0.5,
+    borderLeftWidth: 0.25,
+    borderRightWidth: 0.25,
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1.5,
+    marginBottom: responsive({ d: 10 }),
+
     marginRight: responsive({ d: 30 }),
     padding: responsive({ d: 20 }),
   },
@@ -106,5 +111,16 @@ export default StyleSheet.create({
   instructionView: {
     marginLeft: responsive({ d: 30 }),
     marginBottom: responsive({ d: 30 }),
+  },
+  rowWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  buttonServing: {
+    width: '30%',
+    paddingVertical: responsive({ d: 7 }),
+  },
+  marginLeftSmall: {
+    marginLeft: responsive({ d: 20 }),
   },
 });

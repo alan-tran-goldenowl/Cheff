@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Image } from 'react-native';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import { useFirebaseConnect } from 'react-redux-firebase';
 
 import SearchViewCheff from 'components/SearchViewCheff';
 import HomeTab from 'components/HomeTab/HomeTab';
 import Header from 'components/Header';
+import images from 'assets/images';
 import styles from './styles';
 
+const HomeScreen = ({ navigation }) => {
+  useFirebaseConnect(['Food', 'Type_Food', 'Favourites']);
+  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => Type_Food || []);
 
-const HomeScreen = ({ navigation, typeFood }) => {
   const renderHeader = () => (
-    <React.Fragment>
+    <>
       <Header
         logoVisible
-        iconLeft={require('assets/images/icon_side_menu.png')}
+        iconLeft={images.icon_side_menu}
         onPressLeft={() => navigation.navigate('Settings')}
-        iconRight={require('assets/images/ic_push_notification.png')}
+        iconRight={images.ic_push_notification}
       />
       <View style={styles.searchView}>
         <Image
           resizeMode="stretch"
-          source={require('assets/images/img1.jpg')}
+          source={images.img1}
           style={styles.backgroundImage}
         />
         <View style={styles.search}>
@@ -32,7 +34,7 @@ const HomeScreen = ({ navigation, typeFood }) => {
           />
         </View>
       </View>
-    </React.Fragment>
+    </>
   );
 
   return (
@@ -44,13 +46,7 @@ const HomeScreen = ({ navigation, typeFood }) => {
       />
     </View>
   );
-}
+};
 
-const enhance = compose(
-  firebaseConnect(['Type_Food']),
-  connect(({ firebase: { ordered: { Type_Food } } }) => ({
-    typeFood: Type_Food || [],
-  }))
-)
 
-export default enhance(HomeScreen);
+export default HomeScreen;

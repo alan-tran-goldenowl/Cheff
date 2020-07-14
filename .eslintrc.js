@@ -23,6 +23,9 @@ module.exports = {
           "ignoreTemplateLiterals": true
         }
       ],
+      "no-use-before-define": ["error", { "functions": false, "classes": false,"variables": false }],
+      "arrow-parens": ["error", "as-needed"],
+
   },
   "settings": {
     "import/resolver": {
@@ -38,4 +41,5 @@ module.exports = {
       }
     }
   }
-};
+}
+}
