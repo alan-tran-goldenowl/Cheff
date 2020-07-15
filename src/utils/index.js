@@ -1,5 +1,7 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
 
+import images from 'assets/images';
+
 export authHelper from './authHelper';
 export storageHelper from './storageHelper';
 
@@ -21,31 +23,37 @@ export const responsive = ({ f, h, d }) => {
   return null;
 };
 
-export const isEmail = email => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+export const isEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
-export const actionNameToTypes = actionName => actionName
+export const actionNameToTypes = (actionName) => actionName
   .replace(/([A-Z])/g, '_$1')
   .trim()
   .toUpperCase();
 
 export const isIOS = Platform.OS === 'ios';
 export const convertDataPicker = (list = []) => (
-  list.map(item => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
-)
+  list.map((item) => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
+);
 
 export const uuid = (name) => {
-    const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    return (name + S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-}
+  const S4 = () => (((1 + Math.random()) * 0x10000) || 0).toString(16).substring(1);
+  return (`${name + S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
+};
 
-export const validateEditProfile = fields => {
+export const validateEditProfile = (fields) => {
   const {
     displayName,
-  } = fields
+  } = fields;
 
-  const errors = {}
+  const errors = {};
 
-  if (!displayName) errors.displayName = 'Please enter your full name'
+  if (!displayName) errors.displayName = 'Please enter your full name';
 
-  return errors
-}
+  return errors;
+};
+export const listIconPlan = [
+  images.icon_lunch,
+  images.icon_brunch,
+  images.icon_dinner,
+  images.icon_breakfast,
+];

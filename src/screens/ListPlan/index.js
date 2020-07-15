@@ -10,30 +10,24 @@ import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 import moment from 'moment';
 
 import images from 'assets/images';
+import { listIconPlan } from 'utils';
 import Header from 'components/Header';
 import styles from './styles';
 import ListPlanItem from './components/ListPlanItem';
-
-const icon = [
-  images.icon_lunch,
-  images.icon_brunch,
-  images.icon_dinner,
-  images.icon_breakfast,
-];
 
 const ListPlan = ({ navigation }) => {
   const { day } = navigation.state.params;
 
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
-  useFirebaseConnect([`Meal_Plan/${user.uid}`, 'Food', 'Type_Food']);
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan = {} } } }) => (Meal_Plan[user.uid] || [])
+  useFirebaseConnect(`Meal_Plan/${user.uid}`);
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid])
     .filter((item) => moment(item.value.date).format('YYYY-MM-DD') === day))
     .sort((a, b) => a.value.date - b.value.date); // filter and sort by date
 
   const goBack = () => navigation.goBack();
 
-  const goToMealPlan = (key) => navigation.navigate('PlanDetails', { key });
+  const goToMealPlan = (id) => navigation.navigate('PlanDetails', { id });
 
   const deleteMealPlan = () => {
     Alert.alert(
@@ -52,7 +46,7 @@ const ListPlan = ({ navigation }) => {
     );
   };
 
-  const editMealPlan = (key) => navigation.navigate('CreatePlan', { key });
+  const editMealPlan = (id) => navigation.navigate('CreatePlan', { id });
 
   const renderHeader = () => (
     <Header
@@ -79,8 +73,9 @@ const ListPlan = ({ navigation }) => {
         keyExtractor={({ key }) => key}
         renderItem={({ item, index }) => (
           <ListPlanItem
+            id={item.key}
             {...item}
-            icon={icon[index % 4]}
+            icon={listIconPlan[index % 4]}
             goToMealPlan={goToMealPlan}
             deleteMealPlan={deleteMealPlan}
             editMealPlan={editMealPlan}

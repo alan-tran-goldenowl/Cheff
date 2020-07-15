@@ -1,15 +1,15 @@
-import { device } from 'utils';
+import { StyleSheet } from 'react-native';
+import { device, responsive } from 'utils';
+import theme from 'styles/theme';
 
-const { width } = device;
-
-export default {
+export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
   },
   nameView: {
-    height: 55,
-    marginLeft: 17,
+    height: responsive({ h: 55 }),
+    marginLeft: responsive({ d: 30 }),
     display: 'flex',
     flexDirection: 'row',
     borderBottomWidth: 1,
@@ -17,37 +17,37 @@ export default {
     justifyContent: 'space-between',
   },
   nameText: {
-    fontSize: 24,
+    fontSize: responsive({ f: 24 }),
     color: 'black',
-    marginTop: 15,
+    marginTop: responsive({ d: 15 }),
   },
   rowView: {
-    minHeight: 50,
+    minHeight: responsive({ h: 55 }),
     width: '100%',
     height: 'auto',
-    paddingTop: 15,
+    paddingTop: responsive({ d: 15 }),
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
   },
   iconView: {
-    width: 60,
-    paddingLeft: 17,
+    width: responsive({ h: 60 }),
+    paddingLeft: responsive({ d: 30 }),
   },
   icon: {
-    width: 20,
-    height: 20,
+    width: responsive({ h: 15 }),
+    height: responsive({ h: 15 }),
   },
   typeIcon: {
-    width: 8,
-    height: 8,
+    width: responsive({ h: 8 }),
+    height: responsive({ h: 8 }),
   },
   textView: {
     display: 'flex',
-    paddingLeft: 10,
-    paddingRight: 15,
-    width: width - 60,
-    paddingBottom: 15,
+    paddingLeft: responsive({ d: 10 }),
+    paddingRight: responsive({ d: 10 }),
+    width: device.width - responsive({ h: 60 }),
+    paddingBottom: responsive({ d: 15 }),
     flexDirection: 'row',
   },
   textViewWithIconInFront: {
@@ -58,12 +58,16 @@ export default {
     borderBottomColor: 'hsl(0, 0%, 95%)',
   },
   notification: {
-    paddingLeft: 17,
-    paddingRight: 17,
+    paddingLeft: responsive({ d: 30 }),
+    paddingRight: responsive({ d: 30 }),
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#65DB5E',
     flexDirection: 'row',
-    paddingVertical: 10,
+    paddingVertical: responsive({ d: 10 }),
   },
-};
+  text: {
+    fontSize: responsive({ f: theme.FONT_SIZE_LARGE }),
+    color: theme.COLOR.BLACK_COLOR,
+  },
+});

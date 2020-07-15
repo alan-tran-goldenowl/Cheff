@@ -10,7 +10,7 @@ import moment from 'moment';
 import styles from './styles';
 
 const ListPlanItem = ({
-  key,
+  id,
   value: {
     date, title, note,
   },
@@ -19,7 +19,7 @@ const ListPlanItem = ({
   deleteMealPlan,
   editMealPlan,
 }) => {
-  const onGoToMealPlan = () => goToMealPlan(key);
+  const onGoToMealPlan = () => goToMealPlan(id);
 
   const showAlertDelete = () => {
     deleteMealPlan();
