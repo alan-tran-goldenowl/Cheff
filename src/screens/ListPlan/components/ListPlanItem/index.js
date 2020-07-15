@@ -23,11 +23,11 @@ const ListPlanItem = ({
   const onGoToMealPlan = () => goToMealPlan(id);
 
   const showAlertDelete = () => {
-    deleteMealPlan();
+    deleteMealPlan(id);
   };
 
   const onEditMealPlan = () => {
-    editMealPlan();
+    editMealPlan(id);
   };
 
   return (

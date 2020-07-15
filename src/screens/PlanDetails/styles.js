@@ -70,4 +70,8 @@ export default StyleSheet.create({
     fontSize: responsive({ f: theme.FONT_SIZE_NORMAL }),
     color: theme.COLOR.BLACK_COLOR,
   },
+  textEdit: {
+    fontSize: responsive({ f: theme.FONT_SIZE_NORMAL }),
+    color: theme.COLOR.WHITE_COLOR,
+  },
 });

@@ -28,18 +28,20 @@ const ListPlan = ({ navigation }) => {
 
   const goToMealPlan = (id) => navigation.navigate('PlanDetails', { id });
 
-  const deleteMealPlan = () => {
+  const deleteMealPlan = (id) => {
     Alert.alert(
       'Warning',
       'Are you want to delete this meal plan ?',
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('cancel'),
         },
         {
           text: 'Delete',
-          onPress: () => console.log('delete'),
+          onPress: () => {
+            firebase.remove(`Meal_Plan/${user.uid}/${id}`);
+            goBack();
+          },
         },
       ],
     );

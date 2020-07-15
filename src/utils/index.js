@@ -52,7 +52,7 @@ export const validateEditProfile = (fields) => {
   return errors;
 };
 export const listIconPlan = {
-  lucnch: images.icon_lunch,
+  lunch: images.icon_lunch,
   brunch: images.icon_brunch,
   diner: images.icon_dinner,
   breakfast: images.icon_breakfast,

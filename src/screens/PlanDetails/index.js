@@ -13,21 +13,17 @@ import { listIconPlan } from 'utils';
 import styles from './styles';
 
 const PlanDetails = ({ navigation }) => {
-  const planId = navigation.state.params.id;
+  const { id: planId, isEdit } = navigation.state.params || {};
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect([`Meal_Plan/${user.uid}/${planId}`, 'Food', 'Type_Food']);
-  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid][planId] || {});
+  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
   const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map((item) => Food[item]?.name));
-  const [showNotification, setShowNotification] = useState(true);
+  const [showNotification, setShowNotification] = useState(isEdit);
   const goBack = () => navigation.goBack();
 
   const goEdit = () => {
-    navigation.navigate('CreatePlan', {
-      data: {
-        name: '123',
-      },
-    });
+    navigation.navigate('CreatePlan', { id: planId });
   };
 
   const renderHeader = () => (
@@ -41,10 +37,6 @@ const PlanDetails = ({ navigation }) => {
 
   const handleVisibleNotifi = () => {
     setShowNotification(false);
-  };
-
-  const checkParamsEdit = () => {
-    if (navigation.state.params.message) { return navigation.state.params.message === 'edit'; }
   };
 
   const renderItem = (icon, text, secondIcon) => {
@@ -82,10 +74,10 @@ const PlanDetails = ({ navigation }) => {
       {/* header */}
       {renderHeader()}
       {
-        (checkParamsEdit() && showNotification)
+      showNotification
         && (
         <View style={styles.notification}>
-          <Text style={{ color: 'white' }}>
+          <Text style={styles.textEdit}>
             You have just edited your plan.
           </Text>
           <TouchableOpacity onPress={handleVisibleNotifi}>
