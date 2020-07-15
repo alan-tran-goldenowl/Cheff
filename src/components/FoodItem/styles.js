@@ -66,4 +66,20 @@ export default StyleSheet.create({
     color: 'black',
     flex: 3,
   },
+  line: { backgroundColor: '#dddddd', height: 1 },
+  timeStampContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  likeContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  footer: {
+    flex: 5, flexDirection: 'row',
+  },
 });

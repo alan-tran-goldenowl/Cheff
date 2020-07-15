@@ -1,216 +1,255 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
-  View, Text, Image as RNImage, ScrollView, FlatList, TouchableWithoutFeedback, TouchableOpacity,
+  View,
+  Text,
+  Image as RNImage,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Image } from 'react-native-expo-image-cache';
-import { withNavigation, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 import Header from 'components/Header';
-import { device, responsive } from 'utils';
+import {
+  device,
+  responsive,
+  formatNumber,
+  appropriatePluralisation,
+} from 'utils';
 import CollapseView from 'components/CollapseView';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  isEmpty,
+} from 'react-redux-firebase';
+import { FireBase } from 'constants';
+import { likeFood } from 'services';
+import images from 'assets/images';
 import styles from './styles';
 
 
-class FoodDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      serveForPeople: 0,
-      ingredientsExpand: true,
+const FoodDetail = ({ navigation }) => {
+  const userFirebase = FireBase.auth().currentUser;
+
+  const dispatch = useDispatch();
+
+  const foodKey = navigation.getParam('key');
+
+  const foodValue = useSelector(({ firebase: { ordered: { Food } } }) => {
+    const list = (Food || []).filter(item => item?.key === foodKey);
+    return list[0].value;
+  });
+
+  const isLiked = useSelector(({ firebase: { data: { Favourites } } }) => {
+    const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
+
+    return listFavouritesOfUser && listFavouritesOfUser[foodKey]?.isLiked;
+  });
+
+  const [serveForPeople, setServeForPeople] = useState(foodValue?.serveForPeople || 1);
+
+  const handleAddServe = () => setServeForPeople(serveForPeople + 1);
+
+  const handleSubtractServe = () => {
+    setServeForPeople(serveForPeople > 1 ? serveForPeople - 1 : 1);
+  };
+
+  const handleLike = () => {
+    const params = {
+      userId: userFirebase.uid,
+      food: {
+        key: foodKey,
+        value: foodValue,
+      },
+      like: !isLiked,
     };
-  }
+    dispatch(likeFood(params));
+  };
+  const goBack = () => {
+    navigation.dispatch(NavigationActions.back());
+  };
 
-  componentDidMount() {
-    const { serveForPeople = 0 } = this.props.navigation.getParam('data') || {};
-    this.setState({
-      serveForPeople,
-    });
-  }
+  const renderInstruction = () => (
+    foodValue.guidline?.map((item, index) => (
+      <Text key={index.toString()} style={styles.ingredientsText}>
+        {`${index + 1}. ${item}`}
+      </Text>
+    ))
+  );
 
-  handleAddServe = () => this.setState((prevState) => ({
-    serveForPeople: prevState.serveForPeople + 1,
-  }))
+  const renderIngredients = () => (
+    foodValue.ingredients?.map((item, index) => {
+      const amountForOne = formatNumber((item.amount / foodValue.serveForPeople) * serveForPeople, 2);
 
-  handleSubtractServe = () => this.setState((prevState) => ({
-    serveForPeople: prevState.serveForPeople > 1 ? prevState.serveForPeople - 1 : 1,
-  }))
+      return (
+        <Text key={index.toString()} style={styles.ingredientsText}>
+          {`${amountForOne}  ${item.name}`}
+        </Text>
+      );
+    })
+  );
 
-  goBack = () => {
-    this.props.navigation.dispatch(NavigationActions.back());
-  }
-
-  render() {
-    const data = this.props.navigation.getParam('data') || {};
-
-    return (
-      <View style={styles.container}>
-        <Header
-          onPressLeft={this.goBack}
-          iconLeft={require('assets/images/icon_back.png')}
-          customRight={() => (
-            <TouchableOpacity
-              style={styles.likeView}
-            >
-              <Text style={styles.likeNumber}>
-                {data.like || 0}
-              </Text>
-              <RNImage
-                resizeMode="center"
-                style={styles.iconHeart}
-                source={
-                  this.state.userLike
-                    ? require('assets/images/ic_love.png')
-                    : require('assets/images/ic_nonlove.png')
-                }
-              />
-            </TouchableOpacity>
-          )}
-        />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.nameView}>
-            <Text style={styles.nameText}>
-              {data.name}
+  const renderTags = () => (
+    <View style={styles.rowWrap}>
+      {
+        foodValue.tags?.map((item, index) => (
+          <View key={index.toString()} style={styles.tagView}>
+            <Text style={styles.tagText}>
+              {item.toUpperCase()}
             </Text>
           </View>
-          <View>
-            <Carousel
-              data={data.images}
-              renderItem={({ item }) => (
-                <Image
-                  uri={item}
-                  resizeMode="cover"
-                  style={styles.imageFoodCover}
-                />
-              )}
-              inactiveSlideScale={1}
-              inactiveSlideOpacity={1}
-              sliderWidth={device.width}
-              removeClippedSubviews={false}
-              itemWidth={device.width - responsive({ d: 60 })}
-            />
+        ))
+      }
+    </View>
+  );
+
+  const renderHeader = () => (
+    <Header
+      onPressLeft={goBack}
+      iconLeft={images.icon_back}
+      customRight={() => (
+        <TouchableOpacity
+          style={styles.likeView}
+          onPress={handleLike}
+        >
+          <Text style={styles.likeNumber}>
+            {foodValue?.totalLikes || 0}
+          </Text>
+          <RNImage
+            resizeMode="center"
+            style={styles.iconHeart}
+            source={
+              isLiked
+                ? images.ic_love
+                : images.ic_nonlove
+                }
+          />
+        </TouchableOpacity>
+      )}
+    />
+  );
+
+  if (isEmpty(foodValue)) {
+    return null;
+  }
+
+  return (
+    <View style={styles.container}>
+      {renderHeader()}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ paddingBottom: responsive({ d: 70 }) }}>
+          <View style={styles.nameView}>
+            <Text style={styles.nameText}>
+              {foodValue.name}
+            </Text>
           </View>
+          <Carousel
+            data={foodValue.images}
+            renderItem={({ item }) => (
+              <Image
+                uri={item}
+                resizeMode="cover"
+                style={styles.imageFoodCover}
+              />
+            )}
+            inactiveSlideScale={1}
+            inactiveSlideOpacity={1}
+            sliderWidth={device.width}
+            removeClippedSubviews={false}
+            itemWidth={device.width - responsive({ d: 60 })}
+          />
           <View style={styles.tagInfoView}>
             <View style={styles.infoView}>
               <View style={styles.flexRowCenter}>
                 <RNImage
                   resizeMode="contain"
                   style={styles.iconInfo}
-                  source={require('assets/images/ic_clock.png')}
+                  source={images.ic_clock}
                 />
                 <Text style={styles.infoText}>
-                  {data.timeCook / 60} mins
+                  {+foodValue.timeCook / 60 }
+                  {' '}
+                  mins
                 </Text>
               </View>
-              <View style={[styles.flexRowCenter, { marginLeft: 10 }]}>
+              <View style={[styles.flexRowCenter, styles.marginLeftSmall]}>
                 <RNImage
                   resizeMode="contain"
                   style={styles.iconInfo}
-                  source={require('assets/images/ic_ingredient.png')}
+                  source={images.ic_ingredient}
                 />
                 <Text>
-                  {`${data.ingredients.length} ingredients`}
+                  {`${foodValue.ingredients?.length} ingredients`}
                 </Text>
               </View>
-              <View style={[styles.flexRowCenter, { marginLeft: 10 }]}>
+              <View style={[styles.flexRowCenter, styles.marginLeftSmall]}>
                 <RNImage
                   resizeMode="contain"
                   style={styles.iconInfo}
-                  source={require('assets/images/ic_fire.png')}
+                  source={images.ic_fire}
                 />
                 <Text>
-                  {`${data.calories} calories`}
+                  {`${foodValue.calories} calories`}
                 </Text>
               </View>
             </View>
-            <FlatList
-              data={data.tags}
-              keyExtractor={(item, index) => String(index)}
-              horizontal
-              style={styles.flatList}
-              renderItem={({ item }) => (
-                <View style={styles.tagView}>
-                  <Text style={styles.tagText}>
-                    {item.toUpperCase()}
-                  </Text>
-                </View>
-              )}
-            />
+            {renderTags()}
           </View>
           <View style={styles.ingredientsView}>
-            <CollapseView
-              onExpand={() => this.setState({ ingredientsExpand: true })}
-              onCollapse={() => this.setState({ ingredientsExpand: false })}
-            >
+            <CollapseView>
               <Text style={styles.ingredientsTitle}>
                 INGREDIENTS
               </Text>
-              <FlatList
-                data={data.ingredients}
-                keyExtractor={(item, index) => String(index)}
-                renderItem={({ item }) => {
-                  const { serveForPeople } = this.state;
-                  const amountForOne = Math.round(item.amount / data.serveForPeople);
-                  return (
-                    <Text style={styles.ingredientsText}>
-                      {`${amountForOne * serveForPeople}  ${item.name}`}
-                    </Text>
-                  );
-                }}
-                extraData={this.state.serveForPeople}
-              />
               {
-                this.state.ingredientsExpand && (
-                  <View style={styles.servingBox}>
-                    <TouchableWithoutFeedback
-                      onPress={this.handleSubtractServe}
-                    >
-                      <RNImage
-                        resizeMode="center"
-                        style={styles.iconServing}
-                        source={require('assets/images/ic_minus.png')}
-                      />
-                    </TouchableWithoutFeedback>
-                    <Text>
-                      {`${this.state.serveForPeople} serving${this.state.serveForPeople > 1 ? 's' : ''}`}
-                    </Text>
-                    <TouchableWithoutFeedback
-                      onPress={this.handleAddServe}
-                    >
-                      <RNImage
-                        resizeMode="center"
-                        style={styles.iconServing}
-                        source={require('assets/images/ic_plus.png')}
-                      />
-                    </TouchableWithoutFeedback>
-                  </View>
-                )
+                renderIngredients()
               }
+
+              <View style={styles.servingBox}>
+                <TouchableOpacity
+                  onPress={handleSubtractServe}
+                  style={styles.buttonServing}
+                >
+                  <RNImage
+                    resizeMode="center"
+                    style={styles.iconServing}
+                    source={images.ic_minus}
+                  />
+                </TouchableOpacity>
+                <Text>
+                  {`${serveForPeople} ${appropriatePluralisation(serveForPeople, 'serving', 'servings')}`}
+                </Text>
+                <TouchableOpacity
+                  onPress={handleAddServe}
+                  style={{ ...styles.buttonServing, alignItems: 'flex-end' }}
+                >
+                  <RNImage
+                    resizeMode="center"
+                    style={styles.iconServing}
+                    source={images.ic_plus}
+                  />
+                </TouchableOpacity>
+              </View>
+
             </CollapseView>
           </View>
           <View style={styles.instructionView}>
-            <CollapseView isCollapse>
+            <CollapseView>
               <Text style={styles.ingredientsTitle}>
                 INSTRUCTIONS
               </Text>
-              <FlatList
-                data={data.guidline}
-                keyExtractor={(item, index) => String(index)}
-                renderItem={({ item, index }) => (
-                  <Text style={styles.ingredientsText}>
-                    {`${index + 1}. ${item}`}
-                  </Text>
-                )}
-                showsVerticalScrollIndicator={false}
-              />
+              {
+              renderInstruction()
+            }
             </CollapseView>
           </View>
-        </ScrollView>
-      </View>
-    );
-  }
-}
+        </View>
 
-export default withNavigation(FoodDetail);
+      </ScrollView>
+    </View>
+  );
+};
+
+
+export default FoodDetail;

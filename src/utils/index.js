@@ -23,24 +23,24 @@ export const responsive = ({ f, h, d }) => {
   return null;
 };
 
-export const isEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+export const isEmail = email => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
-export const actionNameToTypes = (actionName) => actionName
+export const actionNameToTypes = actionName => actionName
   .replace(/([A-Z])/g, '_$1')
   .trim()
   .toUpperCase();
 
 export const isIOS = Platform.OS === 'ios';
 export const convertDataPicker = (list = []) => (
-  list.map((item) => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
+  list.map(item => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
 );
 
-export const uuid = (name) => {
+export const uuid = name => {
   const S4 = () => (((1 + Math.random()) * 0x10000) || 0).toString(16).substring(1);
   return (`${name + S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
 };
 
-export const validateEditProfile = (fields) => {
+export const validateEditProfile = fields => {
   const {
     displayName,
   } = fields;
@@ -51,15 +51,22 @@ export const validateEditProfile = (fields) => {
 
   return errors;
 };
+
 export const listIconPlan = {
   lunch: images.icon_lunch,
   brunch: images.icon_brunch,
   diner: images.icon_dinner,
   breakfast: images.icon_breakfast,
 };
+
 export const dataPickerMeal = [
   { label: 'Breakfast', value: 'breakfast' },
   { label: 'Lunch', value: 'lunch' },
   { label: 'Brunch', value: 'brunch' },
   { label: 'Dinner', value: 'dinner' },
 ];
+
+
+export const appropriatePluralisation = (num, sigular, plural) => (num <= 1 ? sigular : plural);
+
+export const formatNumber = (num, digits) => Number.parseFloat(num).toFixed(digits);
