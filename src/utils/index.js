@@ -1,5 +1,7 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
 
+import images from 'assets/images';
+
 export authHelper from './authHelper';
 export storageHelper from './storageHelper';
 
@@ -49,6 +51,21 @@ export const validateEditProfile = fields => {
 
   return errors;
 };
+
+export const listIconPlan = {
+  lunch: images.icon_lunch,
+  brunch: images.icon_brunch,
+  diner: images.icon_dinner,
+  breakfast: images.icon_breakfast,
+};
+
+export const dataPickerMeal = [
+  { label: 'Breakfast', value: 'breakfast' },
+  { label: 'Lunch', value: 'lunch' },
+  { label: 'Brunch', value: 'brunch' },
+  { label: 'Dinner', value: 'dinner' },
+];
+
 
 export const appropriatePluralisation = (num, sigular, plural) => (num <= 1 ? sigular : plural);
 

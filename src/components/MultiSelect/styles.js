@@ -4,22 +4,12 @@ import themeStyles from 'styles/theme';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    borderBottomColor: '#dddd',
+    borderBottomWidth: 1,
+    paddingBottom: responsive({ d: 10 }),
   },
   title: {
-    color: 'black',
-    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
-    fontWeight: '500',
-  },
-  date: {
-    flexDirection: 'row',
-    paddingTop: responsive({ d: 10 }),
-    paddingBottom: responsive({ d: 10 }),
-    borderBottomWidth: 0.7,
-    borderBottomColor: '#dddd',
-  },
-  value: {
-    flex: 1,
+    marginBottom: responsive({ d: 10 }),
     color: 'black',
     fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
   },
@@ -28,5 +18,10 @@ export default StyleSheet.create({
     fontSize: responsive({ f: themeStyles.FONT_SIZE_SMALL }),
     marginTop: responsive({ d: 10 }),
   },
-
+  dropdown: {
+    borderBottomWidth: 0,
+  },
+  items: {
+    height: responsive({ h: 150 }),
+  },
 });

@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
-  Image,
   TextInput,
   ScrollView,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  Platform,
-  Switch
+  Switch,
 } from 'react-native';
-import AntIcon from '@expo/vector-icons/AntDesign';
 import moment from 'moment';
+
 import { useSelector } from 'react-redux';
 import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+import MultiSelect from 'components/MultiSelect';
 
 import Header from 'components/Header';
 import DatePicker from 'components/DatePicker';
@@ -21,96 +19,150 @@ import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
-import { isIOS , convertDataPicker } from 'utils';
+import { isIOS, convertDataPicker, dataPickerMeal } from 'utils';
 
 import styles from './styles';
 
 const CreatePlan = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
-  useFirebaseConnect(['Type_Food', 'Food']);
-  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } }}) => convertDataPicker(Type_Food));
-  const [titlePlan, setTitlePlan] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [toggleAlarm, setToggleAlarm] = useState(true);
-
-  const [mealType, setMealType] = useState(typeFood[0]?.value);
-  const listFood = useSelector(({ firebase: { ordered: { Food } }}) => {
-    const list = (Food || []).filter(item => item?.value?.type === mealType);
-    return convertDataPicker(list);
+  useFirebaseConnect(['Type_Food', 'Food', `Meal_Plan/${user.uid}`]);
+  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => convertDataPicker(Food || []));
+  const [plan, setPlan] = useState({
+    titlePlan: '',
+    date: new Date(),
+    toggleAlarm: true,
+    mealType: dataPickerMeal[0]?.value,
+    recipe: [],
+    note: '',
   });
-
-  const [recipe, setRecipe] = useState('');
-  const [note, setNote] = useState('');
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [error, setError] = useState({});
+  const { id: planId } = navigation.state.params || {};
+  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
 
-  const handleDatePicked = (date) => {
-    setDate(date);
+  const setMealPlan = () => {
+    const {
+      title, date, isAlarm, meal, food, note,
+    } = mealPlan;
+    if (planId) {
+      setPlan({
+        titlePlan: title,
+        date: new Date(date),
+        toggleAlarm: isAlarm,
+        mealType: meal,
+        recipe: food,
+        note,
+      });
+    }
+  };
+
+  useEffect(() => {
+    setMealPlan();
+  }, []);
+
+  const handleDatePicked = (value) => {
+    setPlan({
+      ...plan,
+      date: value,
+    });
     setDatePickerVisible(false);
   };
 
   const handleTimePicked = (time) => {
     const hour = time.getHours();
     const minutes = time.getMinutes();
-    date.setHours(hour);
-    date.setMinutes(minutes);
+    plan.date.setHours(hour);
+    plan.date.setMinutes(minutes);
     setTimePickerVisible(false);
   };
 
   const onChangeTypeMeal = (value) => {
-    setMealType(value);
+    setPlan({
+      ...plan,
+      mealType: value,
+    });
     setError({ ...error, typeMeal: '' });
-  }
+  };
 
   const onValidateInput = () => {
-    const err = {};
-    if (!titlePlan) {
+    const err = { ...error };
+    if (!plan.titlePlan) {
       err.title = 'Please enter title of the meal plan';
     }
-    if (!mealType) {
-      err.mealtype = 'Please choose your meal';
+    if (!plan.mealType) {
+      err.mealType = 'Please choose your meal';
     }
-    if (!recipe) {
+    if (!plan.recipe.length) {
       err.recipe = 'Please choose your recipe';
     }
     return err;
-  }
+  };
 
   const onCreatePlan = () => {
-    const err = onValidateInput();
-    if (Object.keys(err).length) {
-      setError(err);
-      return;
-    }
     const data = {
-      title: titlePlan,
-      date: date.getTime(),
-      isAlarm: toggleAlarm,
-      food: recipe,
-      note,
+      title: plan.titlePlan,
+      date: plan.date.getTime(),
+      isAlarm: plan.toggleAlarm,
+      food: plan.recipe,
+      note: plan.note,
       createdAt: Date.now(),
+      meal: plan.mealType,
     };
-    firebase.push(`Meal_Plan/${user.uid}`, data );
+    firebase.push(`Meal_Plan/${user.uid}`, data);
     navigation.navigate('MealPlan');
   };
 
+  const onEditPlan = () => {
+    const data = {
+      title: plan.titlePlan,
+      date: plan.date.getTime(),
+      isAlarm: plan.toggleAlarm,
+      food: plan.recipe,
+      note: plan.note,
+      meal: plan.mealType,
+    };
+    firebase.update(`Meal_Plan/${user.uid}/${planId}`, data);
+    navigation.navigate('PlanDetails', { isEdit: true, id: planId });
+  };
+
+  const onPressButton = () => {
+    const err = onValidateInput();
+    if (Object.values(err).filter((item) => item !== '').length) {
+      setError(err);
+      return;
+    }
+    if (planId) {
+      onEditPlan();
+    } else {
+      onCreatePlan();
+    }
+  };
+
   const onChangeTitle = (text) => {
-    setTitlePlan(text);
+    setPlan({
+      ...plan,
+      titlePlan: text,
+    });
     setError({ ...error, title: '' });
-  }
+  };
 
   const onChangeRecipe = (value) => {
-    setRecipe(value);
+    setPlan({
+      ...plan,
+      recipe: value,
+    });
     setError({ ...error, recipe: '' });
-  }
+  };
 
   return (
     <View style={styles.main}>
       <Header
         onPressLeft={() => navigation.goBack()}
         iconLeft={images.ic_exist}
+        rightText={planId ? 'Reset' : null}
+        onPressRight={setMealPlan}
       />
       <KeyboardAvoidingView
         style={styles.keyboard}
@@ -120,10 +172,10 @@ const CreatePlan = ({ navigation }) => {
         <ScrollView style={styles.container}>
           <CustomTextInput
             multiline
-            title='Title of the meal plan'
-            placeholder='Write your plan...'
-            value={titlePlan}
-            onChangeText={text => onChangeTitle(text)}
+            title="Title of the meal plan"
+            placeholder="Write your plan..."
+            value={plan.titlePlan}
+            onChangeText={(text) => onChangeTitle(text)}
             containerStyles={styles.containerTitle}
             titleStyles={styles.titleText}
             error={error.title}
@@ -131,25 +183,25 @@ const CreatePlan = ({ navigation }) => {
           {/* date time picker */}
           <View style={styles.viewDate}>
             <DatePicker
-              title='Date'
+              title="Date"
               onPress={() => setDatePickerVisible(true)}
-              value={moment(date).format('DD MMMM, YYYY')}
+              value={moment(plan.date).format('DD MMMM, YYYY')}
               isVisible={isDatePickerVisible}
               onConfirm={handleDatePicked}
               onCancel={() => setDatePickerVisible(false)}
-              mode='date'
+              mode="date"
               containerStyle={styles.pickerDate}
-              date={date}
+              date={plan.date}
             />
             <DatePicker
-              title='Time'
+              title="Time"
               onPress={() => setTimePickerVisible(true)}
-              value={moment(date).format('LT')}
+              value={moment(plan.date).format('LT')}
               isVisible={isTimePickerVisible}
               onConfirm={handleTimePicked}
               onCancel={() => setTimePickerVisible(false)}
-              mode='time'
-              date={date}
+              mode="time"
+              date={plan.date}
             />
           </View>
           {/* alarm */}
@@ -158,32 +210,36 @@ const CreatePlan = ({ navigation }) => {
               Set Alarm to notify your meal plan
             </Text>
             <Switch
-              value={toggleAlarm}
-              onValueChange={(value) => setToggleAlarm(value)}
+              value={plan.toggleAlarm}
+              onValueChange={(value) => setPlan({ ...plan, toggleAlarm: value })}
               thumbColor="white"
-              trackColor='#45db5e'
+              trackColor="#45db5e"
             />
           </View>
           {/* meal type picker */}
           <PickerSelect
             title="What's your meal?"
-            onValueChange={value => onChangeTypeMeal(value)}
-            value={mealType}
-            items={typeFood}
+            onValueChange={(value) => onChangeTypeMeal(value)}
+            value={plan.mealType}
+            items={dataPickerMeal}
             containerStyle={styles.picker}
             error={error.mealType}
           />
-          <PickerSelect
-            title='Choose your recipe'
-            onValueChange={(value) => onChangeRecipe(value)}
-            value={recipe}
+          <MultiSelect
+            title="Choose your recipe"
             items={listFood}
+            uniqueKey="key"
+            displayKey="label"
+            onSelectedItemsChange={(value) => onChangeRecipe(value)}
+            selectedItems={plan.recipe}
             containerStyle={styles.picker}
             error={error.recipe}
           />
           {/* notes */}
           <View style={styles.note}>
-            <Text style={styles.textNote}>Note{' '}
+            <Text style={styles.textNote}>
+              Note
+              {' '}
               <Text style={styles.textOptional}>(Optional)</Text>
             </Text>
             <TextInput
@@ -192,8 +248,8 @@ const CreatePlan = ({ navigation }) => {
               multiline
               placeholder="Add any Additional information"
               style={styles.textNote}
-              value={note}
-              onChangeText={text => setNote(text)}
+              value={plan.note}
+              onChangeText={(text) => setPlan({ ...plan, note: text })}
             />
           </View>
         </ScrollView>
@@ -201,11 +257,11 @@ const CreatePlan = ({ navigation }) => {
 
       <Button
         buttonStyle={styles.btnCreate}
-        title='CREATE A PLAN'
-        onPress={onCreatePlan}
+        title={!planId ? 'CREATE A PLAN' : 'SAVE'}
+        onPress={onPressButton}
       />
     </View>
   );
-}
+};
 
 export default CreatePlan;

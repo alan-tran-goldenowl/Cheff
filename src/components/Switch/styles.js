@@ -31,5 +31,5 @@ export default StyleSheet.create({
     marginRight: responsive({ d: 16 }),
     alignItems: 'flex-end',
     justifyContent: 'center',
-  }
+  },
 });

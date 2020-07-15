@@ -3,82 +3,65 @@ import {
   View,
   Text,
   FlatList,
+  Alert,
 } from 'react-native';
-import { withNavigation, NavigationActions } from 'react-navigation';
+import { useSelector } from 'react-redux';
+import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+import moment from 'moment';
 
+import images from 'assets/images';
 import Header from 'components/Header';
 import styles from './styles';
 import ListPlanItem from './components/ListPlanItem';
 
+const ListPlan = ({ navigation }) => {
+  const { day } = navigation.state.params;
 
-const mockData = [
-  {
-    id: '1',
-    time: '5:00 AM',
-    title: 'Let have breakfast',
-    description: 'Tiểu nhị! Cho tô phở tái',
-    type: 'breakfast',
-  },
-  {
-    id: '2',
-    time: '10:30 AM',
-    title: 'Brunch with dog',
-    description: 'Mang đây 1 pizza ko hành ko giá',
-    type: 'brunch',
-  },
-  {
-    id: '3',
-    time: '1:30 PM',
-    title: 'Lunch love',
-    description: 'Bò xào cần tây ft rau ngót hầm xương',
-    type: 'lunch',
-  },
-  {
-    id: '4',
-    time: '7:50 PM',
-    title: 'Ready for dinner',
-    description: 'Nhẹ nhàng chào buổi tối bằng nồi lẩu hải sản <3',
-    type: 'dinner',
-  },
-];
+  const firebase = useFirebase();
+  const user = firebase.auth().currentUser;
+  useFirebaseConnect(`Meal_Plan/${user.uid}`);
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid] || [])
+    .filter((item) => moment(item.value.date).format('YYYY-MM-DD') === day))
+    .sort((a, b) => a.value.date - b.value.date); // filter and sort by date
 
-export default withNavigation(({ navigation }) => {
-  const goBack = () => {
-    navigation.dispatch(NavigationActions.back());
+  const goBack = () => navigation.goBack();
+
+  const goToMealPlan = (id) => navigation.navigate('PlanDetails', { id });
+
+  const deleteMealPlan = (id) => {
+    Alert.alert(
+      'Warning',
+      'Are you want to delete this meal plan ?',
+      [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            firebase.remove(`Meal_Plan/${user.uid}/${id}`);
+            goBack();
+          },
+        },
+      ],
+    );
   };
+
+  const editMealPlan = (id) => navigation.navigate('CreatePlan', { id });
 
   const renderHeader = () => (
     <Header
       onPressLeft={goBack}
-      iconLeft={require('assets/images/icon_back.png')}
+      iconLeft={images.icon_back}
     />
   );
 
   const renderDayTime = () => (
-    <View
-      style={{
-        height: 50,
-        marginLeft: 17,
-        display: 'flex',
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Text style={{ marginTop: 15, color: 'black', fontSize: 24 }}>
+    <View style={styles.dayView}>
+      <Text style={styles.day}>
         01 August, 2018
       </Text>
-      <Text
-        style={{
-          color: '#666',
-          fontSize: 18,
-          marginTop: 20,
-          marginRight: 15,
-        }}
-      >
-        Today
-      </Text>
+      <Text style={styles.today}>Today</Text>
     </View>
   );
 
@@ -87,10 +70,20 @@ export default withNavigation(({ navigation }) => {
       {renderHeader()}
       {renderDayTime()}
       <FlatList
-        data={mockData}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => <ListPlanItem {...item} />}
+        data={mealPlan}
+        keyExtractor={({ key }) => key}
+        renderItem={({ item }) => (
+          <ListPlanItem
+            id={item.key}
+            {...item}
+            goToMealPlan={goToMealPlan}
+            deleteMealPlan={deleteMealPlan}
+            editMealPlan={editMealPlan}
+          />
+        )}
       />
     </View>
   );
-});
+};
+
+export default ListPlan;

@@ -1,57 +1,36 @@
 import React, { useState } from 'react';
 import { upperFirst } from 'lodash';
 import {
-  Text, View, Image, FlatList, TouchableOpacity,
+  Text, View, Image, TouchableOpacity,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { useSelector } from 'react-redux';
+import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+import moment from 'moment';
+import images from 'assets/images';
 import AntIcon from '@expo/vector-icons/AntDesign';
 import Header from 'components/Header';
+import { listIconPlan } from 'utils';
 import styles from './styles';
 
-const icon = {
-  lunch: require('assets/images/icon-lunch.png'),
-  brunch: require('assets/images/icon-brunch.png'),
-  dinner: require('assets/images/icon-dinner.png'),
-  breakfast: require('assets/images/icon-breakfast.png'),
-};
-
-const data = {
-  id: 1,
-  title: 'breakfast with family',
-  date: '1 August, 2018',
-  time: '05:00 AM',
-  type: 'breakfast',
-  food: [
-    {
-      id: 1,
-      name: 'Vegetarian Fried Fried Rice',
-    },
-    {
-      id: 2,
-      name: 'Grab Soup',
-    },
-  ],
-  notes: 'Duis eu faucibus libero. Etiam non dui orci. Vestibulum id turpis eu est tincidunt porttitor vel at velit. Integer venenatis massa vitae mauris sagittis, sed condimentum lorem sodales. Quisque id est bibendum nibh cursus blandit nec nec purus. Nullam sit amet libero ut leo facilisis finibus vel at urna. Ut vehicula, lorem eget dictum laoreet, lectus ipsum consequat dolor, vel convallis sem nisl ac diam. Donec quis auctor massa, nec auctor nisl. Sed convallis molestie arcu vel semper. Duis et fermentum mauris. Vivamus posuere ullamcorper aliquam. Sed ut risus vitae erat pretium commodo non sed erat. Ut vel lacus eu purus dictum ultricies in sit amet magna. Phasellus rutrum viverra risus, sit amet imperdiet metus dignissim consectetur.',
-};
 const PlanDetails = ({ navigation }) => {
-  const [showNotification, setShowNotification] = useState(true);
-  const goBack = () => {
-    navigation.dispatch(NavigationActions.back());
-  };
+  const { id: planId, isEdit } = navigation.state.params || {};
+  const firebase = useFirebase();
+  const user = firebase.auth().currentUser;
+  useFirebaseConnect([`Meal_Plan/${user.uid}/${planId}`, 'Food', 'Type_Food']);
+  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
+  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map((item) => Food[item]?.name));
+  const [showNotification, setShowNotification] = useState(isEdit);
+  const goBack = () => navigation.goBack();
 
   const goEdit = () => {
-    navigation.navigate('CreatePlan', {
-      data: {
-        name: '123',
-      },
-    });
+    navigation.navigate('CreatePlan', { id: planId });
   };
 
   const renderHeader = () => (
     <Header
       onPressLeft={goBack}
-      iconLeft={require('assets/images/icon_back.png')}
-      iconRight={require('assets/images/icon_pen.png')}
+      iconLeft={images.icon_back}
+      iconRight={images.icon_pen}
       onPressRight={goEdit}
     />
   );
@@ -60,8 +39,34 @@ const PlanDetails = ({ navigation }) => {
     setShowNotification(false);
   };
 
-  const checkParamsEdit = () => {
-    if (navigation.state.params.message) { return navigation.state.params.message === 'edit'; }
+  const renderItem = (icon, text, secondIcon) => {
+    if (text) {
+      return (
+        <View style={styles.rowView}>
+          <View style={styles.iconView}>
+            <Image
+              style={styles.icon}
+              resizeMode="center"
+              source={icon}
+            />
+          </View>
+          <View style={styles.textView}>
+            {secondIcon
+              && (
+              <Image
+                source={secondIcon}
+                resizeMode="center"
+                style={styles.iconViewImage}
+              />
+              )}
+            <Text style={styles.text}>
+              {text}
+            </Text>
+          </View>
+        </View>
+      );
+    }
+    return null;
   };
 
   return (
@@ -69,10 +74,10 @@ const PlanDetails = ({ navigation }) => {
       {/* header */}
       {renderHeader()}
       {
-        (checkParamsEdit() && showNotification)
+      showNotification
         && (
         <View style={styles.notification}>
-          <Text style={{ color: 'white' }}>
+          <Text style={styles.textEdit}>
             You have just edited your plan.
           </Text>
           <TouchableOpacity onPress={handleVisibleNotifi}>
@@ -84,106 +89,20 @@ const PlanDetails = ({ navigation }) => {
       {/* title */}
       <View style={styles.nameView}>
         <Text style={styles.nameText}>
-          {upperFirst(data.title)}
+          {upperFirst(mealPlan.title)}
         </Text>
       </View>
 
       {/* date */}
-      <View style={styles.rowView}>
-        <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            resizeMode="center"
-            source={require('assets/images/icon_calendar.png')}
-          />
-        </View>
-        <View style={styles.textView}>
-          <Text styles={styles.text}>
-            {data.date}
-          </Text>
-        </View>
-      </View>
-
+      {renderItem(images.icon_calendar, moment(mealPlan.date).format('DD, MMM, YYYY'))}
       {/* time */}
-      <View style={styles.rowView}>
-        <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            resizeMode="center"
-            source={require('assets/images/icon_clock.png')}
-          />
-        </View>
-        <View style={styles.textView}>
-          <Text styles={styles.text}>
-            {data.time}
-          </Text>
-        </View>
-      </View>
-
+      {renderItem(images.icon_clock, moment(mealPlan.date).format('LT'))}
       {/* type */}
-      <View style={styles.rowView}>
-        <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            resizeMode="center"
-            source={require('assets/images/icon_chicken_food.png')}
-          />
-        </View>
-        <View style={{
-          ...styles.textView,
-          ...styles.borderBottom,
-          ...styles.textViewWithIconInFront,
-        }}
-        >
-          <Image
-            source={icon[data.type]}
-            resizeMode="center"
-            style={styles.iconViewImage}
-          />
-          <Text styles={styles.text}>
-            {' '}
-            {upperFirst(data.type)}
-          </Text>
-        </View>
-      </View>
-
+      {renderItem(images.icon_chicken_food, upperFirst(mealPlan.meal), listIconPlan[mealPlan.meal])}
       {/* food */}
-      <View style={styles.rowView}>
-        <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            resizeMode="center"
-            source={require('assets/images/icon_food.png')}
-          />
-        </View>
-        <View style={{ ...styles.textView, ...styles.borderBottom }}>
-          <FlatList
-            data={data.food}
-            keyExtractor={({ id }) => String(id)}
-            renderItem={({ item }) => (
-              <Text styles={styles.text}>
-                {upperFirst(item.name)}
-              </Text>
-            )}
-          />
-        </View>
-      </View>
-
+      {renderItem(images.icon_food, food.join('\n'))}
       {/* notes */}
-      <View style={styles.rowView}>
-        <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            resizeMode="center"
-            source={require('assets/images/icon_note.png')}
-          />
-        </View>
-        <View style={styles.textView}>
-          <Text styles={styles.notes}>
-            {data.notes}
-          </Text>
-        </View>
-      </View>
+      {renderItem(images.icon_note, mealPlan.note)}
     </View>
   );
 };

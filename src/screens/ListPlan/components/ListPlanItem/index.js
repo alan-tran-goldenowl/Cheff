@@ -4,40 +4,30 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
-import SwipeRow from 'components/SwipeRow';
 
+import { listIconPlan } from 'utils';
+import SwipeRow from 'components/SwipeRow';
+import moment from 'moment';
 import styles from './styles';
 
-const icon = {
-  lunch: require('assets/images/icon-lunch.png'),
-  brunch: require('assets/images/icon-brunch.png'),
-  dinner: require('assets/images/icon-dinner.png'),
-  breakfast: require('assets/images/icon-breakfast.png'),
-};
-
-export default withNavigation(({
-  id, time, type, title, description, navigation,
+const ListPlanItem = ({
+  id,
+  value: {
+    date, title, note, meal,
+  },
+  goToMealPlan,
+  deleteMealPlan,
+  editMealPlan,
 }) => {
-  const goToMealPlan = () => navigation.navigate('PlanDetails', { id });
+  const onGoToMealPlan = () => goToMealPlan(id);
 
   const showAlertDelete = () => {
-    Alert.alert(
-      'Warning',
-      'Are you want to delete this meal plan ?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('cancel'),
-        },
-        {
-          text: 'Delete',
-          onPress: () => console.log('delete'),
-        },
-      ],
-    );
+    deleteMealPlan(id);
+  };
+
+  const onEditMealPlan = () => {
+    editMealPlan(id);
   };
 
   return (
@@ -46,7 +36,7 @@ export default withNavigation(({
         {
           text: 'Edit',
           color: '#C8C7CD',
-          action: () => navigation.navigate('CreatePlan'),
+          action: onEditMealPlan,
           x: 192,
         },
         {
@@ -59,27 +49,27 @@ export default withNavigation(({
     >
       <View style={styles.container}>
         <View style={styles.textViewTime}>
-          <Text>
-            {time}
+          <Text style={styles.text}>
+            {moment(date).format('LT')}
           </Text>
         </View>
         <TouchableOpacity
-          onPress={goToMealPlan}
+          onPress={onGoToMealPlan}
           style={styles.touchable}
         >
           <View style={styles.iconView}>
             <Image
-              source={icon[type]}
+              source={listIconPlan[meal]}
               resizeMode="center"
               style={styles.iconViewImage}
             />
           </View>
           <View style={styles.textViewSummary}>
-            <Text>
+            <Text style={styles.text}>
               {title}
             </Text>
             <Text style={styles.textViewDescription}>
-              {description}
+              {note}
             </Text>
           </View>
         </TouchableOpacity>
@@ -87,4 +77,6 @@ export default withNavigation(({
     </SwipeRow>
 
   );
-});
+};
+
+export default ListPlanItem;
