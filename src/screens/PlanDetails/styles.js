@@ -8,7 +8,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   nameView: {
-    height: responsive({ h: 55 }),
+    height: responsive({ h: 45 }),
     marginLeft: responsive({ d: 30 }),
     display: 'flex',
     flexDirection: 'row',
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginTop: responsive({ d: 15 }),
   },
   rowView: {
-    minHeight: responsive({ h: 55 }),
+    minHeight: responsive({ h: 45 }),
     width: '100%',
     height: 'auto',
     paddingTop: responsive({ d: 15 }),
@@ -35,8 +35,8 @@ export default StyleSheet.create({
     paddingLeft: responsive({ d: 30 }),
   },
   icon: {
-    width: responsive({ h: 15 }),
-    height: responsive({ h: 15 }),
+    width: responsive({ h: 12 }),
+    height: responsive({ h: 12 }),
   },
   typeIcon: {
     width: responsive({ h: 8 }),
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     paddingVertical: responsive({ d: 10 }),
   },
   text: {
-    fontSize: responsive({ f: theme.FONT_SIZE_LARGE }),
+    fontSize: responsive({ f: theme.FONT_SIZE_NORMAL }),
     color: theme.COLOR.BLACK_COLOR,
   },
 });

@@ -56,7 +56,8 @@ const MyCalendar = ({
   const markedDates = loadMarkedDates();
 
   const onDayPress = (day) => {
-    if (markedDates[day.dateString]) {
+    const marked = getMarkedDays();
+    if (marked[day.dateString]) {
       moveToListPlan(day.dateString);
     }
   };

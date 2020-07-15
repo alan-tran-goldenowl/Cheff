@@ -51,9 +51,15 @@ export const validateEditProfile = (fields) => {
 
   return errors;
 };
-export const listIconPlan = [
-  images.icon_lunch,
-  images.icon_brunch,
-  images.icon_dinner,
-  images.icon_breakfast,
+export const listIconPlan = {
+  lucnch: images.icon_lunch,
+  brunch: images.icon_brunch,
+  diner: images.icon_dinner,
+  breakfast: images.icon_breakfast,
+};
+export const dataPickerMeal = [
+  { label: 'Breakfast', value: 'breakfast' },
+  { label: 'Lunch', value: 'lunch' },
+  { label: 'Brunch', value: 'brunch' },
+  { label: 'Dinner', value: 'dinner' },
 ];

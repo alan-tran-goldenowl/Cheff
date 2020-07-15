@@ -5,6 +5,8 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+
+import { listIconPlan } from 'utils';
 import SwipeRow from 'components/SwipeRow';
 import moment from 'moment';
 import styles from './styles';
@@ -12,9 +14,8 @@ import styles from './styles';
 const ListPlanItem = ({
   id,
   value: {
-    date, title, note,
+    date, title, note, meal,
   },
-  icon,
   goToMealPlan,
   deleteMealPlan,
   editMealPlan,
@@ -58,7 +59,7 @@ const ListPlanItem = ({
         >
           <View style={styles.iconView}>
             <Image
-              source={icon}
+              source={listIconPlan[meal]}
               resizeMode="center"
               style={styles.iconViewImage}
             />

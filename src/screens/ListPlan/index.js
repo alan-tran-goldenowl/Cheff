@@ -10,7 +10,6 @@ import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 import moment from 'moment';
 
 import images from 'assets/images';
-import { listIconPlan } from 'utils';
 import Header from 'components/Header';
 import styles from './styles';
 import ListPlanItem from './components/ListPlanItem';
@@ -21,7 +20,7 @@ const ListPlan = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect(`Meal_Plan/${user.uid}`);
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid])
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid] || [])
     .filter((item) => moment(item.value.date).format('YYYY-MM-DD') === day))
     .sort((a, b) => a.value.date - b.value.date); // filter and sort by date
 
@@ -71,11 +70,10 @@ const ListPlan = ({ navigation }) => {
       <FlatList
         data={mealPlan}
         keyExtractor={({ key }) => key}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <ListPlanItem
             id={item.key}
             {...item}
-            icon={listIconPlan[index % 4]}
             goToMealPlan={goToMealPlan}
             deleteMealPlan={deleteMealPlan}
             editMealPlan={editMealPlan}

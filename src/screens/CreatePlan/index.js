@@ -11,6 +11,7 @@ import moment from 'moment';
 
 import { useSelector } from 'react-redux';
 import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+import MultiSelect from 'components/MultiSelect';
 
 import Header from 'components/Header';
 import DatePicker from 'components/DatePicker';
@@ -18,7 +19,7 @@ import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
-import { isIOS, convertDataPicker } from 'utils';
+import { isIOS, convertDataPicker, dataPickerMeal } from 'utils';
 
 import styles from './styles';
 
@@ -26,18 +27,14 @@ const CreatePlan = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect(['Type_Food', 'Food']);
-  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => convertDataPicker(Type_Food));
   const [titlePlan, setTitlePlan] = useState('');
   const [date, setDate] = useState(new Date());
   const [toggleAlarm, setToggleAlarm] = useState(true);
 
-  const [mealType, setMealType] = useState(typeFood[0]?.value);
-  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => {
-    const list = (Food || []).filter((item) => item?.value?.type === mealType);
-    return convertDataPicker(list);
-  });
+  const [mealType, setMealType] = useState(dataPickerMeal[0]?.value);
+  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => convertDataPicker(Food || []));
 
-  const [recipe, setRecipe] = useState('');
+  const [recipe, setRecipe] = useState([]);
   const [note, setNote] = useState('');
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
@@ -67,9 +64,9 @@ const CreatePlan = ({ navigation }) => {
       err.title = 'Please enter title of the meal plan';
     }
     if (!mealType) {
-      err.mealtype = 'Please choose your meal';
+      err.mealType = 'Please choose your meal';
     }
-    if (!recipe) {
+    if (!recipe.length) {
       err.recipe = 'Please choose your recipe';
     }
     return err;
@@ -88,6 +85,7 @@ const CreatePlan = ({ navigation }) => {
       food: recipe,
       note,
       createdAt: Date.now(),
+      meal: mealType,
     };
     firebase.push(`Meal_Plan/${user.uid}`, data);
     navigation.navigate('MealPlan');
@@ -166,15 +164,17 @@ const CreatePlan = ({ navigation }) => {
             title="What's your meal?"
             onValueChange={(value) => onChangeTypeMeal(value)}
             value={mealType}
-            items={typeFood}
+            items={dataPickerMeal}
             containerStyle={styles.picker}
             error={error.mealType}
           />
-          <PickerSelect
+          <MultiSelect
             title="Choose your recipe"
-            onValueChange={(value) => onChangeRecipe(value)}
-            value={recipe}
             items={listFood}
+            uniqueKey="key"
+            displayKey="label"
+            onSelectedItemsChange={(value) => onChangeRecipe(value)}
+            selectedItems={recipe}
             containerStyle={styles.picker}
             error={error.recipe}
           />

@@ -9,6 +9,7 @@ import moment from 'moment';
 import images from 'assets/images';
 import AntIcon from '@expo/vector-icons/AntDesign';
 import Header from 'components/Header';
+import { listIconPlan } from 'utils';
 import styles from './styles';
 
 const PlanDetails = ({ navigation }) => {
@@ -17,8 +18,7 @@ const PlanDetails = ({ navigation }) => {
   const user = firebase.auth().currentUser;
   useFirebaseConnect([`Meal_Plan/${user.uid}/${planId}`, 'Food', 'Type_Food']);
   const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid][planId] || {});
-  // const food = useSelector(({ firebase: { data: { Food = {} } } }) => Food[mealPlan.food] || {});
-  // const typeFood = useSelector(({ firebase: { data: { Type_Food = {} } } }) => Type_Food[food.type]);
+  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map((item) => Food[item]?.name));
   const [showNotification, setShowNotification] = useState(true);
   const goBack = () => navigation.goBack();
 
@@ -47,7 +47,7 @@ const PlanDetails = ({ navigation }) => {
     if (navigation.state.params.message) { return navigation.state.params.message === 'edit'; }
   };
 
-  const renderItem = (icon, text) => {
+  const renderItem = (icon, text, secondIcon) => {
     if (text) {
       return (
         <View style={styles.rowView}>
@@ -59,6 +59,14 @@ const PlanDetails = ({ navigation }) => {
             />
           </View>
           <View style={styles.textView}>
+            {secondIcon
+              && (
+              <Image
+                source={secondIcon}
+                resizeMode="center"
+                style={styles.iconViewImage}
+              />
+              )}
             <Text style={styles.text}>
               {text}
             </Text>
@@ -98,11 +106,11 @@ const PlanDetails = ({ navigation }) => {
       {/* time */}
       {renderItem(images.icon_clock, moment(mealPlan.date).format('LT'))}
       {/* type */}
-      {renderItem(images.icon_chicken_food, '')}
+      {renderItem(images.icon_chicken_food, upperFirst(mealPlan.meal), listIconPlan[mealPlan.meal])}
       {/* food */}
-      {renderItem(images.icon_food, '')}
+      {renderItem(images.icon_food, food.join('\n'))}
       {/* notes */}
-      {renderItem(images.icon_note, mealPlan.notes)}
+      {renderItem(images.icon_note, mealPlan.note)}
     </View>
   );
 };
