@@ -12,6 +12,7 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { store, rrfProps } from 'stores';
 import images from 'assets/images';
 import NavigationRoot from 'navigation/SwitchNavigation';
+import PushNotificationHandler from 'components/PushNotificationHandler';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,6 +61,7 @@ export default class App extends React.Component {
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <NavigationRoot />
+            <PushNotificationHandler />
           </View>
         </ReactReduxFirebaseProvider>
       </Provider>

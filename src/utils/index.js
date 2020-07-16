@@ -1,5 +1,5 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
-
+import { Notifications } from 'expo';
 import images from 'assets/images';
 
 export authHelper from './authHelper';
@@ -70,3 +70,17 @@ export const dataPickerMeal = [
 export const appropriatePluralisation = (num, sigular, plural) => (num <= 1 ? sigular : plural);
 
 export const formatNumber = (num, digits) => Number.parseFloat(num).toFixed(digits);
+
+export const setNotification = time => Notifications.scheduleLocalNotificationAsync({
+  title: 'Meal Plan',
+  body: 'You have a meal plan',
+  ios: {
+    sound: true,
+    _displayInForeground: true,
+  },
+},
+{
+  time,
+});
+
+export const cancelNotification = id => Notifications.cancelScheduledNotificationAsync(id);
