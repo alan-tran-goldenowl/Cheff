@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+import { useFirebaseConnect } from 'react-redux-firebase';
 
 import MyCalendar from 'components/Calendar';
 import Header from 'components/Header';
 import images from 'assets/images';
+import { FireBase } from 'constants';
 
 import styles from './styles';
 
 const MealPlan = ({ navigation }) => {
   const [currentMonth, setCurrentMonth] = useState(moment());
-  const firebase = useFirebase();
-  const user = firebase.auth().currentUser;
-  useFirebaseConnect(`Meal_Plan/${user.uid}`);
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan = {} } } }) => (Meal_Plan[user.uid] || [])
-    .filter((item) => moment(item.value.date).month() === currentMonth.month())); // filter by month
+
+  const user = FireBase.auth().currentUser || {};
+  useFirebaseConnect(`Meal_Plan/${user?.uid}`);
+
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan = {} } } }) => (Meal_Plan[user?.uid] || [])
+    .filter(item => moment(item.value.date).month() === currentMonth.month())); // filter by month
 
   const onPressLeftCalendar = () => {
     setCurrentMonth(currentMonth.clone().subtract(1, 'months'));
@@ -58,7 +60,7 @@ const MealPlan = ({ navigation }) => {
 
   const renderCalendar = () => (
     <MyCalendar
-      moveToListPlan={(day) => navigation.navigate('ListPlan', { day })}
+      moveToListPlan={day => navigation.navigate('ListPlan', { day })}
       mealPlan={mealPlan}
       onPressLeftCalendar={onPressLeftCalendar}
       onPressRightCalendar={onPressRightCalendar}

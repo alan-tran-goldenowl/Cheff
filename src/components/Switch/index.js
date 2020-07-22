@@ -25,7 +25,7 @@ const CustomSwitch = ({ image, title, valueSwitch }) => (
     <View style={styles.switch}>
       <Switch
         thumbColor="white"
-        trackColor="#45db5e"
+        trackColor={{ false: '#ddd', true: '#46DB5F' }}
         value={valueSwitch}
         disabled
       />

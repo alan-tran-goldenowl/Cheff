@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
     paddingBottom: responsive({ d: 25 }),
     flex: 1,
+    paddingRight: responsive({ d: 15 }),
+
   },
 });
 

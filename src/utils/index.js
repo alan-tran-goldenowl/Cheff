@@ -70,3 +70,32 @@ export const dataPickerMeal = [
 export const appropriatePluralisation = (num, sigular, plural) => (num <= 1 ? sigular : plural);
 
 export const formatNumber = (num, digits) => Number.parseFloat(num).toFixed(digits);
+
+
+const WEEK_LENGTH = 604800000;
+
+export const onCurrentWeek = date => {
+  const parseDate = new Date(date * 1000);
+  const lastMonday = new Date(); // Creating new date object for today
+  lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() - 1)); // Setting date to last monday
+  lastMonday.setHours(0, 0, 0, 0); // Setting Hour to 00:00:00:00
+
+
+  const res = lastMonday.getTime() < parseDate.getTime()
+              && parseDate.getTime() < (lastMonday.getTime() + WEEK_LENGTH);
+  return res; // Boolean
+};
+
+export const onCurrentMonth = date => {
+  const currentMonth = (new Date()).getMonth() + 1;
+  const monthFromDate = (new Date(date * 1000)).getMonth() + 1;
+  return currentMonth === monthFromDate;
+};
+
+export const isToday = date => {
+  const today = new Date();
+  const parseDate = new Date(date * 1000);
+  return parseDate.getDate() === today.getDate()
+      && parseDate.getMonth() === today.getMonth()
+      && parseDate.getFullYear() === today.getFullYear();
+};

@@ -1,47 +1,65 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import Header from 'components/Header';
 import ScrollableView from 'react-native-scrollable-tab-view';
+import { FireBase } from 'constants';
 
-
+import { useSelector } from 'react-redux';
 // My components
+import images from 'assets/images';
+import { onCurrentWeek, onCurrentMonth, isToday } from 'utils';
 import TabView from './TabView';
+
 // Data
-import { activityData } from './data';
 
+const ActivityScreen = ({ navigation }) => {
+  const userFirebase = FireBase.auth().currentUser;
 
-export default class ActivityScreen extends Component {
-  static navigationOptions = {
-    headerShown: false,
-  }
+  const activityData = useSelector(({ firebase: { data: { Activity } } }) => {
+    const data = (Activity && Activity[userFirebase.uid]) || [];
 
-  renderHeader() {
-    return (
-      <Header
-        title="Activity"
-        iconLeft={require('assets/images/icon_side_menu.png')}
-        onPressLeft={() => this.props.navigation.navigate('Settings')}
-        iconRight={require('assets/images/ic_push_notification.png')}
-      />
+    return Object.values(data).reverse();
+  });
 
-    );
-  }
+  const renderHeader = () => (
+    <Header
+      title="Activity"
+      iconLeft={images.icon_side_menu}
+      onPressLeft={() => navigation.navigate('Settings')}
+      // iconRight={images.ic_push_notification}
+    />
 
-  render() {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        {this.renderHeader()}
-        <ScrollableView
-          tabBarInactiveTextColor="gray"
-          tabBarActiveTextColor="#000"
-          tabBarUnderlineStyle={{ backgroundColor: '#000', height: 1 }}
-        >
-          <TabView key={1} tabLabel="Today" list={activityData} />
-          <TabView key={2} tabLabel="This week" list={activityData} />
-          <TabView key={3} tabLabel="This month" list={activityData} />
-        </ScrollableView>
-      </View>
+  );
 
-    );
-  }
-}
+  const getListInWeek = () => {
+    const data = activityData.filter(item => onCurrentWeek(item.timeStamp));
+    return data;
+  };
+
+  const getListInMonth = () => {
+    const data = activityData.filter(item => onCurrentMonth(item.timeStamp));
+    return data;
+  };
+
+  const getListToday = () => {
+    const data = activityData.filter(item => isToday(item.timeStamp));
+    return data;
+  };
+
+  return (
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      {renderHeader()}
+      <ScrollableView
+        tabBarInactiveTextColor="gray"
+        tabBarActiveTextColor="#000"
+        tabBarUnderlineStyle={{ backgroundColor: '#000', height: 1 }}
+      >
+        <TabView key={1} tabLabel="Today" list={getListToday()} />
+        <TabView key={2} tabLabel="This week" list={getListInWeek()} />
+        <TabView key={3} tabLabel="This month" list={getListInMonth()} />
+      </ScrollableView>
+    </View>
+
+  );
+};
+export default ActivityScreen;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -22,8 +22,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   isEmpty,
 } from 'react-redux-firebase';
-import { FireBase } from 'constants';
-import { likeFood } from 'services';
+import { FireBase, ActivityConstant } from 'constants';
+import { likeFood, addNewActivity } from 'services';
 import images from 'assets/images';
 import styles from './styles';
 
@@ -34,6 +34,7 @@ const FoodDetail = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const foodKey = navigation.getParam('key');
+  const fromScreen = navigation.getParam('from');
 
   const foodValue = useSelector(({ firebase: { ordered: { Food } } }) => {
     const list = (Food || []).filter(item => item?.key === foodKey);
@@ -47,6 +48,19 @@ const FoodDetail = ({ navigation }) => {
   });
 
   const [serveForPeople, setServeForPeople] = useState(foodValue?.serveForPeople || 1);
+
+  useEffect(() => {
+    if (!foodValue.name || fromScreen === 'Activity') {
+      return;
+    }
+    const params = {
+      key: foodKey,
+      name: foodValue.name,
+      userId: userFirebase.uid,
+      action: ActivityConstant.VIEW,
+    };
+    dispatch(addNewActivity(params));
+  }, [foodValue?.name]);
 
   const handleAddServe = () => setServeForPeople(serveForPeople + 1);
 
@@ -65,6 +79,7 @@ const FoodDetail = ({ navigation }) => {
     };
     dispatch(likeFood(params));
   };
+
   const goBack = () => {
     navigation.dispatch(NavigationActions.back());
   };

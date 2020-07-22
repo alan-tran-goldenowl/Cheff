@@ -34,6 +34,7 @@ const CustomSwitch = ({
         fontSize={responsive({ f: theme.FONT_SIZE_NORMAL })}
         styleDropdownMenuSubsection={styles.dropdown}
         styleItemsContainer={styles.items}
+        flatListProps={{ nestedScrollEnabled: true }}
       />
     </View>
     {!!error && <Text style={styles.errorText}>{error}</Text> }
