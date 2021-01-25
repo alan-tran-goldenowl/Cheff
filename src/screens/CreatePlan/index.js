@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 import MultiSelect from 'components/MultiSelect';
 
@@ -20,10 +20,11 @@ import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
 import { isIOS, convertDataPicker, dataPickerMeal } from 'utils';
-
+import { addPlan, updatePlan } from 'services';
 import styles from './styles';
 
 const CreatePlan = ({ navigation }) => {
+  const dispatch = useDispatch();
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect(['Type_Food', 'Food', `Meal_Plan/${user.uid}`]);
@@ -62,7 +63,7 @@ const CreatePlan = ({ navigation }) => {
     setMealPlan();
   }, []);
 
-  const handleDatePicked = (value) => {
+  const handleDatePicked = value => {
     setPlan({
       ...plan,
       date: value,
@@ -70,7 +71,7 @@ const CreatePlan = ({ navigation }) => {
     setDatePickerVisible(false);
   };
 
-  const handleTimePicked = (time) => {
+  const handleTimePicked = time => {
     const hour = time.getHours();
     const minutes = time.getMinutes();
     plan.date.setHours(hour);
@@ -78,7 +79,7 @@ const CreatePlan = ({ navigation }) => {
     setTimePickerVisible(false);
   };
 
-  const onChangeTypeMeal = (value) => {
+  const onChangeTypeMeal = value => {
     setPlan({
       ...plan,
       mealType: value,
@@ -110,8 +111,14 @@ const CreatePlan = ({ navigation }) => {
       createdAt: Date.now(),
       meal: plan.mealType,
     };
-    firebase.push(`Meal_Plan/${user.uid}`, data);
-    navigation.navigate('MealPlan');
+
+    const params = {
+      data,
+      userId: user.uid,
+      callback: () => navigation.navigate('MealPlan'),
+    };
+
+    dispatch(addPlan(params));
   };
 
   const onEditPlan = () => {
@@ -123,13 +130,20 @@ const CreatePlan = ({ navigation }) => {
       note: plan.note,
       meal: plan.mealType,
     };
-    firebase.update(`Meal_Plan/${user.uid}/${planId}`, data);
-    navigation.navigate('PlanDetails', { isEdit: true, id: planId });
+
+    const params = {
+      data,
+      userId: user.uid,
+      callback: () => navigation.navigate('PlanDetails', { isEdit: true, id: planId }),
+      planId,
+    };
+
+    dispatch(updatePlan(params));
   };
 
   const onPressButton = () => {
     const err = onValidateInput();
-    if (Object.values(err).filter((item) => item !== '').length) {
+    if (Object.values(err).filter(item => item !== '').length) {
       setError(err);
       return;
     }
@@ -140,7 +154,7 @@ const CreatePlan = ({ navigation }) => {
     }
   };
 
-  const onChangeTitle = (text) => {
+  const onChangeTitle = text => {
     setPlan({
       ...plan,
       titlePlan: text,
@@ -148,7 +162,7 @@ const CreatePlan = ({ navigation }) => {
     setError({ ...error, title: '' });
   };
 
-  const onChangeRecipe = (value) => {
+  const onChangeRecipe = value => {
     setPlan({
       ...plan,
       recipe: value,
@@ -169,13 +183,15 @@ const CreatePlan = ({ navigation }) => {
         behavior={isIOS ? 'height' : 'padding'}
         enabled={isIOS}
       >
-        <ScrollView style={styles.container}>
+        <ScrollView
+          style={styles.container}
+        >
           <CustomTextInput
             multiline
             title="Title of the meal plan"
             placeholder="Write your plan..."
             value={plan.titlePlan}
-            onChangeText={(text) => onChangeTitle(text)}
+            onChangeText={text => onChangeTitle(text)}
             containerStyles={styles.containerTitle}
             titleStyles={styles.titleText}
             error={error.title}
@@ -211,7 +227,7 @@ const CreatePlan = ({ navigation }) => {
             </Text>
             <Switch
               value={plan.toggleAlarm}
-              onValueChange={(value) => setPlan({ ...plan, toggleAlarm: value })}
+              onValueChange={value => setPlan({ ...plan, toggleAlarm: value })}
               thumbColor="white"
               trackColor="#45db5e"
             />
@@ -219,7 +235,7 @@ const CreatePlan = ({ navigation }) => {
           {/* meal type picker */}
           <PickerSelect
             title="What's your meal?"
-            onValueChange={(value) => onChangeTypeMeal(value)}
+            onValueChange={value => onChangeTypeMeal(value)}
             value={plan.mealType}
             items={dataPickerMeal}
             containerStyle={styles.picker}
@@ -230,7 +246,7 @@ const CreatePlan = ({ navigation }) => {
             items={listFood}
             uniqueKey="key"
             displayKey="label"
-            onSelectedItemsChange={(value) => onChangeRecipe(value)}
+            onSelectedItemsChange={value => onChangeRecipe(value)}
             selectedItems={plan.recipe}
             containerStyle={styles.picker}
             error={error.recipe}
@@ -249,7 +265,7 @@ const CreatePlan = ({ navigation }) => {
               placeholder="Add any Additional information"
               style={styles.textNote}
               value={plan.note}
-              onChangeText={(text) => setPlan({ ...plan, note: text })}
+              onChangeText={text => setPlan({ ...plan, note: text })}
             />
           </View>
         </ScrollView>

@@ -33,7 +33,7 @@ const FavoriteScreen = ({ navigation }) => {
       <Header
         iconLeft={images.icon_side_menu}
         onPressLeft={() => navigation.navigate('Settings')}
-        iconRight={images.ic_push_notification}
+        // iconRight={images.ic_push_notification}
         onPressRight={() => {}}
         title="Favorites"
       />
@@ -43,6 +43,7 @@ const FavoriteScreen = ({ navigation }) => {
             data: listFavoriteFood,
           })}
           pointerEvents="none"
+          editable={false}
         />
       </View>
       <FlatList

@@ -10,7 +10,7 @@ import images from 'assets/images';
 import styles from './styles';
 
 const HomeScreen = ({ navigation }) => {
-  useFirebaseConnect(['Food', 'Type_Food', 'Favourites']);
+  useFirebaseConnect(['Food', 'Type_Food', 'Favourites', 'Activity']);
   const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => Type_Food || []);
 
   const renderHeader = () => (
@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
         logoVisible
         iconLeft={images.icon_side_menu}
         onPressLeft={() => navigation.navigate('Settings')}
-        iconRight={images.ic_push_notification}
+        // iconRight={images.ic_push_notification}
       />
       <View style={styles.searchView}>
         <Image
@@ -31,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
           <SearchViewCheff
             moveToSeacrh={() => navigation.navigate('Search')}
             pointerEvents="none"
+            editable={false}
           />
         </View>
       </View>

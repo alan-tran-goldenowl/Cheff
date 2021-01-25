@@ -26,6 +26,7 @@ export default class App extends React.Component {
     this.state = {
       isLoadingComplete: false,
     };
+    console.disableYellowBox = true;
   }
 
   _loadResourcesAsync = async () => Promise.all([
@@ -36,7 +37,7 @@ export default class App extends React.Component {
     }),
   ]);
 
-  _handleLoadingError = (error) => {
+  _handleLoadingError = error => {
     console.warn(error);
   };
 
