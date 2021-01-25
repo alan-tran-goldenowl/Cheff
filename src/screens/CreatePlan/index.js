@@ -11,16 +11,27 @@ import moment from 'moment';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
-import MultiSelect from 'components/MultiSelect';
 
+import MultiSelect from 'components/MultiSelect';
 import Header from 'components/Header';
 import DatePicker from 'components/DatePicker';
 import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
+<<<<<<< HEAD
 import { isIOS, convertDataPicker, dataPickerMeal } from 'utils';
 import { addPlan, updatePlan } from 'services';
+=======
+import {
+  isIOS,
+  convertDataPicker,
+  dataPickerMeal,
+  setNotification,
+  cancelNotification,
+} from 'utils';
+
+>>>>>>> 763005f382fefb298ca021c9cd372070d9deb86a
 import styles from './styles';
 
 const CreatePlan = ({ navigation }) => {
@@ -51,7 +62,7 @@ const CreatePlan = ({ navigation }) => {
       setPlan({
         titlePlan: title,
         date: new Date(date),
-        toggleAlarm: isAlarm,
+        toggleAlarm: !!isAlarm,
         mealType: meal,
         recipe: food,
         note,
@@ -101,11 +112,15 @@ const CreatePlan = ({ navigation }) => {
     return err;
   };
 
-  const onCreatePlan = () => {
+  const onCreatePlan = async () => {
+    let notiId = '';
+    if (plan.toggleAlarm) {
+      notiId = await setNotification(plan.date.getTime());
+    }
     const data = {
       title: plan.titlePlan,
       date: plan.date.getTime(),
-      isAlarm: plan.toggleAlarm,
+      isAlarm: notiId,
       food: plan.recipe,
       note: plan.note,
       createdAt: Date.now(),
@@ -121,11 +136,19 @@ const CreatePlan = ({ navigation }) => {
     dispatch(addPlan(params));
   };
 
-  const onEditPlan = () => {
+  const onEditPlan = async () => {
+    let notiId = '';
+    if (!plan.toggleAlarm && mealPlan.isAlarm) { // change toggle alarm
+      cancelNotification(mealPlan.isAlarm);
+    }
+    if (plan.date.getTime() !== mealPlan.date && plan.toggleAlarm) { // change date and turn on alarm
+      cancelNotification(mealPlan.isAlarm);
+      notiId = await setNotification(plan.date.getTime());
+    }
     const data = {
       title: plan.titlePlan,
       date: plan.date.getTime(),
-      isAlarm: plan.toggleAlarm,
+      isAlarm: notiId,
       food: plan.recipe,
       note: plan.note,
       meal: plan.mealType,

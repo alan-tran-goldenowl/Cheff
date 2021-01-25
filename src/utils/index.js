@@ -1,9 +1,9 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
-
+import { Notifications } from 'expo';
 import images from 'assets/images';
 
-export authHelper from './authHelper';
-export storageHelper from './storageHelper';
+// export authHelper from './authHelper';
+// export storageHelper from './storageHelper';
 
 const { width, height } = Dimensions.get('window');
 
@@ -31,19 +31,19 @@ export const actionNameToTypes = actionName => actionName
   .toUpperCase();
 
 export const isIOS = Platform.OS === 'ios';
-export const convertDataPicker = (list = []) => (
-  list.map(item => ({ label: item?.value?.name, value: item?.key, key: item?.key }))
-);
+export const convertDataPicker = (list = []) => list.map(item => ({
+  label: item?.value?.name,
+  value: item?.key,
+  key: item?.key,
+}));
 
 export const uuid = name => {
-  const S4 = () => (((1 + Math.random()) * 0x10000) || 0).toString(16).substring(1);
-  return (`${name + S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
+  const S4 = () => ((1 + Math.random()) * 0x10000 || 0).toString(16).substring(1);
+  return `${name + S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`;
 };
 
 export const validateEditProfile = fields => {
-  const {
-    displayName,
-  } = fields;
+  const { displayName } = fields;
 
   const errors = {};
 
@@ -66,11 +66,9 @@ export const dataPickerMeal = [
   { label: 'Dinner', value: 'dinner' },
 ];
 
-
 export const appropriatePluralisation = (num, sigular, plural) => (num <= 1 ? sigular : plural);
 
 export const formatNumber = (num, digits) => Number.parseFloat(num).toFixed(digits);
-
 
 const WEEK_LENGTH = 604800000;
 
@@ -80,22 +78,38 @@ export const onCurrentWeek = date => {
   lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() - 1)); // Setting date to last monday
   lastMonday.setHours(0, 0, 0, 0); // Setting Hour to 00:00:00:00
 
-
   const res = lastMonday.getTime() < parseDate.getTime()
-              && parseDate.getTime() < (lastMonday.getTime() + WEEK_LENGTH);
+    && parseDate.getTime() < lastMonday.getTime() + WEEK_LENGTH;
   return res; // Boolean
 };
 
 export const onCurrentMonth = date => {
-  const currentMonth = (new Date()).getMonth() + 1;
-  const monthFromDate = (new Date(date * 1000)).getMonth() + 1;
+  const currentMonth = new Date().getMonth() + 1;
+  const monthFromDate = new Date(date * 1000).getMonth() + 1;
   return currentMonth === monthFromDate;
 };
 
 export const isToday = date => {
   const today = new Date();
   const parseDate = new Date(date * 1000);
-  return parseDate.getDate() === today.getDate()
-      && parseDate.getMonth() === today.getMonth()
-      && parseDate.getFullYear() === today.getFullYear();
+  return (
+    parseDate.getDate() === today.getDate()
+    && parseDate.getMonth() === today.getMonth()
+    && parseDate.getFullYear() === today.getFullYear()
+  );
 };
+export const setNotification = time => Notifications.scheduleLocalNotificationAsync(
+  {
+    title: 'Meal Plan',
+    body: 'You have a meal plan',
+    ios: {
+      sound: true,
+      _displayInForeground: true,
+    },
+  },
+  {
+    time,
+  },
+);
+
+export const cancelNotification = id => Notifications.cancelScheduledNotificationAsync(id);

@@ -1,30 +1,33 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Image,
 } from 'react-native';
+
+import images from 'assets/images';
+
 import { FireBase } from 'constants';
 
-const AuthLoadingScreen =({navigation})=> {
+const AuthLoadingScreen = ({ navigation }) => {
   useEffect(() => {
     onAuthStateChanged();
   }, []);
 
   const onAuthStateChanged = () => {
-    FireBase.auth().onAuthStateChanged(async (user) => {
+    FireBase.auth().onAuthStateChanged(async user => {
       if (user) {
-        navigation.navigate('App')
-      }else{
-        navigation.navigate('Auth')
+        navigation.navigate('App');
+      } else {
+        navigation.navigate('Auth');
       }
     });
   };
 
-    return (
-      <View style={{ flex: 1 }}>
-        <Image source={require('assets/images/background.png')} />
-      </View>
-    );
-}
+  return (
+    <View style={{ flex: 1 }}>
+      <Image source={images.background} />
+    </View>
+  );
+};
 
-export default AuthLoadingScreen
+export default AuthLoadingScreen;
