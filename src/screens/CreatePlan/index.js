@@ -19,10 +19,7 @@ import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
-<<<<<<< HEAD
-import { isIOS, convertDataPicker, dataPickerMeal } from 'utils';
 import { addPlan, updatePlan } from 'services';
-=======
 import {
   isIOS,
   convertDataPicker,
@@ -31,7 +28,6 @@ import {
   cancelNotification,
 } from 'utils';
 
->>>>>>> 763005f382fefb298ca021c9cd372070d9deb86a
 import styles from './styles';
 
 const CreatePlan = ({ navigation }) => {
