@@ -19,10 +19,8 @@ import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
-<<<<<<< HEAD
-import { isIOS, convertDataPicker, dataPickerMeal } from 'utils';
+
 import { addPlan, updatePlan } from 'services';
-=======
 import {
   isIOS,
   convertDataPicker,
@@ -31,7 +29,6 @@ import {
   cancelNotification,
 } from 'utils';
 
->>>>>>> 763005f382fefb298ca021c9cd372070d9deb86a
 import styles from './styles';
 
 const CreatePlan = ({ navigation }) => {
@@ -52,7 +49,13 @@ const CreatePlan = ({ navigation }) => {
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [error, setError] = useState({});
   const { id: planId } = navigation.state.params || {};
-  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
+  const mealPlan = useSelector(
+    ({
+      firebase: {
+        data: { Meal_Plan = {} },
+      },
+    }) => Meal_Plan[user.uid]?.[planId] || {},
+  );
 
   const setMealPlan = () => {
     const {
@@ -138,10 +141,12 @@ const CreatePlan = ({ navigation }) => {
 
   const onEditPlan = async () => {
     let notiId = '';
-    if (!plan.toggleAlarm && mealPlan.isAlarm) { // change toggle alarm
+    if (!plan.toggleAlarm && mealPlan.isAlarm) {
+      // change toggle alarm
       cancelNotification(mealPlan.isAlarm);
     }
-    if (plan.date.getTime() !== mealPlan.date && plan.toggleAlarm) { // change date and turn on alarm
+    if (plan.date.getTime() !== mealPlan.date && plan.toggleAlarm) {
+      // change date and turn on alarm
       cancelNotification(mealPlan.isAlarm);
       notiId = await setNotification(plan.date.getTime());
     }
@@ -206,9 +211,7 @@ const CreatePlan = ({ navigation }) => {
         behavior={isIOS ? 'height' : 'padding'}
         enabled={isIOS}
       >
-        <ScrollView
-          style={styles.container}
-        >
+        <ScrollView style={styles.container}>
           <CustomTextInput
             multiline
             title="Title of the meal plan"

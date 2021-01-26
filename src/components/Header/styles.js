@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { device, responsive } from 'utils';
 
 export default StyleSheet.create({
@@ -9,7 +9,8 @@ export default StyleSheet.create({
   },
   header: {
     backgroundColor: '#ffffff',
-    marginTop: responsive({ d: responsive({ d: 70 }) }),
+    marginTop:
+      Platform.OS !== 'ios' ? responsive({ d: responsive({ d: 70 }) }) : 0,
     height: device.height / 20,
     width: null,
     flexDirection: 'row',

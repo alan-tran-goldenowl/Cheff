@@ -13,19 +13,16 @@ import { FireBase, FbConfig, GgConfig } from 'constants';
 import images from 'assets/images';
 import styles from './styles';
 
-const  SignInScreen = ({ navigation }) =>  {
-
-  const handleLoginSuccess = async (credential) => {
+const SignInScreen = ({ navigation }) => {
+  const handleLoginSuccess = async credential => {
     FireBase
       .auth()
       .signInWithCredential(credential)
       .then(({ user }) => {
-        navigation.navigate('App')
+        navigation.navigate('App');
       })
-      .catch((err) => {
-        return err;
-      });
-  }
+      .catch(err => err);
+  };
 
   const logInViaFacebook = async () => { // TODO: failure with iOS
     try {
@@ -49,7 +46,9 @@ const  SignInScreen = ({ navigation }) =>  {
 
   const logInViaGoogle = async () => {
     try {
-      const { type, accessToken, user, idToken} = await Google.logInAsync({
+      const {
+        type, accessToken, user, idToken,
+      } = await Google.logInAsync({
         iosClientId: GgConfig.IOS_CLIENT_ID,
         androidClientId: GgConfig.ANDROID_CLIENT_ID,
         scopes: ['profile', 'email'],
@@ -59,13 +58,13 @@ const  SignInScreen = ({ navigation }) =>  {
       }
       const credential = FireBase.auth.GoogleAuthProvider.credential(
         idToken,
-        accessToken
+        accessToken,
       );
       handleLoginSuccess(credential);
-    } catch(err) {
+    } catch (err) {
       alert(`Login failed: ${err}`);
-    };
-  }
+    }
+  };
 
   return (
     <ImageBackground
@@ -104,6 +103,6 @@ const  SignInScreen = ({ navigation }) =>  {
       </View>
     </ImageBackground>
   );
-}
+};
 
 export default SignInScreen;

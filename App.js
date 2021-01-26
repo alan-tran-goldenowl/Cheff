@@ -1,6 +1,10 @@
 import React from 'react';
 import {
-  Platform, StatusBar, StyleSheet, View,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  SafeAreaView,
 } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -59,11 +63,13 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <ReactReduxFirebaseProvider {...rrfProps}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <NavigationRoot />
-            <PushNotificationHandler />
-          </View>
+          <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <NavigationRoot />
+              <PushNotificationHandler />
+            </View>
+          </SafeAreaView>
         </ReactReduxFirebaseProvider>
       </Provider>
     );
