@@ -19,7 +19,6 @@ import PickerSelect from 'components/PickerSelect';
 import Button from 'components/Button';
 import CustomTextInput from 'components/TextInput';
 import images from 'assets/images';
-
 import { addPlan, updatePlan } from 'services';
 import {
   isIOS,
