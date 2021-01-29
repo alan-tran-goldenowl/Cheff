@@ -7,6 +7,7 @@ export default StyleSheet.create({
     width: responsive({ h: 15 }),
     padding: 15,
   },
+
   header: {
     backgroundColor: '#ffffff',
     marginTop:
@@ -15,6 +16,10 @@ export default StyleSheet.create({
     width: null,
     flexDirection: 'row',
     marginHorizontal: responsive({ d: 0 }),
+  },
+  headerFoodDetail: {
+    marginBottom:
+    Platform.OS !== 'ios' ? responsive({ d: responsive({ d: 20 }) }) : 0,
   },
   title: {
     fontSize: responsive({ f: 17 }),

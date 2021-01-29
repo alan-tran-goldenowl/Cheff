@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
   imageFoodCover: {
     height: responsive({ h: 120 }),
-    // marginRight: responsive({ d: 20 }),
+    marginRight: responsive({ d: 20 }),
     borderRadius: 5,
   },
   nameView: {

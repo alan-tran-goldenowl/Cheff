@@ -126,24 +126,16 @@ const FoodDetail = ({ navigation }) => {
 
   const renderHeader = () => (
     <Header
+      detail
       onPressLeft={goBack}
       iconLeft={images.icon_back}
       customRight={() => (
-        <TouchableOpacity
-          style={styles.likeView}
-          onPress={handleLike}
-        >
-          <Text style={styles.likeNumber}>
-            {foodValue?.totalLikes || 0}
-          </Text>
+        <TouchableOpacity style={styles.likeView} onPress={handleLike}>
+          <Text style={styles.likeNumber}>{foodValue?.totalLikes || 0}</Text>
           <RNImage
             resizeMode="center"
             style={styles.iconHeart}
-            source={
-              isLiked
-                ? images.ic_love
-                : images.ic_nonlove
-                }
+            source={isLiked ? images.ic_love : images.ic_nonlove}
           />
         </TouchableOpacity>
       )}
@@ -161,9 +153,7 @@ const FoodDetail = ({ navigation }) => {
         <View style={{ paddingBottom: responsive({ d: 70 }) }}>
           <View style={styles.nameView}>
             {/* {foodValue.name} */}
-            <Text style={styles.nameText}>
-              {foodValue.name}
-            </Text>
+            <Text style={styles.nameText}>{foodValue.name}</Text>
             {/* <TouchableOpacity style={styles.likeView} onPress={handleLike}>
               <Text style={styles.likeNumber}>
                 {foodValue?.totalLikes || 0}
