@@ -2,7 +2,6 @@
   "expo": {
     "name": "cheff",
     "description": "A very interesting project.",
-    "sdkVersion": "37.0.0",
     "slug": "cheff",
     "privacy": "public",
     "platforms": [

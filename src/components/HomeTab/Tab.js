@@ -15,7 +15,7 @@ const Tab = ({ navigation, typeId }) => {
       return list;
     },
   );
-  console.log(listFood);
+
   return (
     <FlatList
       data={listFood}

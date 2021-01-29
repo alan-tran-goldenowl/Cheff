@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  Platform,
-  StatusBar,
-  StyleSheet,
-  View,
-  SafeAreaView,
+  Platform, StatusBar, StyleSheet, View,
 } from 'react-native';
-import { AppLoading } from 'expo';
+import SafeAreaView from 'react-native-safe-area-view';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
@@ -61,17 +60,19 @@ export default class App extends React.Component {
       );
     }
     return (
-      <Provider store={store}>
-        <ReactReduxFirebaseProvider {...rrfProps}>
-          <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <NavigationRoot />
-              <PushNotificationHandler />
-            </View>
-          </SafeAreaView>
-        </ReactReduxFirebaseProvider>
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <ReactReduxFirebaseProvider {...rrfProps}>
+            <SafeAreaView style={{ flex: 1 }} forceInset={{ bottom: 'never' }}>
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <NavigationRoot />
+                <PushNotificationHandler />
+              </View>
+            </SafeAreaView>
+          </ReactReduxFirebaseProvider>
+        </Provider>
+      </SafeAreaProvider>
     );
   }
 }

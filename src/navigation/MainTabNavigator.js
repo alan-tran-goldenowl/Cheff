@@ -1,5 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Platform } from 'react-native';
+import {
+  Image, StyleSheet,
+  // , Platform
+} from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import HomeScreen from 'screens/Home';
@@ -86,10 +89,11 @@ export default createBottomTabNavigator(
     tabBarOptions: {
       showLabel: false,
       style: {
-        minHeight: Platform.OS === 'ios' ? 0 : 45,
-        height: Platform.OS === 'ios' ? 20 : 'auto',
+        // alignItems: 'center',
+        // minHeight: Platform.OS === 'ios' ? 25 : 45,
+        // height: Platform.OS === 'ios' ? 25 : 'auto',
         // minHeight: Platform.OS !== 'ios' ? 25 : 0,
-        paddingBottom: 0,
+        // paddingBottom: 0,
       },
     },
   },

@@ -48,8 +48,9 @@ const FavoriteScreen = ({ navigation }) => {
       </View>
       <FlatList
         data={listFavoriteFood}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <FoodItem
+            isLastItem={index === listFavoriteFood.length - 1}
             item={item.value}
             keyFood={item.key}
             onPressItem={() => navigation.navigate('FoodDetail', { key: item.key })}

@@ -34,6 +34,7 @@ const CustomDatePicker = ({
       />
     </TouchableOpacity>
     <DateTimePicker
+      display="spinner"
       isVisible={isVisible}
       onConfirm={onConfirm}
       onCancel={onCancel}
