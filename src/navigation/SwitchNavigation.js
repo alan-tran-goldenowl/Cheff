@@ -31,6 +31,7 @@ const AppStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+
   },
 );
 

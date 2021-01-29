@@ -48,7 +48,13 @@ const CreatePlan = ({ navigation }) => {
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [error, setError] = useState({});
   const { id: planId } = navigation.state.params || {};
-  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
+  const mealPlan = useSelector(
+    ({
+      firebase: {
+        data: { Meal_Plan = {} },
+      },
+    }) => Meal_Plan[user.uid]?.[planId] || {},
+  );
 
   const setMealPlan = () => {
     const {
@@ -134,10 +140,12 @@ const CreatePlan = ({ navigation }) => {
 
   const onEditPlan = async () => {
     let notiId = '';
-    if (!plan.toggleAlarm && mealPlan.isAlarm) { // change toggle alarm
+    if (!plan.toggleAlarm && mealPlan.isAlarm) {
+      // change toggle alarm
       cancelNotification(mealPlan.isAlarm);
     }
-    if (plan.date.getTime() !== mealPlan.date && plan.toggleAlarm) { // change date and turn on alarm
+    if (plan.date.getTime() !== mealPlan.date && plan.toggleAlarm) {
+      // change date and turn on alarm
       cancelNotification(mealPlan.isAlarm);
       notiId = await setNotification(plan.date.getTime());
     }
@@ -202,12 +210,10 @@ const CreatePlan = ({ navigation }) => {
         behavior={isIOS ? 'height' : 'padding'}
         enabled={isIOS}
       >
-        <ScrollView
-          style={styles.container}
-        >
+        <ScrollView style={styles.container}>
           <CustomTextInput
             multiline
-            title="Title of the meal plan"
+            // title="Title of the meal plan"
             placeholder="Write your plan..."
             value={plan.titlePlan}
             onChangeText={text => onChangeTitle(text)}

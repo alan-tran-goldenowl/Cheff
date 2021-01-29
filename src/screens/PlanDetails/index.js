@@ -18,7 +18,7 @@ const PlanDetails = ({ navigation }) => {
   const user = firebase.auth().currentUser;
   useFirebaseConnect([`Meal_Plan/${user.uid}/${planId}`, 'Food', 'Type_Food']);
   const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
-  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map((item) => Food[item]?.name));
+  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map(item => Food[item]?.name));
   const [showNotification, setShowNotification] = useState(isEdit);
   const goBack = () => navigation.goBack();
 
@@ -106,6 +106,5 @@ const PlanDetails = ({ navigation }) => {
     </View>
   );
 };
-
 
 export default PlanDetails;

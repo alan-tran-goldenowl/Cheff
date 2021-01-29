@@ -34,7 +34,7 @@ const FavoriteScreen = ({ navigation }) => {
         iconLeft={images.icon_side_menu}
         onPressLeft={() => navigation.navigate('Settings')}
         // iconRight={images.ic_push_notification}
-        onPressRight={() => {}}
+        // onPressRight={() => {}}
         title="Favorites"
       />
       <View style={styles.searchView}>
@@ -48,8 +48,9 @@ const FavoriteScreen = ({ navigation }) => {
       </View>
       <FlatList
         data={listFavoriteFood}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <FoodItem
+            isLastItem={index === listFavoriteFood.length - 1}
             item={item.value}
             keyFood={item.key}
             onPressItem={() => navigation.navigate('FoodDetail', { key: item.key })}
@@ -60,6 +61,5 @@ const FavoriteScreen = ({ navigation }) => {
     </View>
   );
 };
-
 
 export default FavoriteScreen;

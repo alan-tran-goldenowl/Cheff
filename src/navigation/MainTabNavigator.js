@@ -1,5 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import {
+  Image, StyleSheet,
+  // , Platform
+} from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import HomeScreen from 'screens/Home';
@@ -11,7 +14,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-    marginLeft: 10,
+    // marginLeft: 10,
   },
 });
 
@@ -41,10 +44,10 @@ export default createBottomTabNavigator(
             style={styles.icon}
             resizeMode="center"
             source={
-            focused
-              ? require('assets/images/ic_favorite_active.png')
-              : require('assets/images/ic_favorite_unactive.png')
-          }
+              focused
+                ? require('assets/images/ic_favorite_active.png')
+                : require('assets/images/ic_favorite_unactive.png')
+            }
           />
         ),
       }),
@@ -57,10 +60,10 @@ export default createBottomTabNavigator(
             style={styles.icon}
             resizeMode="center"
             source={
-                  focused
-                    ? require('assets/images/ic_plan_active.png')
-                    : require('assets/images/ic_plan_unactive.png')
-                }
+              focused
+                ? require('assets/images/ic_plan_active.png')
+                : require('assets/images/ic_plan_unactive.png')
+            }
           />
         ),
       }),
@@ -73,10 +76,10 @@ export default createBottomTabNavigator(
             style={styles.icon}
             resizeMode="center"
             source={
-                  focused
-                    ? require('assets/images/ic_activity_active.png')
-                    : require('assets/images/ic_activity_unactive.png')
-                }
+              focused
+                ? require('assets/images/ic_activity_active.png')
+                : require('assets/images/ic_activity_unactive.png')
+            }
           />
         ),
       }),
@@ -85,6 +88,13 @@ export default createBottomTabNavigator(
   {
     tabBarOptions: {
       showLabel: false,
+      style: {
+        // alignItems: 'center',
+        // minHeight: Platform.OS === 'ios' ? 25 : 45,
+        // height: Platform.OS === 'ios' ? 25 : 'auto',
+        // minHeight: Platform.OS !== 'ios' ? 25 : 0,
+        // paddingBottom: 0,
+      },
     },
   },
 );

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { device, responsive } from 'utils';
+import { responsive } from 'utils';
 
 export default StyleSheet.create({
   container: {

@@ -6,7 +6,11 @@ import CustomArrow from './CustomArrow';
 import styles from './styles';
 
 const MyCalendar = ({
-  moveToListPlan, mealPlan, onPressLeftCalendar, onPressRightCalendar, currentMonth,
+  moveToListPlan,
+  mealPlan,
+  onPressLeftCalendar,
+  onPressRightCalendar,
+  currentMonth,
 }) => {
   const getMarkedDays = () => {
     const marked = {};

@@ -18,7 +18,7 @@ export default StyleSheet.create({
     zIndex: 1,
     position: 'absolute',
     height: responsive({ h: 130 }),
-    width: '100%',
+    width: '110%',
   },
   search: {
     alignItems: 'center',

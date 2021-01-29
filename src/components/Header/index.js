@@ -11,9 +11,9 @@ import images from 'assets/images';
 import styles from './styles';
 
 const Header = ({
-  onPressLeft, iconLeft, logoVisible, title, onPressRight, iconRight, rightText, customRight,
+  onPressLeft, iconLeft, logoVisible, title, onPressRight, iconRight, rightText, customRight, detail,
 }) => (
-  <View style={styles.header}>
+  <View style={[styles.header, detail && styles.headerDetail]}>
     <TouchableOpacity
       style={[styles.button, { alignItems: 'flex-start' }]}
       onPress={onPressLeft}

@@ -19,14 +19,11 @@ import {
 } from 'utils';
 import CollapseView from 'components/CollapseView';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  isEmpty,
-} from 'react-redux-firebase';
+import { isEmpty } from 'react-redux-firebase';
 import { FireBase, ActivityConstant } from 'constants';
 import { likeFood, addNewActivity } from 'services';
 import images from 'assets/images';
 import styles from './styles';
-
 
 const FoodDetail = ({ navigation }) => {
   const userFirebase = FireBase.auth().currentUser;
@@ -36,18 +33,32 @@ const FoodDetail = ({ navigation }) => {
   const foodKey = navigation.getParam('key');
   const fromScreen = navigation.getParam('from');
 
-  const foodValue = useSelector(({ firebase: { ordered: { Food } } }) => {
-    const list = (Food || []).filter(item => item?.key === foodKey);
-    return list[0].value;
-  });
+  const foodValue = useSelector(
+    ({
+      firebase: {
+        ordered: { Food },
+      },
+    }) => {
+      const list = (Food || []).filter(item => item?.key === foodKey);
+      return list[0].value;
+    },
+  );
 
-  const isLiked = useSelector(({ firebase: { data: { Favourites } } }) => {
-    const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
+  const isLiked = useSelector(
+    ({
+      firebase: {
+        data: { Favourites },
+      },
+    }) => {
+      const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
 
-    return listFavouritesOfUser && listFavouritesOfUser[foodKey]?.isLiked;
-  });
+      return listFavouritesOfUser && listFavouritesOfUser[foodKey]?.isLiked;
+    },
+  );
 
-  const [serveForPeople, setServeForPeople] = useState(foodValue?.serveForPeople || 1);
+  const [serveForPeople, setServeForPeople] = useState(
+    foodValue?.serveForPeople || 1,
+  );
 
   useEffect(() => {
     if (!foodValue.name || fromScreen === 'Activity') {
@@ -84,60 +95,47 @@ const FoodDetail = ({ navigation }) => {
     navigation.dispatch(NavigationActions.back());
   };
 
-  const renderInstruction = () => (
-    foodValue.guidline?.map((item, index) => (
+  const renderInstruction = () => foodValue.guidline?.map((item, index) => (
+    <Text key={index.toString()} style={styles.ingredientsText}>
+      {`${index + 1}. ${item}`}
+    </Text>
+  ));
+
+  const renderIngredients = () => foodValue.ingredients?.map((item, index) => {
+    const amountForOne = formatNumber(
+      (item.amount / foodValue.serveForPeople) * serveForPeople,
+      2,
+    );
+
+    return (
       <Text key={index.toString()} style={styles.ingredientsText}>
-        {`${index + 1}. ${item}`}
+        {`${amountForOne}  ${item.name}`}
       </Text>
-    ))
-  );
-
-  const renderIngredients = () => (
-    foodValue.ingredients?.map((item, index) => {
-      const amountForOne = formatNumber((item.amount / foodValue.serveForPeople) * serveForPeople, 2);
-
-      return (
-        <Text key={index.toString()} style={styles.ingredientsText}>
-          {`${amountForOne}  ${item.name}`}
-        </Text>
-      );
-    })
-  );
+    );
+  });
 
   const renderTags = () => (
     <View style={styles.rowWrap}>
-      {
-        foodValue.tags?.map((item, index) => (
-          <View key={index.toString()} style={styles.tagView}>
-            <Text style={styles.tagText}>
-              {item.toUpperCase()}
-            </Text>
-          </View>
-        ))
-      }
+      {foodValue.tags?.map((item, index) => (
+        <View key={index.toString()} style={styles.tagView}>
+          <Text style={styles.tagText}>{item.toUpperCase()}</Text>
+        </View>
+      ))}
     </View>
   );
 
   const renderHeader = () => (
     <Header
+      detail
       onPressLeft={goBack}
       iconLeft={images.icon_back}
       customRight={() => (
-        <TouchableOpacity
-          style={styles.likeView}
-          onPress={handleLike}
-        >
-          <Text style={styles.likeNumber}>
-            {foodValue?.totalLikes || 0}
-          </Text>
+        <TouchableOpacity style={styles.likeView} onPress={handleLike}>
+          <Text style={styles.likeNumber}>{foodValue?.totalLikes || 0}</Text>
           <RNImage
             resizeMode="center"
             style={styles.iconHeart}
-            source={
-              isLiked
-                ? images.ic_love
-                : images.ic_nonlove
-                }
+            source={isLiked ? images.ic_love : images.ic_nonlove}
           />
         </TouchableOpacity>
       )}
@@ -147,18 +145,25 @@ const FoodDetail = ({ navigation }) => {
   if (isEmpty(foodValue)) {
     return null;
   }
-
+  // console.log(foodValue);
   return (
     <View style={styles.container}>
       {renderHeader()}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ paddingBottom: responsive({ d: 70 }) }}>
           <View style={styles.nameView}>
-            <Text style={styles.nameText}>
-              {foodValue.name}
-            </Text>
+            {/* {foodValue.name} */}
+            <Text style={styles.nameText}>{foodValue.name}</Text>
+            {/* <TouchableOpacity style={styles.likeView} onPress={handleLike}>
+              <Text style={styles.likeNumber}>
+                {foodValue?.totalLikes || 0}
+              </Text>
+              <RNImage
+                resizeMode="center"
+                style={styles.iconHeart}
+                source={isLiked ? images.ic_love : images.ic_nonlove}
+              />
+            </TouchableOpacity> */}
           </View>
           <Carousel
             data={foodValue.images}
@@ -184,7 +189,7 @@ const FoodDetail = ({ navigation }) => {
                   source={images.ic_clock}
                 />
                 <Text style={styles.infoText}>
-                  {+foodValue.timeCook / 60 }
+                  {+foodValue.timeCook / 60}
                   {' '}
                   mins
                 </Text>
@@ -195,9 +200,7 @@ const FoodDetail = ({ navigation }) => {
                   style={styles.iconInfo}
                   source={images.ic_ingredient}
                 />
-                <Text>
-                  {`${foodValue.ingredients?.length} ingredients`}
-                </Text>
+                <Text>{`${foodValue.ingredients?.length} ingredients`}</Text>
               </View>
               <View style={[styles.flexRowCenter, styles.marginLeftSmall]}>
                 <RNImage
@@ -205,21 +208,16 @@ const FoodDetail = ({ navigation }) => {
                   style={styles.iconInfo}
                   source={images.ic_fire}
                 />
-                <Text>
-                  {`${foodValue.calories} calories`}
-                </Text>
+                <Text>{`${foodValue.calories} calories`}</Text>
               </View>
             </View>
             {renderTags()}
           </View>
+
           <View style={styles.ingredientsView}>
             <CollapseView>
-              <Text style={styles.ingredientsTitle}>
-                INGREDIENTS
-              </Text>
-              {
-                renderIngredients()
-              }
+              <Text style={styles.ingredientsTitle}>INGREDIENTS</Text>
+              {renderIngredients()}
 
               <View style={styles.servingBox}>
                 <TouchableOpacity
@@ -233,7 +231,11 @@ const FoodDetail = ({ navigation }) => {
                   />
                 </TouchableOpacity>
                 <Text>
-                  {`${serveForPeople} ${appropriatePluralisation(serveForPeople, 'serving', 'servings')}`}
+                  {`${serveForPeople} ${appropriatePluralisation(
+                    serveForPeople,
+                    'serving',
+                    'servings',
+                  )}`}
                 </Text>
                 <TouchableOpacity
                   onPress={handleAddServe}
@@ -246,25 +248,18 @@ const FoodDetail = ({ navigation }) => {
                   />
                 </TouchableOpacity>
               </View>
-
             </CollapseView>
           </View>
           <View style={styles.instructionView}>
             <CollapseView>
-              <Text style={styles.ingredientsTitle}>
-                INSTRUCTIONS
-              </Text>
-              {
-              renderInstruction()
-            }
+              <Text style={styles.ingredientsTitle}>INSTRUCTIONS</Text>
+              {renderInstruction()}
             </CollapseView>
           </View>
         </View>
-
       </ScrollView>
     </View>
   );
 };
-
 
 export default FoodDetail;

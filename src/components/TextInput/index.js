@@ -10,14 +10,14 @@ import {
 import styles from './styles';
 
 const CustomTextInput = ({
-  title,
+  // title,
   placeholder,
   value,
   onChangeText,
   icon,
   error,
   containerStyles,
-  titleStyles,
+  // titleStyles,
   multiline,
 }) => {
   const inputRef = useRef(null);
@@ -28,9 +28,9 @@ const CustomTextInput = ({
 
   return (
     <View style={containerStyles}>
-      <Text style={[styles.textInput, titleStyles]}>
-        {title}
-      </Text>
+      {/* <Text style={[styles.textInput, titleStyles]}>
+        {title} */}
+      {/* </Text> */}
       <TouchableOpacity
         onPress={onTouchInput}
         style={styles.row}
