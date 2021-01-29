@@ -214,7 +214,7 @@ const CreatePlan = ({ navigation }) => {
         <ScrollView style={styles.container}>
           <CustomTextInput
             multiline
-            title="Title of the meal plan"
+            // title="Title of the meal plan"
             placeholder="Write your plan..."
             value={plan.titlePlan}
             onChangeText={text => onChangeTitle(text)}

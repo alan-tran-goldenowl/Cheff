@@ -15,21 +15,27 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     right: responsive({ d: -20 }),
+    marginRight: responsive({ d: 10 }),
   },
   likeNumber: {
     fontSize: responsive({ f: 15 }),
   },
   imageFoodCover: {
     height: responsive({ h: 120 }),
-    marginRight: responsive({ d: 20 }),
+    // marginRight: responsive({ d: 20 }),
     borderRadius: 5,
   },
   nameView: {
     paddingVertical: responsive({ d: 20 }),
     marginLeft: responsive({ d: 30 }),
+    marginRight: responsive({ d: 30 }),
     borderBottomColor: 'rgb(217,217,217)',
     borderBottomWidth: 0.7,
     marginBottom: responsive({ d: 30 }),
+    // display: 'flex',
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
   },
   nameText: {
     fontSize: responsive({ f: 20 }),
@@ -51,6 +57,7 @@ export default StyleSheet.create({
   },
   tagInfoView: {
     marginLeft: responsive({ d: 30 }),
+    marginRight: responsive({ d: 30 }),
     borderBottomColor: 'rgb(217,217,217)',
     borderBottomWidth: 0.7,
     marginBottom: responsive({ d: 30 }),
@@ -77,6 +84,7 @@ export default StyleSheet.create({
   },
   ingredientsView: {
     marginLeft: responsive({ d: 30 }),
+    marginRight: responsive({ d: 30 }),
     marginBottom: responsive({ d: 30 }),
   },
   ingredientsTitle: {
@@ -101,7 +109,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1.5,
     marginBottom: responsive({ d: 10 }),
 
-    marginRight: responsive({ d: 30 }),
+    // marginRight: responsive({ d: 30 }),
     padding: responsive({ d: 20 }),
   },
   iconServing: {
@@ -110,6 +118,7 @@ export default StyleSheet.create({
   },
   instructionView: {
     marginLeft: responsive({ d: 30 }),
+    marginRight: responsive({ d: 30 }),
     marginBottom: responsive({ d: 30 }),
   },
   rowWrap: {

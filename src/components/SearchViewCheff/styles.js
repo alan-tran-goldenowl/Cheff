@@ -23,6 +23,7 @@ export default StyleSheet.create({
     marginLeft: responsive({ d: 10 }),
   },
   text: {
+    // width: '100%',
     fontSize: responsive({ f: 14 }),
     color: '#bcbcbc',
   },

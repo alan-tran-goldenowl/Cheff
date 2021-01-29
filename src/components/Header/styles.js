@@ -10,11 +10,11 @@ export default StyleSheet.create({
   header: {
     backgroundColor: '#ffffff',
     marginTop:
-      Platform.OS !== 'ios' ? responsive({ d: responsive({ d: 70 }) }) : 0,
+      Platform.OS !== 'ios' ? responsive({ d: responsive({ d: 130 }) }) : 0,
     height: device.height / 20,
     width: null,
     flexDirection: 'row',
-    marginHorizontal: responsive({ d: 10 }),
+    marginHorizontal: responsive({ d: 0 }),
   },
   title: {
     fontSize: responsive({ f: 17 }),

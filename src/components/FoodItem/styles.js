@@ -11,23 +11,26 @@ export default StyleSheet.create({
   },
   itemFood: {
     width: '100%',
-    height: responsive({ h: 180 }),
+    // height: responsive({ h: 180 }),
   },
   imageFood: {
     flex: 3,
   },
   infomationFood: {
     flex: 1,
+
   },
   imageFoodCover: {
     width: '100%',
     height: responsive({ h: 120 }),
     borderRadius: 5,
+    marginBottom: responsive({ d: 25 }),
   },
   foodName: {
     fontSize: responsive({ f: 14 }),
     color: 'black',
     flex: 3,
+    marginBottom: responsive({ d: 10 }),
   },
   timeStamp: {
     fontSize: responsive({ f: 11 }),
@@ -72,6 +75,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+
   },
   likeContainer: {
     flexDirection: 'row',
@@ -80,6 +84,24 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   footer: {
-    flex: 5, flexDirection: 'row',
+    marginBottom: responsive({ d: 20 }),
+    flex: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tagView: {
+    borderRadius: 2,
+    marginRight: responsive({ d: 25 }),
+    backgroundColor: 'rgb(226,226,226)',
+    paddingHorizontal: responsive({ d: 5 }),
+    marginBottom: responsive({ d: 12 }),
+  },
+  tagText: {
+    padding: responsive({ d: 10 }),
+    color: 'rgb(68,68,68)',
   },
 });

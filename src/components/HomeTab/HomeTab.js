@@ -8,7 +8,7 @@ import Tab from './Tab';
 const HomeTab = ({ tab, navigation }) => (
   <ScrollableTabView
     initialPage={0}
-    renderTabBar={(tabBarProps) => (
+    renderTabBar={tabBarProps => (
       <ScrollableTabBar
         {...tabBarProps}
         style={{
@@ -28,7 +28,7 @@ const HomeTab = ({ tab, navigation }) => (
       height: 2,
     }}
   >
-    {tab.map((item) => (
+    {tab.map(item => (
       <Tab
         key={item.key}
         tabLabel={lodash.capitalize(item?.value?.name)}

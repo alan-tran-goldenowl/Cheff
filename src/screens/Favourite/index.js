@@ -34,7 +34,7 @@ const FavoriteScreen = ({ navigation }) => {
         iconLeft={images.icon_side_menu}
         onPressLeft={() => navigation.navigate('Settings')}
         // iconRight={images.ic_push_notification}
-        onPressRight={() => {}}
+        // onPressRight={() => {}}
         title="Favorites"
       />
       <View style={styles.searchView}>
@@ -60,6 +60,5 @@ const FavoriteScreen = ({ navigation }) => {
     </View>
   );
 };
-
 
 export default FavoriteScreen;

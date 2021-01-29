@@ -15,7 +15,7 @@ const SearchiewCheff = props => (
           source={require('assets/images/ic_search.png')}
         />
       </View>
-      <View style={{ display: 'flex', justifyContent: 'center' }}>
+      <View style={{ display: 'flex', justifyContent: 'center', minWidth: '70%' }}>
         <TextInput
           underlineColorAndroid="transparent"
           autofocus={props.autofocus}

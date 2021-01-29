@@ -2,20 +2,26 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 
-
 import FoodItem from '../FoodItem';
 
 const Tab = ({ navigation, typeId }) => {
-  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => {
-    const list = (Food || []).filter(item => item?.value?.type === typeId);
-    return list;
-  });
+  const listFood = useSelector(
+    ({
+      firebase: {
+        ordered: { Food },
+      },
+    }) => {
+      const list = (Food || []).filter(item => item?.value?.type === typeId);
+      return list;
+    },
+  );
 
   return (
     <FlatList
       data={listFood}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <FoodItem
+          isLastItem={index === listFood.length - 1}
           item={item.value}
           keyFood={item.key}
           onPressItem={() => navigation.navigate('FoodDetail', { key: item.key })}
@@ -27,4 +33,4 @@ const Tab = ({ navigation, typeId }) => {
   );
 };
 
-export default (Tab);
+export default Tab;

@@ -86,8 +86,10 @@ export default createBottomTabNavigator(
     tabBarOptions: {
       showLabel: false,
       style: {
-        height: Platform.OS === 'ios' && 20,
-        paddingBottom: Platform.OS === 'ios' && 0,
+        minHeight: Platform.OS === 'ios' ? 0 : 45,
+        height: Platform.OS === 'ios' ? 20 : 'auto',
+        // minHeight: Platform.OS !== 'ios' ? 25 : 0,
+        paddingBottom: 0,
       },
     },
   },
