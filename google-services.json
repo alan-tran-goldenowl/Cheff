@@ -1,3 +1,4 @@
+
 {
   "project_info": {
     "project_number": "720924385775",
@@ -13,12 +14,7 @@
           "package_name": "com.goldenowl.cheff"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "720924385775-q1eoc3hdvijjbn7j3v2u1lo7jniui75i.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyAjtbH--JGycBNgpN6deYR5nIYrZBxFoc4"
@@ -32,7 +28,7 @@
               "client_type": 3
             },
             {
-              "client_id": "720924385775-q5f2dcmf0q1v6qied2igtmqcu0id95pr.apps.googleusercontent.com",
+              "client_id": "720924385775-hmshqbv2oo4521l05ms5r9b6gir3t7an.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.goldenowl.cheff"

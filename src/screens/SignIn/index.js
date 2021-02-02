@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -9,37 +9,39 @@ import {
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 
-import { FireBase, FbConfig, GgConfig } from 'constants';
 import images from 'assets/images';
+import { FireBase, FbConfig, GgConfig } from 'constants';
 import styles from './styles';
 
 const SignInScreen = ({ navigation }) => {
   const handleLoginSuccess = async credential => {
-    FireBase
-      .auth()
+    FireBase.auth()
       .signInWithCredential(credential)
       .then(({ user }) => {
+        console.log(user);
         navigation.navigate('App');
       })
-      .catch(err => err);
+      .catch(err => console.log(err));
   };
 
-  const logInViaFacebook = async () => { // TODO: failure with iOS
+  const logInViaFacebook = async () => {
+    // TODO: failure with iOS
+    console.log(FbConfig.APP_ID);
     try {
-      await Facebook.initializeAsync(FbConfig.APP_ID, FbConfig.APP_NAME);
-      const {
-        type,
-        token,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile', 'email'],
+      await Facebook.initializeAsync(FbConfig.APP_ID);
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['email'],
       });
       if (type !== 'success') {
         throw new Error('Sorry, unexpected error');
       }
-
+      console.log('token', token);
+      // await FireBase.auth().setPersistence(FireBase.auth.Auth.Persistence.LOCAL);
       const credential = FireBase.auth.FacebookAuthProvider.credential(token);
+      console.log('credential', credential);
       handleLoginSuccess(credential);
     } catch (err) {
+      console.log(err);
       alert(`Login failed: ${err}`);
     }
   };
@@ -60,6 +62,7 @@ const SignInScreen = ({ navigation }) => {
         idToken,
         accessToken,
       );
+      console.log(credential);
       handleLoginSuccess(credential);
     } catch (err) {
       alert(`Login failed: ${err}`);
@@ -67,38 +70,20 @@ const SignInScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground
-      style={styles.container}
-      source={images.background}
-    >
-      <View
-        style={styles.viewBtn}
-      >
+    <ImageBackground style={styles.container} source={images.background}>
+      <View style={styles.viewBtn}>
         {/* login via Google */}
-        <TouchableOpacity
-          onPress={logInViaGoogle}
-          style={styles.textSignInGG}
-        >
-          <Image
-            source={images.btn_gg}
-            style={styles.image}
-          />
-          <Text style={styles.textGG}>
-            Google
-          </Text>
+        <TouchableOpacity onPress={logInViaGoogle} style={styles.textSignInGG}>
+          <Image source={images.btn_gg} style={styles.image} />
+          <Text style={styles.textGG}>Google</Text>
         </TouchableOpacity>
         {/* login via Facebook */}
         <TouchableOpacity
           style={styles.textSignInFb}
           onPress={logInViaFacebook}
         >
-          <Image
-            style={styles.image}
-            source={images.btn_fb}
-          />
-          <Text style={styles.textFB}>
-            Facebook
-          </Text>
+          <Image style={styles.image} source={images.btn_fb} />
+          <Text style={styles.textFB}>Facebook</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
