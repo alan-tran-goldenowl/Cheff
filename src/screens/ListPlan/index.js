@@ -1,9 +1,6 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  FlatList,
-  Alert,
+  View, Text, FlatList, Alert,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
@@ -22,46 +19,39 @@ const ListPlan = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect(`Meal_Plan/${user.uid}`);
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid] || [])
-    .filter(item => moment(item.value.date).format('YYYY-MM-DD') === day))
-    .sort((a, b) => a.value.date - b.value.date); // filter and sort by date
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid] || []).filter(
+    item => moment(item.value.date).format('YYYY-MM-DD') === day,
+  )).sort((a, b) => a.value.date - b.value.date); // filter and sort by date
 
   const goBack = () => navigation.goBack();
 
   const goToMealPlan = id => navigation.navigate('PlanDetails', { id });
 
   const deleteMealPlan = id => {
-    Alert.alert(
-      'Warning',
-      'Are you want to delete this meal plan ?',
-      [
-        {
-          text: 'Cancel',
+    Alert.alert('Warning', 'Are you want to delete this meal plan ?', [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => {
+          // firebase.remove(`Meal_Plan/${user.uid}/${id}`);
+          const params = {
+            planId: id,
+            callback: goBack,
+            userId: user.uid,
+          };
+          dispatch(deletePlan(params));
+          // goBack();
         },
-        {
-          text: 'Delete',
-          onPress: () => {
-            // firebase.remove(`Meal_Plan/${user.uid}/${id}`);
-            const params = {
-              planId: id,
-              callback: goBack,
-              userId: user.uid,
-            };
-            dispatch(deletePlan(params));
-            // goBack();
-          },
-        },
-      ],
-    );
+      },
+    ]);
   };
 
   const editMealPlan = id => navigation.navigate('CreatePlan', { id });
 
   const renderHeader = () => (
-    <Header
-      onPressLeft={goBack}
-      iconLeft={images.icon_back}
-    />
+    <Header type="back" onPressLeft={goBack} iconLeft={images.icon_back} />
   );
 
   const renderDayTime = () => (

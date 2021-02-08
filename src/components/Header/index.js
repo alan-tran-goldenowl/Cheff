@@ -1,9 +1,6 @@
 import React from 'react';
 import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
+  Text, View, Image, TouchableOpacity,
 } from 'react-native';
 
 import images from 'assets/images';
@@ -11,11 +8,24 @@ import images from 'assets/images';
 import styles from './styles';
 
 const Header = ({
-  onPressLeft, iconLeft, logoVisible, title, onPressRight, iconRight, rightText, customRight, detail,
+  onPressLeft,
+  iconLeft,
+  logoVisible,
+  title,
+  onPressRight,
+  iconRight,
+  rightText,
+  customRight,
+  detail,
+  type,
 }) => (
   <View style={[styles.header, detail && styles.headerDetail]}>
     <TouchableOpacity
-      style={[styles.button, { alignItems: 'flex-start' }]}
+      style={[
+        styles.button,
+        { alignItems: 'flex-start' },
+        type === 'back' ? styles.noPadding : null,
+      ]}
       onPress={onPressLeft}
     >
       {iconLeft && (
@@ -24,13 +34,9 @@ const Header = ({
     </TouchableOpacity>
     <View style={styles.logoVisible}>
       {logoVisible && (
-        <Image style={styles.logo} source={images.logo_cheff} />
+      <Image style={styles.logo} source={images.logo_cheff} />
       )}
-      {title && (
-      <Text style={styles.title}>
-        {title}
-      </Text>
-      )}
+      {title && <Text style={styles.title}>{title}</Text>}
     </View>
     <TouchableOpacity
       style={[styles.button, { alignItems: 'flex-end' }]}
@@ -39,11 +45,7 @@ const Header = ({
       {iconRight && (
       <Image style={styles.icon} resizeMode="center" source={iconRight} />
       )}
-      {rightText && (
-        <Text style={styles.rightText}>
-          {rightText}
-        </Text>
-      )}
+      {rightText && <Text style={styles.rightText}>{rightText}</Text>}
       {customRight && customRight()}
     </TouchableOpacity>
   </View>
