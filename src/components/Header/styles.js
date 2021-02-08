@@ -37,6 +37,7 @@ export default StyleSheet.create({
     width: '30%',
     paddingHorizontal: responsive({ h: 10 }),
   },
+  noPadding: { paddingHorizontal: 0 },
   logoVisible: {
     flex: 8,
     justifyContent: 'center',
