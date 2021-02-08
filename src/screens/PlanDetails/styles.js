@@ -15,6 +15,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     justifyContent: 'space-between',
+    marginBottom: responsive({ d: 15 }),
   },
   nameText: {
     fontSize: responsive({ f: 24 }),
@@ -22,16 +23,20 @@ export default StyleSheet.create({
     marginTop: responsive({ d: 15 }),
   },
   rowView: {
-    minHeight: responsive({ h: 45 }),
+    // minHeight: responsive({ h: 30 }),
     width: '100%',
     height: 'auto',
-    paddingTop: responsive({ d: 15 }),
+    paddingVertical: responsive({ d: 15 }),
     display: 'flex',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  listItem: {
+    alignItems: 'flex-start',
   },
   iconView: {
-    width: responsive({ h: 60 }),
+    width: responsive({ h: 40 }),
     paddingLeft: responsive({ d: 30 }),
   },
   icon: {
@@ -44,10 +49,10 @@ export default StyleSheet.create({
   },
   textView: {
     display: 'flex',
-    paddingLeft: responsive({ d: 10 }),
-    paddingRight: responsive({ d: 10 }),
+    // paddingLeft: responsive({ d: 10 }),
+    // paddingRight: responsive({ d: 10 }),
     width: device.width - responsive({ h: 60 }),
-    paddingBottom: responsive({ d: 15 }),
+    // paddingBottom: responsive({ d: 15 }),
     flexDirection: 'row',
   },
   textViewWithIconInFront: {
