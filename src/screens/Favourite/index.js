@@ -14,7 +14,7 @@ import styles from './styles';
 
 const FavoriteScreen = ({ navigation }) => {
   const userFirebase = FireBase.auth().currentUser;
-  const [typeList, setTypeList] = useState(true);
+  const [typeList, setTypeList] = useState(false);
 
   const listFavouritesOfUser = useSelector(
     ({
