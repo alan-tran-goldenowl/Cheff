@@ -17,7 +17,13 @@ const PlanDetails = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect([`Meal_Plan/${user.uid}/${planId}`, 'Food', 'Type_Food']);
-  const mealPlan = useSelector(({ firebase: { data: { Meal_Plan = {} } } }) => Meal_Plan[user.uid]?.[planId] || {});
+  const mealPlan = useSelector(
+    ({
+      firebase: {
+        data: { Meal_Plan = {} },
+      },
+    }) => Meal_Plan[user.uid]?.[planId] || {},
+  );
   const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map(item => Food[item]?.name));
   const [showNotification, setShowNotification] = useState(isEdit);
   const goBack = () => navigation.goBack();
@@ -39,29 +45,22 @@ const PlanDetails = ({ navigation }) => {
     setShowNotification(false);
   };
 
-  const renderItem = (icon, text, secondIcon) => {
+  const renderItem = (listItem, icon, text, secondIcon) => {
     if (text) {
       return (
-        <View style={styles.rowView}>
+        <View style={[styles.rowView, listItem ? styles.listItem : null]}>
           <View style={styles.iconView}>
-            <Image
-              style={styles.icon}
-              resizeMode="center"
-              source={icon}
-            />
+            <Image style={styles.icon} resizeMode="center" source={icon} />
           </View>
           <View style={styles.textView}>
-            {secondIcon
-              && (
+            {secondIcon && (
               <Image
                 source={secondIcon}
                 resizeMode="center"
                 style={styles.iconViewImage}
               />
-              )}
-            <Text style={styles.text}>
-              {text}
-            </Text>
+            )}
+            <Text style={styles.text}>{text}</Text>
           </View>
         </View>
       );
@@ -73,36 +72,38 @@ const PlanDetails = ({ navigation }) => {
     <View style={styles.container}>
       {/* header */}
       {renderHeader()}
-      {
-      showNotification
-        && (
+      {showNotification && (
         <View style={styles.notification}>
-          <Text style={styles.textEdit}>
-            You have just edited your plan.
-          </Text>
+          <Text style={styles.textEdit}>You have just edited your plan.</Text>
           <TouchableOpacity onPress={handleVisibleNotifi}>
             <AntIcon color="#FFF" name="close" size={20} />
           </TouchableOpacity>
         </View>
-        )
-      }
+      )}
       {/* title */}
       <View style={styles.nameView}>
-        <Text style={styles.nameText}>
-          {upperFirst(mealPlan.title)}
-        </Text>
+        <Text style={styles.nameText}>{upperFirst(mealPlan.title)}</Text>
       </View>
 
       {/* date */}
-      {renderItem(images.icon_calendar, moment(mealPlan.date).format('DD, MMM, YYYY'))}
+      {renderItem(
+        0,
+        images.icon_calendar,
+        moment(mealPlan.date).format('DD, MMM, YYYY'),
+      )}
       {/* time */}
-      {renderItem(images.icon_clock, moment(mealPlan.date).format('LT'))}
+      {renderItem(0, images.icon_clock, moment(mealPlan.date).format('LT'))}
       {/* type */}
-      {renderItem(images.icon_chicken_food, upperFirst(mealPlan.meal), listIconPlan[mealPlan.meal])}
+      {renderItem(
+        0,
+        images.icon_chicken_food,
+        upperFirst(mealPlan.meal),
+        listIconPlan[mealPlan.meal],
+      )}
       {/* food */}
-      {renderItem(images.icon_food, food.join('\n'))}
+      {renderItem(1, images.icon_food, `- ${food.join('\n- ')}`)}
       {/* notes */}
-      {renderItem(images.icon_note, mealPlan.note)}
+      {renderItem(0, images.icon_note, mealPlan.note)}
     </View>
   );
 };

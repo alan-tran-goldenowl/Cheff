@@ -35,6 +35,8 @@ export default {
   ic_pullup: require('./ic_pullup.png'),
   ic_push_notification: require('./ic_push_notification.png'),
   ic_search: require('./ic_search.png'),
+  ic_list_large: require('./ic_list_large.png'),
+  ic_list_small: require('./ic_list_small.png'),
   ic_star: require('./ic_star.png'),
   ic_user: require('./ic_user.png'),
   icon: require('./icon.png'),
@@ -55,5 +57,5 @@ export default {
   robot_dev: require('./robot-dev.png'),
   robot_prod: require('./robot-prod.png'),
   splash: require('./splash.png'),
-  icon_logout: require('./logout.png')
-}
+  icon_logout: require('./logout.png'),
+};
