@@ -6,6 +6,22 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  changeTypeListView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginVertical: responsive({ d: 15 }),
+    paddingHorizontal: responsive({ h: 15 }),
+    backgroundColor: 'white',
+  },
+  changeTypeList: {
+    width: 30,
+    height: 30,
+  },
+  iconTypeList: {
+    width: '100%',
+    height: '100%',
+  },
   list: {
     flex: 1,
     backgroundColor: 'white',

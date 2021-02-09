@@ -11,7 +11,6 @@ import Header from 'components/Header';
 import images from 'assets/images';
 import styles from './styles';
 
-
 const SearchScreen = ({ navigation }) => {
   const [dataSearch, setDataSearch] = useState(null);
 
