@@ -131,7 +131,6 @@ const FoodDetail = ({ navigation }) => {
       iconLeft={images.icon_back}
       customRight={() => (
         <TouchableOpacity style={styles.likeView} onPress={handleLike}>
-          <Text style={styles.likeNumber}>{foodValue?.totalLikes || 0}</Text>
           <RNImage
             resizeMode="center"
             style={styles.iconHeart}
@@ -145,25 +144,13 @@ const FoodDetail = ({ navigation }) => {
   if (isEmpty(foodValue)) {
     return null;
   }
-  // console.log(foodValue);
   return (
     <View style={styles.container}>
       {renderHeader()}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ paddingBottom: responsive({ d: 70 }) }}>
           <View style={styles.nameView}>
-            {/* {foodValue.name} */}
             <Text style={styles.nameText}>{foodValue.name}</Text>
-            {/* <TouchableOpacity style={styles.likeView} onPress={handleLike}>
-              <Text style={styles.likeNumber}>
-                {foodValue?.totalLikes || 0}
-              </Text>
-              <RNImage
-                resizeMode="center"
-                style={styles.iconHeart}
-                source={isLiked ? images.ic_love : images.ic_nonlove}
-              />
-            </TouchableOpacity> */}
           </View>
           <Carousel
             data={foodValue.images}
@@ -180,6 +167,21 @@ const FoodDetail = ({ navigation }) => {
             removeClippedSubviews={false}
             itemWidth={device.width - responsive({ d: 60 })}
           />
+
+          <View style={{ ...styles.likeSection, flexDirection: 'row' }}>
+            <TouchableOpacity style={styles.likeView} onPress={handleLike}>
+              <RNImage
+                resizeMode="center"
+                style={styles.iconHeart}
+                source={isLiked ? images.ic_love : images.ic_nonlove}
+              />
+              <Text style={styles.likeNumber}>
+                {foodValue?.totalLikes || 0}
+                {' '}
+                Likes
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.tagInfoView}>
             <View style={styles.infoView}>
               <View style={styles.flexRowCenter}>
@@ -218,7 +220,6 @@ const FoodDetail = ({ navigation }) => {
             <CollapseView>
               <Text style={styles.ingredientsTitle}>INGREDIENTS</Text>
               {renderIngredients()}
-
               <View style={styles.servingBox}>
                 <TouchableOpacity
                   onPress={handleSubtractServe}

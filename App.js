@@ -63,7 +63,7 @@ export default class App extends React.Component {
       <SafeAreaProvider>
         <Provider store={store}>
           <ReactReduxFirebaseProvider {...rrfProps}>
-            <SafeAreaView style={{ flex: 1 }} forceInset={{ bottom: 'never' }}>
+            <SafeAreaView style={{ flex: 1 }}>
               <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                 <NavigationRoot />

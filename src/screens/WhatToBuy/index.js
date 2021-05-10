@@ -1,49 +1,43 @@
 import React from 'react';
 import { View } from 'react-native';
-import Header from 'components/Header';
 import ScrollableView from 'react-native-scrollable-tab-view';
 import { FireBase } from 'constants';
+import moment from 'moment';
 
 import { useSelector } from 'react-redux';
-// My components
-import images from 'assets/images';
-import { onCurrentWeek, onCurrentMonth, isToday } from 'utils';
+
+import {
+  onCurrentWeek, onCurrentMonth, isToday, groupDataByDate,
+} from 'utils';
 import TabView from './TabView';
 
 // Data
 
-const ActivityScreen = ({ navigation }) => {
+const WhatToBuyScreen = () => {
   const userFirebase = FireBase.auth().currentUser;
 
-  const activityData = useSelector(({ firebase: { data: { Activity } } }) => {
-    const data = (Activity && Activity[userFirebase.uid]) || [];
-
+  const activityData = useSelector(({ firebase: { data: { Plan_To_do } } }) => {
+    const data = (Plan_To_do && Plan_To_do[userFirebase.uid]) || [];
     return Object.values(data).reverse();
   });
 
-  const renderHeader = () => (
-    <Header
-      title="Activity"
-      iconLeft={images.icon_side_menu}
-      onPressLeft={() => navigation.navigate('Settings')}
-      // iconRight={images.ic_push_notification}
-    />
-
-  );
 
   const getListInWeek = () => {
-    const data = activityData.filter(item => onCurrentWeek(item?.timeStamp * 1000));
-    return data;
+    const data = activityData.filter(item => onCurrentWeek(item.date));
+
+
+    return groupDataByDate(data);
   };
 
   const getListInMonth = () => {
-    const data = activityData.filter(item => onCurrentMonth(item?.timeStamp * 1000));
-    return data;
+    const data = activityData.filter(item => onCurrentMonth(item.date));
+
+    return groupDataByDate(data);
   };
 
   const getListToday = () => {
-    const data = activityData.filter(item => isToday(item?.timeStamp * 1000));
-    return data;
+    const data = activityData.filter(item => isToday(item.date));
+    return groupDataByDate(data);
   };
 
   return (
@@ -61,4 +55,4 @@ const ActivityScreen = ({ navigation }) => {
 
   );
 };
-export default ActivityScreen;
+export default WhatToBuyScreen;
