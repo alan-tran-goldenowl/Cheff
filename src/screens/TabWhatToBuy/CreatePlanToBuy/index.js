@@ -12,7 +12,7 @@ import moment from 'moment';
 import Icon from '@expo/vector-icons/FontAwesome';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import { addPlanTodo } from 'services';
+import { addPlanTodo, updatePlanTodo } from 'services';
 
 import { useFirebase } from 'react-redux-firebase';
 
@@ -51,9 +51,9 @@ const CreatePlanToBuy = ({ navigation }) => {
   const oldPlan = useSelector(
     ({
       firebase: {
-        data: { Plan = {} },
+        data: { Plan_To_do = {} },
       },
-    }) => Plan[user.uid]?.[planId] || {},
+    }) => Plan_To_do[user.uid]?.[planId] || {},
   );
 
 
@@ -63,7 +63,12 @@ const CreatePlanToBuy = ({ navigation }) => {
 
   const [error, setError] = useState({});
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (planId) {
+      setPlan(oldPlan);
+      setTodoList(oldPlan.todos);
+    }
+  }, [planId]);
 
   const handleDatePicked = value => {
     setPlan({
@@ -95,12 +100,19 @@ const CreatePlanToBuy = ({ navigation }) => {
 
     const data = {
       ...plan,
-      date: plan.date.getTime(),
+      date: Number.isNaN(plan.date) ? plan.date.getTime() : plan.date,
       todos: list,
       userId: user.uid,
     };
-
-    dispatch(addPlanTodo({ data, userId: user.uid }));
+    if (planId) {
+      dispatch(updatePlanTodo({ data, userId: user.uid, planId })).then(() => {
+        navigation.goBack();
+      });
+    } else {
+      dispatch(addPlanTodo({ data, userId: user.uid })).then(() => {
+        navigation.goBack();
+      });
+    }
   };
 
   const addMore = () => {
@@ -157,6 +169,8 @@ const CreatePlanToBuy = ({ navigation }) => {
           >
             <TextInput
               multiline
+              defaultValue={plan.title}
+
               style={styles.containerTitle}
               placeholder="Type something"
               onChangeText={text => onChangeText('title', text)}
@@ -182,6 +196,7 @@ const CreatePlanToBuy = ({ navigation }) => {
           <ContainerInput label="Notes">
             <TextInput
               multiline
+              defaultValue={plan.notes}
               style={{ ...styles.containerTitle, minHeight: 70 }}
               placeholder="Notes"
               onChangeText={text => onChangeText('notes', text)}
@@ -199,6 +214,7 @@ const CreatePlanToBuy = ({ navigation }) => {
                   <View key={e.id} style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                     <TextInput
                       multiline
+                      defaultValue={e.text}
                       onChangeText={text => onChangeTextTodo(e.id, text)}
                       style={{ ...styles.containerTitle, flex: 3 }}
                       placeholder="Type something ..."

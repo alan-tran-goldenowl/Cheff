@@ -3,6 +3,7 @@ export const COLOR = {
   BLACK_COLOR: '#000000',
   TEXT_SECONDARY_COLOR: '#777777',
   BORDER_COLOR: '#9fa0a4',
+  GREEN_COLOR: '#44db5e',
 };
 
 export default {

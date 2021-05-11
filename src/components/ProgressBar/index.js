@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { COLOR } from 'styles/theme';
 
 const ProgressBar = props => {
   const { bgcolor, completed } = props;
@@ -7,7 +8,7 @@ const ProgressBar = props => {
 
   return (
     <View style={styles.containerStyles}>
-      <View style={[styles.fillerStyles, { width: `${completed}%`, backgroundColor: bgcolor ?? 'green' }]} />
+      <View style={[styles.fillerStyles, { width: `${completed}%`, backgroundColor: bgcolor ?? COLOR.GREEN_COLOR }]} />
     </View>
   );
 };

@@ -72,15 +72,4 @@ export default StyleSheet.create({
   pickerDate: {
     marginRight: responsive({ d: 30 }),
   },
-  alarm: {
-    flexDirection: 'row',
-    marginTop: responsive({ d: 30 }),
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  textAlarm: {
-    fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
-    color: COLOR.TEXT_SECONDARY_COLOR,
-    flex: 1,
-  },
 });

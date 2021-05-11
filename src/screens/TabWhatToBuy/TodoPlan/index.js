@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import ScrollableView from 'react-native-scrollable-tab-view';
 import { FireBase } from 'constants';
-import moment from 'moment';
 
 import { useSelector } from 'react-redux';
 
@@ -16,27 +15,32 @@ import TabView from './TabView';
 const WhatToBuyScreen = () => {
   const userFirebase = FireBase.auth().currentUser;
 
-  const activityData = useSelector(({ firebase: { data: { Plan_To_do } } }) => {
-    const data = (Plan_To_do && Plan_To_do[userFirebase.uid]) || [];
-    return Object.values(data).reverse();
+  const todoData = useSelector(({ firebase: { ordered: { Plan_To_do } } }) => {
+    const data = (Plan_To_do[userFirebase.uid]) || [];
+    const parseData = data.map(item => ({ ...item.value, id: item.key })) ?? [];
+
+    return parseData.reverse();
   });
 
 
   const getListInWeek = () => {
-    const data = activityData.filter(item => onCurrentWeek(item.date));
-
+    const data = todoData
+      .filter(item => onCurrentWeek(item.date))
+      .sort((a, b) => b.date - a.date);
 
     return groupDataByDate(data);
   };
 
   const getListInMonth = () => {
-    const data = activityData.filter(item => onCurrentMonth(item.date));
+    const data = todoData
+      .filter(item => onCurrentMonth(item.date))
+      .sort((a, b) => b.date - a.date);
 
     return groupDataByDate(data);
   };
 
   const getListToday = () => {
-    const data = activityData.filter(item => isToday(item.date));
+    const data = todoData.filter(item => isToday(item.date));
     return groupDataByDate(data);
   };
 

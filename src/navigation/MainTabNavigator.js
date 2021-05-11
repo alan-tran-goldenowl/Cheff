@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from 'screens/Home';
 import FavouriteScreen from 'screens/Favourite';
 import MealPlanScreen from 'screens/MealPlan';
-import CreatePlanToBuy from 'screens/WhatToBuy';
+import CreatePlanToBuy from 'screens/TabWhatToBuy/TodoPlan';
 
 const styles = StyleSheet.create({
   icon: {

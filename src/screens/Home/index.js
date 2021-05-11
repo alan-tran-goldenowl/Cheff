@@ -7,10 +7,14 @@ import SearchViewCheff from 'components/SearchViewCheff';
 import HomeTab from 'components/HomeTab/HomeTab';
 import Header from 'components/Header';
 import images from 'assets/images';
+import { FireBase } from 'constants';
 import styles from './styles';
 
 const HomeScreen = ({ navigation }) => {
-  useFirebaseConnect(['Food', 'Type_Food', 'Favourites', 'Activity', 'Plan_To_do']);
+  const user = FireBase.auth().currentUser || {};
+
+  useFirebaseConnect(`Plan_To_do/${user.uid}`);
+  useFirebaseConnect(['Food', 'Type_Food', 'Favourites', 'Activity']);
   const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => Type_Food || []);
 
   const CustomHeader = () => (

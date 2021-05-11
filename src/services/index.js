@@ -91,3 +91,12 @@ export function deletePlan({ userId, planId }) {
       .remove();
   };
 }
+
+export function deletePlanToBuy({ userId, planId }) {
+  return (dispatch, getState, getFirebase) => {
+    const firebase = getFirebase();
+    return firebase
+      .ref(`Plan_To_do/${userId}/${planId}`)
+      .remove();
+  };
+}
