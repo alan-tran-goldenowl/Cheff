@@ -14,6 +14,9 @@ import CreatePlan from 'screens/CreatePlan';
 import Settings from 'screens/Setting';
 import EditProfile from 'screens/EditProfile';
 import PlanDetails from 'screens/PlanDetails';
+import TodoPlanDetail from 'screens/TabWhatToBuy/TodoPlanDetail';
+import CreatePlanToBuy from 'screens/TabWhatToBuy/CreatePlanToBuy';
+
 import AuthLoading from 'screens/AuthLoading';
 import Main from './MainTabNavigator';
 
@@ -28,6 +31,8 @@ const AppStack = createStackNavigator(
     FoodDetail,
     EditProfile,
     PlanDetails,
+    TodoPlanDetail,
+    CreatePlanToBuy,
   },
   {
     headerMode: 'none',

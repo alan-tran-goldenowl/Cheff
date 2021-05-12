@@ -13,6 +13,7 @@ const CustomDatePicker = ({
   title,
   value,
   date,
+  icon,
   isVisible,
   onConfirm,
   onCancel,
@@ -20,16 +21,17 @@ const CustomDatePicker = ({
   onPress,
   containerStyle,
   error,
+  minimumDate,
 }) => (
-  <View style={[styles.container, containerStyle]}>
-    <Text style={styles.title}>{title}</Text>
+  <View style={containerStyle}>
+    {title ? <Text style={styles.title}>{title}</Text> : null}
     <TouchableOpacity
       onPress={onPress}
       style={styles.date}
     >
       <Text style={styles.value}>{value}</Text>
       <Icon
-        name="angle-down"
+        name={icon ?? 'calendar'}
         size={20}
       />
     </TouchableOpacity>
@@ -41,7 +43,7 @@ const CustomDatePicker = ({
       mode={mode}
       is24Hour={false}
       date={date}
-      minimumDate={new Date()}
+      minimumDate={minimumDate}
     />
     {!!error && <Text style={styles.errorText}>{error}</Text> }
   </View>

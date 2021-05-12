@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from 'screens/Home';
 import FavouriteScreen from 'screens/Favourite';
 import MealPlanScreen from 'screens/MealPlan';
-import ActivityScreen from 'screens/Activity';
+import CreatePlanToBuy from 'screens/TabWhatToBuy/TodoPlan';
 
 const styles = StyleSheet.create({
   icon: {
@@ -69,7 +69,7 @@ export default createBottomTabNavigator(
       }),
     },
     Activity: {
-      screen: ActivityScreen,
+      screen: CreatePlanToBuy,
       navigationOptions: () => ({
         tabBarIcon: ({ focused }) => (
           <Image

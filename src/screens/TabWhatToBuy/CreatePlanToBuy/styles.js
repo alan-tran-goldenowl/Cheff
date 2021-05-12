@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { responsive } from 'utils';
 import themeStyles, { COLOR } from 'styles/theme';
 
+
 export default StyleSheet.create({
   main: {
     flex: 1,
@@ -25,7 +26,20 @@ export default StyleSheet.create({
     marginBottom: responsive({ d: 30 }),
   },
   containerTitle: {
-    marginTop: responsive({ d: 40 }),
+    borderWidth: 0.2,
+    borderColor: COLOR.borderColor,
+    paddingVertical: responsive({ d: 10 }),
+    paddingHorizontal: responsive({ d: 10 }),
+    borderRadius: 3,
+    fontSize: 14,
+  },
+  containerTodo: {
+    borderWidth: 1,
+    borderColor: COLOR.borderColor,
+    paddingVertical: responsive({ d: 10 }),
+    paddingHorizontal: responsive({ d: 10 }),
+    borderRadius: 3,
+    fontSize: 14,
   },
   text: {
     paddingTop: responsive({ d: 40 }),
@@ -69,4 +83,5 @@ export default StyleSheet.create({
     color: COLOR.TEXT_SECONDARY_COLOR,
     flex: 1,
   },
+  containerAddMore: { flexDirection: 'row', alignItems: 'center', marginTop: 10 },
 });

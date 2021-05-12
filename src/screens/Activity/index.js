@@ -32,23 +32,22 @@ const ActivityScreen = ({ navigation }) => {
   );
 
   const getListInWeek = () => {
-    const data = activityData.filter(item => onCurrentWeek(item.timeStamp));
+    const data = activityData.filter(item => onCurrentWeek(item?.timeStamp * 1000));
     return data;
   };
 
   const getListInMonth = () => {
-    const data = activityData.filter(item => onCurrentMonth(item.timeStamp));
+    const data = activityData.filter(item => onCurrentMonth(item?.timeStamp * 1000));
     return data;
   };
 
   const getListToday = () => {
-    const data = activityData.filter(item => isToday(item.timeStamp));
+    const data = activityData.filter(item => isToday(item?.timeStamp * 1000));
     return data;
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      {renderHeader()}
       <ScrollableView
         tabBarInactiveTextColor="gray"
         tabBarActiveTextColor="#000"

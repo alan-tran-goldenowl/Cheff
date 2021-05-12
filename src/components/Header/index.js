@@ -5,7 +5,9 @@ import {
 
 import images from 'assets/images';
 
+import { device } from 'utils';
 import styles from './styles';
+
 
 const Header = ({
   onPressLeft,
@@ -16,10 +18,15 @@ const Header = ({
   iconRight,
   rightText,
   customRight,
-  detail,
   type,
+  bigTitle,
 }) => (
-  <View style={[styles.header, detail && styles.headerDetail]}>
+  <View style={[
+    styles.header,
+    bigTitle
+      ? { minHeight: device.height / 20 }
+      : { height: device.height / 20 }]}
+  >
     <TouchableOpacity
       style={[
         styles.button,
@@ -36,6 +43,7 @@ const Header = ({
       {logoVisible && (
       <Image style={styles.logo} source={images.logo_cheff} />
       )}
+      {bigTitle && <Text style={styles.bigTitle}>{bigTitle}</Text>}
       {title && <Text style={styles.title}>{title}</Text>}
     </View>
     <TouchableOpacity

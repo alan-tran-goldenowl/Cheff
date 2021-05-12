@@ -63,6 +63,13 @@ export default StyleSheet.create({
     marginBottom: responsive({ d: 30 }),
     paddingBottom: responsive({ d: 40 }),
   },
+  likeSection:{
+    // marginLeft: responsive({ d: 30 }),
+    borderBottomColor: 'rgb(217,217,217)',
+    borderBottomWidth: 0.7,
+    marginBottom: responsive({ d: 10 }),
+    paddingBottom: responsive({ d: 10 }),
+  },
   flatList: {
     flexWrap: 'wrap',
   },

@@ -50,7 +50,7 @@ export default class SwipeableRow extends Component {
     );
   };
 
-  renderRightActions = (progress) => {
+  renderRightActions = progress => {
     const { listAction } = this.props;
     return (
       <View style={{ width: 192, flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row' }}>
@@ -64,7 +64,7 @@ export default class SwipeableRow extends Component {
   };
 
 
-  updateRef = (ref) => {
+  updateRef = ref => {
     this._swipeableRow = ref;
   };
 

@@ -6,7 +6,7 @@ export default StyleSheet.create({
   button: {
     borderRadius: 4,
     alignItems: 'center',
-    paddingVertical: responsive({ d: 30 }),
+    paddingVertical: responsive({ d: 15 }),
     justifyContent: 'center',
     backgroundColor: '#377AFD',
   },

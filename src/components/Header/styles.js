@@ -7,12 +7,10 @@ export default StyleSheet.create({
     width: responsive({ h: 15 }),
     padding: 15,
   },
-
   header: {
     backgroundColor: '#ffffff',
     marginTop:
       Platform.OS !== 'ios' ? responsive({ d: responsive({ d: 130 }) }) : 0,
-    height: device.height / 20,
     width: null,
     flexDirection: 'row',
     marginHorizontal: responsive({ d: 0 }),
@@ -24,9 +22,16 @@ export default StyleSheet.create({
   title: {
     fontSize: responsive({ f: 17 }),
   },
+  bigTitle: {
+    fontSize: responsive({ f: 14 }),
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
   logo: {
     resizeMode: 'contain',
     width: responsive({ h: 40 }),
+    maxHeight: device.height / 20,
   },
   rightText: {
     fontSize: responsive({ f: 17 }),
@@ -34,7 +39,7 @@ export default StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '30%',
+    width: '20%',
     paddingHorizontal: responsive({ h: 10 }),
   },
   noPadding: { paddingHorizontal: 0 },

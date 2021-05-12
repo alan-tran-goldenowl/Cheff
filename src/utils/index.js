@@ -1,6 +1,7 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
 import { Notifications } from 'expo';
 import images from 'assets/images';
+import moment from 'moment';
 
 // export authHelper from './authHelper';
 // export storageHelper from './storageHelper';
@@ -73,7 +74,7 @@ export const formatNumber = (num, digits) => Number.parseFloat(num).toFixed(digi
 const WEEK_LENGTH = 604800000;
 
 export const onCurrentWeek = date => {
-  const parseDate = new Date(date * 1000);
+  const parseDate = new Date(date);
   const lastMonday = new Date(); // Creating new date object for today
   lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() - 1)); // Setting date to last monday
   lastMonday.setHours(0, 0, 0, 0); // Setting Hour to 00:00:00:00
@@ -85,13 +86,14 @@ export const onCurrentWeek = date => {
 
 export const onCurrentMonth = date => {
   const currentMonth = new Date().getMonth() + 1;
-  const monthFromDate = new Date(date * 1000).getMonth() + 1;
+  const monthFromDate = new Date(date).getMonth() + 1;
   return currentMonth === monthFromDate;
 };
 
 export const isToday = date => {
   const today = new Date();
-  const parseDate = new Date(date * 1000);
+  const parseDate = new Date(date);
+
   return (
     parseDate.getDate() === today.getDate()
     && parseDate.getMonth() === today.getMonth()
@@ -113,3 +115,26 @@ export const setNotification = time => Notifications.scheduleLocalNotificationAs
 );
 
 export const cancelNotification = id => Notifications.cancelScheduledNotificationAsync(id);
+
+export const groupDataByDate = data => {
+  const finalObj = {};
+  data.forEach(item => {
+    const date = moment(item.date).format('DD-MM-YYYY');
+    if (finalObj[date]) {
+      finalObj[date].push(item);
+    } else {
+      finalObj[date] = [item];
+    }
+  });
+  const finalArr = [];
+  const listKey = Object.keys(finalObj);
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < listKey.length; i++) {
+    finalArr.push({
+      title: listKey[i],
+      data: finalObj[listKey[i]],
+    });
+  }
+
+  return finalArr;
+};
