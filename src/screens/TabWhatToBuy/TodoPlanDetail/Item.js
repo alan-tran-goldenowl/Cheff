@@ -10,7 +10,7 @@ const TodoItem = ({ data, onPress, onChangeText }) => (
   <View key="e.id" style={styles.container}>
     <TouchableOpacity onPress={onPress}>
       <Icon
-        name="checkmark-circle"
+        name={data.isCompleted ? 'checkmark-circle' : 'ellipse-outline'}
         size={25}
         color={data.isCompleted ? COLOR.GREEN_COLOR : COLOR.BORDER_COLOR}
         style={styles.icon}

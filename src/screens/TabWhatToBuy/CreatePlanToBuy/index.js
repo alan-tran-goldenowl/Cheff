@@ -39,7 +39,7 @@ const CreatePlanToBuy = ({ navigation }) => {
   const dispatch = useDispatch();
   const [plan, setPlan] = useState({
     title: '',
-    date: new Date(),
+    date: (new Date()).getTime(),
     notes: '',
   });
   const { id: planId } = navigation.state.params || {};
@@ -71,11 +71,14 @@ const CreatePlanToBuy = ({ navigation }) => {
   }, [planId]);
 
   const handleDatePicked = value => {
+    setDatePickerVisible(false);
+    if (!value) {
+      return;
+    }
     setPlan({
       ...plan,
-      date: value,
+      date: value?.getTime(),
     });
-    setDatePickerVisible(false);
   };
 
   const onValidateInput = () => {
@@ -100,7 +103,6 @@ const CreatePlanToBuy = ({ navigation }) => {
 
     const data = {
       ...plan,
-      date: Number.isNaN(plan.date) ? plan.date.getTime() : plan.date,
       todos: list,
       userId: user.uid,
     };

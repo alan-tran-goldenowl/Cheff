@@ -75,6 +75,7 @@ const WEEK_LENGTH = 604800000;
 
 export const onCurrentWeek = date => {
   const parseDate = new Date(date);
+
   const lastMonday = new Date(); // Creating new date object for today
   lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() - 1)); // Setting date to last monday
   lastMonday.setHours(0, 0, 0, 0); // Setting Hour to 00:00:00:00

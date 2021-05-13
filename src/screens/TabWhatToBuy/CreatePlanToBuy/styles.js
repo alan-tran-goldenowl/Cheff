@@ -27,7 +27,7 @@ export default StyleSheet.create({
   },
   containerTitle: {
     borderWidth: 0.2,
-    borderColor: COLOR.borderColor,
+    borderColor: COLOR.BORDER_COLOR,
     paddingVertical: responsive({ d: 10 }),
     paddingHorizontal: responsive({ d: 10 }),
     borderRadius: 3,
@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   containerTodo: {
     borderWidth: 1,
-    borderColor: COLOR.borderColor,
+    borderColor: COLOR.BORDER_COLOR,
     paddingVertical: responsive({ d: 10 }),
     paddingHorizontal: responsive({ d: 10 }),
     borderRadius: 3,

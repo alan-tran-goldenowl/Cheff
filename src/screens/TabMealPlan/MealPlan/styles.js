@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { responsive, device } from 'utils';
+import { responsive } from 'utils';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   list: {
     flex: 1,
@@ -43,5 +42,5 @@ export default StyleSheet.create({
   },
   center: {
     justifyContent: 'center',
-  }
+  },
 });
