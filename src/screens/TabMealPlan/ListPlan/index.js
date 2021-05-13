@@ -56,12 +56,12 @@ const ListPlan = ({ navigation }) => {
 
   const renderDayTime = () => (
     <View style={styles.dayView}>
-      <Text style={styles.day}>
-        {/* 01 August, 2018 */}
-        {moment(mealPlan[0].date).format('DD MMMM, YYYY')}
-      </Text>
+      <Text style={styles.day}>{moment(day).format('DD MMMM, YYYY')}</Text>
 
-      <Text style={styles.today}>Today</Text>
+      {moment(day).format('DD MMMM, YYYY')
+      === moment().format('DD MMMM, YYYY') ? (
+        <Text style={styles.today}>Today</Text>
+        ) : null}
     </View>
   );
 

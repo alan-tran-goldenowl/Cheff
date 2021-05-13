@@ -6,10 +6,10 @@ export default StyleSheet.create({
   container: {
     borderBottomColor: '#dddd',
     borderBottomWidth: 1,
-    paddingBottom: responsive({ d: 10 }),
+    alignItems: 'center',
   },
   title: {
-    marginBottom: responsive({ d: 10 }),
+    // marginBottom: responsive({ d: 10 }),
     color: 'black',
     fontSize: responsive({ f: themeStyles.FONT_SIZE_NORMAL }),
   },

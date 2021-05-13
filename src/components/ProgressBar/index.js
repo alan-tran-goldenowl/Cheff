@@ -2,16 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { COLOR } from 'styles/theme';
 
-const ProgressBar = props => {
-  const { bgcolor, completed } = props;
-
-
-  return (
-    <View style={styles.containerStyles}>
-      <View style={[styles.fillerStyles, { width: `${completed}%`, backgroundColor: bgcolor ?? COLOR.GREEN_COLOR }]} />
-    </View>
-  );
-};
+const ProgressBar = ({ bgcolor, completed }) => (
+  <View style={styles.containerStyles}>
+    <View style={[styles.fillerStyles, { width: `${completed}%`, backgroundColor: bgcolor ?? COLOR.GREEN_COLOR }]} />
+  </View>
+);
 
 const styles = StyleSheet.create({
   containerStyles: {

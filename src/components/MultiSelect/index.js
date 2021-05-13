@@ -21,7 +21,7 @@ const CustomSwitch = ({
 }) => (
   <View>
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.title}>{title}</Text>
+      {title ? <Text style={styles.title}>{title}</Text> : null}
       <MultiSelect
         hideTags
         items={items}

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: responsive({ d: 15 }),
     justifyContent: 'center',
-    backgroundColor: '#377AFD',
+
   },
   text: {
     color: '#ffff',

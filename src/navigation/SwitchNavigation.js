@@ -1,19 +1,16 @@
-import {
-  createAppContainer,
-  createSwitchNavigator,
-} from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Links from 'screens/Links';
-import ListPlan from 'screens/ListPlan';
+import ListPlan from 'screens/TabMealPlan/ListPlan';
 import SignIn from 'screens/SignIn';
 import Search from 'screens/Search';
 import FoodDetail from 'screens/FoodDetail';
-import CreatePlan from 'screens/CreatePlan';
+import CreatePlan from 'screens/TabMealPlan/CreateMealPlan';
 import Settings from 'screens/Setting';
 import EditProfile from 'screens/EditProfile';
-import PlanDetails from 'screens/PlanDetails';
+import PlanDetails from 'screens/TabMealPlan/PlanDetail';
 import TodoPlanDetail from 'screens/TabWhatToBuy/TodoPlanDetail';
 import CreatePlanToBuy from 'screens/TabWhatToBuy/CreatePlanToBuy';
 
@@ -36,7 +33,6 @@ const AppStack = createStackNavigator(
   },
   {
     headerMode: 'none',
-
   },
 );
 

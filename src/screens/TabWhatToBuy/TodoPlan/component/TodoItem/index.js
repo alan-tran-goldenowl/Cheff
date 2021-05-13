@@ -42,6 +42,7 @@ const ToDoItem = ({ item, onPress, navigation }) => {
     bottomSheetRef?.current?.close();
     navigation.navigate('CreatePlanToBuy', { id: item.id });
   };
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -83,6 +84,7 @@ const ToDoItem = ({ item, onPress, navigation }) => {
         ref={
           bottomSheetRef
         }
+        closeOnDragDown
         duration={250}
       >
         <View style={styles.listContainer}>

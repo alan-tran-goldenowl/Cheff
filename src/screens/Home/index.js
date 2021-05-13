@@ -13,9 +13,21 @@ import styles from './styles';
 const HomeScreen = ({ navigation }) => {
   const user = FireBase.auth().currentUser || {};
 
-  useFirebaseConnect(`Plan_To_do/${user.uid}`);
-  useFirebaseConnect(['Food', 'Type_Food', 'Favourites', 'Activity']);
-  const typeFood = useSelector(({ firebase: { ordered: { Type_Food } } }) => Type_Food || []);
+  useFirebaseConnect([
+    'Food',
+    'Type_Food',
+    'Favourites',
+    'Activity',
+    `Plan_To_do/${user.uid}`,
+    `Meal_Plan/${user?.uid}`,
+  ]);
+  const typeFood = useSelector(
+    ({
+      firebase: {
+        ordered: { Type_Food },
+      },
+    }) => Type_Food || [],
+  );
 
   const CustomHeader = () => (
     <>
@@ -44,10 +56,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <CustomHeader />
-      <HomeTab
-        tab={typeFood}
-        navigation={navigation}
-      />
+      <HomeTab tab={typeFood} navigation={navigation} />
     </View>
   );
 };

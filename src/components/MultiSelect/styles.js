@@ -4,9 +4,8 @@ import themeStyles from 'styles/theme';
 
 export default StyleSheet.create({
   container: {
-    borderBottomColor: '#dddd',
-    borderBottomWidth: 1,
-    paddingBottom: responsive({ d: 10 }),
+    // borderBottomColor: '#dddd',
+    // borderBottomWidth: 1,
   },
   title: {
     marginBottom: responsive({ d: 10 }),
