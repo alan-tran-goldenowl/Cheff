@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView, Platform } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import ScrollableView from 'react-native-scrollable-tab-view';
 import { FireBase } from 'constants';
 
@@ -30,16 +30,14 @@ const WhatToBuyScreen = () => {
 
   const getListInWeek = () => {
     const data = todoData
-      .filter(item => onCurrentWeek(item.date))
-      .sort((a, b) => b.date - a.date);
+      .filter(item => onCurrentWeek(item.date));
 
     return groupDataByDate(data);
   };
 
   const getListInMonth = () => {
     const data = todoData
-      .filter(item => onCurrentMonth(item.date))
-      .sort((a, b) => b.date - a.date);
+      .filter(item => onCurrentMonth(item.date));
 
     return groupDataByDate(data);
   };
@@ -51,7 +49,7 @@ const WhatToBuyScreen = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, paddingTop: Platform.OS === 'android' ? 25 : 0 }}
+      style={{ flex: 1 }}
     >
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <ScrollableView

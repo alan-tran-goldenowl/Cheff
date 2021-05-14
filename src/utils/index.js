@@ -137,5 +137,5 @@ export const groupDataByDate = data => {
     });
   }
 
-  return finalArr;
+  return finalArr.sort((a, b) => a.title - b.title);
 };

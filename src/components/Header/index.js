@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  Text, View, Image, TouchableOpacity,
+  Text, View, Image, TouchableOpacity, StatusBar,
 } from 'react-native';
 
 import images from 'assets/images';
 
 import { device } from 'utils';
 import styles from './styles';
-
 
 const Header = ({
   onPressLeft,
@@ -21,12 +20,15 @@ const Header = ({
   type,
   bigTitle,
 }) => (
-  <View style={[
-    styles.header,
-    bigTitle
-      ? { minHeight: device.height / 20 }
-      : { height: device.height / 20 }]}
+  <View
+    style={[
+      styles.header,
+      bigTitle
+        ? { minHeight: device.height / 20 }
+        : { height: device.height / 17 },
+    ]}
   >
+    <StatusBar barStyle="dark-content" backgroundColor="white" />
     <TouchableOpacity
       style={[
         styles.button,
@@ -36,13 +38,11 @@ const Header = ({
       onPress={onPressLeft}
     >
       {iconLeft && (
-      <Image style={styles.icon} resizeMode="center" source={iconLeft} />
+        <Image style={styles.icon} resizeMode="center" source={iconLeft} />
       )}
     </TouchableOpacity>
     <View style={styles.logoVisible}>
-      {logoVisible && (
-      <Image style={styles.logo} source={images.logo_cheff} />
-      )}
+      {logoVisible && <Image style={styles.logo} source={images.logo_cheff} />}
       {bigTitle && <Text style={styles.bigTitle}>{bigTitle}</Text>}
       {title && <Text style={styles.title}>{title}</Text>}
     </View>
@@ -51,7 +51,7 @@ const Header = ({
       onPress={onPressRight}
     >
       {iconRight && (
-      <Image style={styles.icon} resizeMode="center" source={iconRight} />
+        <Image style={styles.icon} resizeMode="center" source={iconRight} />
       )}
       {rightText && <Text style={styles.rightText}>{rightText}</Text>}
       {customRight && customRight()}
