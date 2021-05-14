@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Platform, StatusBar, StyleSheet, View,
+  StyleSheet, View,
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -15,7 +15,6 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { store, rrfProps } from 'stores';
 import images from 'assets/images';
 import NavigationRoot from 'navigation/SwitchNavigation';
-import PushNotificationHandler from 'components/PushNotificationHandler';
 
 const styles = StyleSheet.create({
   container: {
@@ -65,9 +64,7 @@ export default class App extends React.Component {
           <ReactReduxFirebaseProvider {...rrfProps}>
             <SafeAreaView style={{ flex: 1 }}>
               <View style={styles.container}>
-                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                 <NavigationRoot />
-                <PushNotificationHandler />
               </View>
             </SafeAreaView>
           </ReactReduxFirebaseProvider>

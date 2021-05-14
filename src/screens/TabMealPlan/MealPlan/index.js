@@ -8,7 +8,6 @@ import Header from 'components/Header';
 import images from 'assets/images';
 import { FireBase } from 'constants';
 import { COLOR } from 'styles/theme';
-import { device } from 'utils';
 import ItemUpcoming from './components/ItemUpcoming';
 
 import styles from './styles';
@@ -61,7 +60,7 @@ const MealPlan = ({ navigation }) => {
     />
   );
 
-  const renderUpcomingPlan = () => (
+  const renderUpcomingPlan = () => (upcomingPlan.length ? (
     <View style={{ marginBottom: 150 }}>
       <Text style={{ padding: 20 }}>Upcoming Plan</Text>
       <FlatList
@@ -75,8 +74,8 @@ const MealPlan = ({ navigation }) => {
         ItemSeparatorComponent={() => (
           <View
             style={{
-              height: 1,
-              backgroundColor: COLOR.BORDER_COLOR,
+              height: 0.25,
+              backgroundColor: COLOR.LIGHT_GRAY_COLOR,
               marginLeft: 20,
             }}
           />
@@ -84,7 +83,7 @@ const MealPlan = ({ navigation }) => {
         keyExtractor={item => String(item.key)}
       />
     </View>
-  );
+  ) : null);
 
   return (
     <View style={styles.container}>

@@ -21,8 +21,9 @@ const StepTwo = ({
   const showHideModal = () => setVisibleModal(!isVisibleModal);
 
   const handleSelectDate = date => {
-    onSelectDate(date);
     showHideModal();
+
+    onSelectDate(date);
   };
 
   return isVisible ? (
@@ -33,7 +34,7 @@ const StepTwo = ({
         onPress={showHideModal}
         style={[
           styles.row,
-          { borderWidth: 0.2, borderColor: COLOR.BORDER_COLOR },
+          { borderWidth: 0.2, borderColor: COLOR.BORDER_COLOR, overflow: 'hidden' },
         ]}
       >
         <View style={[styles.row, styles.picker, styles.left]}>
@@ -117,11 +118,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 0,
     height: 0,
-    borderLeftWidth: 13,
+    marginLeft: 5,
+    borderLeftWidth: 15,
     borderLeftColor: COLOR.BLUE_COLOR,
-    borderTopWidth: 49.5,
+    borderTopWidth: 70,
     borderTopColor: 'transparent',
-    borderBottomWidth: 49.5,
+    borderBottomWidth: 70,
     backgroundColor: 'white',
     borderBottomColor: 'transparent',
   },

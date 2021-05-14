@@ -63,7 +63,9 @@ const PlanDetails = ({ navigation }) => {
       title: mealPlan.title,
       date: moment(mealPlan.date).format('HH:MM / DD-MMM'),
       meal: upperFirst(mealPlan.meal),
-      textFood: `${mealPlan?.food?.length} dishes`,
+      textFood: `${mealPlan?.food?.length} ${
+        mealPlan?.food?.length > 1 ? 'dishes' : 'dish'
+      }`,
       food: mealPlan?.food,
       note: mealPlan?.note,
     }),
@@ -91,7 +93,6 @@ const PlanDetails = ({ navigation }) => {
       },
     ]);
   };
-
 
   const goToFoodDetail = foodId => {
     navigation.navigate('FoodDetail', { key: foodId });

@@ -45,7 +45,7 @@ export default StyleSheet.create({
     marginLeft: responsive({ d: 20 }),
   },
   content: {
-    height: device.height / 7,
+    // height: device.height / 7,
     marginLeft: responsive({ d: 20 }),
     marginRight: responsive({ d: 20 }),
     justifyContent: 'space-around',

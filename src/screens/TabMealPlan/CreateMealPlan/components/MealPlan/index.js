@@ -1,10 +1,8 @@
-import React, { memo, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View, Text, StyleSheet, FlatList,
 } from 'react-native';
-import {
-  responsive, dataPickerMeal, device,
-} from 'utils';
+import { responsive, dataPickerMeal, device } from 'utils';
 import { COLOR } from 'styles/theme';
 import ContainerInput from 'components/ContainerInput';
 import PickerSelect from 'components/PickerSelect';
@@ -16,12 +14,13 @@ import SearchComponent from '../SearchMeal';
 import ItemMeal from './ItemMeal';
 
 const MealPlan = ({
-  onSelectType, onSelectFood, plan: { food: foodList, meal },
+  onSelectType,
+  onSelectFood,
+  plan: { food: foodList, meal },
 }) => {
   const bottomSheetRef = useRef();
 
-  const [listSelected, setListSelected] = React.useState(foodList);
-
+  const [listSelected, setListSelected] = useState(foodList);
 
   const food = useSelector(({ firebase: { data: { Food = {} } } }) => (listSelected || []).map(item => ({ ...Food[item], key: item })));
 
@@ -52,8 +51,24 @@ const MealPlan = ({
       </ContainerInput>
 
       <ContainerInput label="Choose your dishes">
-        <TouchableOpacity onPress={showModal} style={styles.picker}>
-          <Text>Select</Text>
+        <TouchableOpacity
+          onPress={showModal}
+          style={[styles.picker, styles.rowBetweenCenter]}
+        >
+          <View style={styles.rowBetweenCenter}>
+            <Icon size={25} name="search" color={COLOR.LIGHT_GRAY_COLOR} />
+            <Text
+              style={{
+                marginLeft: 20,
+                fontSize: 16,
+                color: COLOR.LIGHT_GRAY_COLOR,
+              }}
+            >
+              Select
+            </Text>
+          </View>
+
+          <Icon name="chevron-down" />
         </TouchableOpacity>
         <FlatList
           data={food}
@@ -116,6 +131,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: responsive({ d: 20 }),
     borderRadius: 5,
   },
+  rowBetweenCenter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });
 
-export default (MealPlan);
+export default MealPlan;

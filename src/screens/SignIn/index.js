@@ -17,7 +17,6 @@ const SignInScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleLoginSuccess = async credential => {
-    setLoading(true);
     FireBase.auth()
       .signInWithCredential(credential)
       .then(({ user }) => {
@@ -51,11 +50,15 @@ const SignInScreen = ({ navigation }) => {
       handleLoginSuccess(credential);
     } catch (err) {
       console.log(err);
+      setLoading(false);
+
       // alert(`Login failed: ${err}`);
     }
   };
 
   const logInViaGoogle = async () => {
+    setLoading(true);
+
     try {
       const { type, accessToken, idToken } = await Google.logInAsync({
         iosClientId: GgConfig.IOS_CLIENT_ID,

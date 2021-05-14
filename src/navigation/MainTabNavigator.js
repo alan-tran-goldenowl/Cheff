@@ -74,11 +74,11 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <Image
             style={styles.icon}
-            resizeMode="center"
+            resizeMode="cover"
             source={
               focused
-                ? require('assets/images/ic_activity_active.png')
-                : require('assets/images/ic_activity_unactive.png')
+                ? require('assets/images/todo_active.png')
+                : require('assets/images/todo_inactive.png')
             }
           />
         ),

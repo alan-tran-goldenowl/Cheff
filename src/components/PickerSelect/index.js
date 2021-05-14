@@ -4,7 +4,7 @@ import {
   Text,
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import AntIcon from '@expo/vector-icons/AntDesign';
+import Icon from '@expo/vector-icons/Ionicons';
 
 import styles from './styles';
 
@@ -22,7 +22,7 @@ const CustomSwitch = ({
       <RNPickerSelect
         onValueChange={onValueChange}
         value={value}
-        Icon={() => <AntIcon name="down" />}
+        Icon={() => <Icon name="chevron-down" />}
         items={items}
         textInputProps={{ style: styles.title }}
       />

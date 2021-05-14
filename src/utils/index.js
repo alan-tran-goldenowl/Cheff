@@ -1,5 +1,5 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
-import { Notifications } from 'expo';
+// import { Notifications } from 'expo';
 import images from 'assets/images';
 import moment from 'moment';
 
@@ -101,21 +101,21 @@ export const isToday = date => {
     && parseDate.getFullYear() === today.getFullYear()
   );
 };
-export const setNotification = time => Notifications.scheduleLocalNotificationAsync(
-  {
-    title: 'Meal Plan',
-    body: 'You have a meal plan',
-    ios: {
-      sound: true,
-      _displayInForeground: true,
-    },
-  },
-  {
-    time,
-  },
-);
+// export const setNotification = time => Notifications.scheduleLocalNotificationAsync(
+//   {
+//     title: 'Meal Plan',
+//     body: 'You have a meal plan',
+//     ios: {
+//       sound: true,
+//       _displayInForeground: true,
+//     },
+//   },
+//   {
+//     time,
+//   },
+// );
 
-export const cancelNotification = id => Notifications.cancelScheduledNotificationAsync(id);
+// export const cancelNotification = id => Notifications.cancelScheduledNotificationAsync(id);
 
 export const groupDataByDate = data => {
   const finalObj = {};

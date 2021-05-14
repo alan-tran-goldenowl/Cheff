@@ -58,4 +58,6 @@ export default {
   robot_prod: require('./robot-prod.png'),
   splash: require('./splash.png'),
   icon_logout: require('./logout.png'),
+  ic_todo_active: require('./todo_active.png'),
+  ic_todo_inactive: require('./todo_inactive.png'),
 };
