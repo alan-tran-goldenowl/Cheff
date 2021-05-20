@@ -9,7 +9,7 @@ import moment from 'moment';
 import images from 'assets/images';
 import Header from 'components/Header';
 import Icon from '@expo/vector-icons/Ionicons';
-import { deletePlan } from 'services';
+import { deletePlan, deletePlanToBuy } from 'services';
 import styles from './styles';
 import Row from './components/Row';
 import ItemMeal from './components/ItemMeal';
@@ -83,12 +83,21 @@ const PlanDetails = ({ navigation }) => {
       {
         text: 'OK',
         onPress: () => {
+          const { idWhatToBuy } = mealPlan;
           dispatch(
             deletePlan({
               userId: user.uid,
               planId,
             }),
-          ).then(() => navigation.goBack());
+          ).then(() => {
+            dispatch(
+              deletePlanToBuy({
+                userId: user.uid,
+                planId: idWhatToBuy,
+              }),
+            );
+            navigation.goBack();
+          });
         },
       },
     ]);
@@ -96,6 +105,10 @@ const PlanDetails = ({ navigation }) => {
 
   const goToFoodDetail = foodId => {
     navigation.navigate('FoodDetail', { key: foodId });
+  };
+
+  const goToPlanToBuyDetail = () => {
+    navigation.navigate('TodoPlanDetail', { id: mealPlan.idWhatToBuy });
   };
 
   return mealPlan ? (
@@ -107,19 +120,19 @@ const PlanDetails = ({ navigation }) => {
         </View>
         <View style={styles.inner}>
           <Row
-            title="Time"
+            title="Thời gian tạo"
             rightComponent={() => (
               <Text style={styles.boldText}>{data.date}</Text>
             )}
           />
           <Row
-            title="Time-frame"
+            title="Loại"
             rightComponent={() => (
               <Text style={styles.boldText}>{data.meal}</Text>
             )}
           />
           <Row
-            title="Meals"
+            title="Món ăn"
             rightComponent={() => (
               <TouchableOpacity
                 style={{ flexDirection: 'row' }}
@@ -147,14 +160,19 @@ const PlanDetails = ({ navigation }) => {
               keyExtractor={item => String(item.key)}
             />
           </Row>
-          <Row
-            title="Notes"
-            customStyle={{ borderBottomWidth: 0, paddingBottom: 20 }}
-          >
+          <Row title="Ghi chú">
             <Text style={styles.blurText}>{data.note}</Text>
           </Row>
+
+          <Row
+            onPress={goToPlanToBuyDetail}
+            title="Xem danh sách nguyên liệu"
+            rightComponent={() => <Icon name="arrow-forward-sharp" size={20} />}
+            customStyle={{ borderBottomWidth: 0, justifyContent: 'center' }}
+          />
         </View>
       </View>
+
       <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
         <Text style={styles.deleteText}>Delete</Text>
       </TouchableOpacity>

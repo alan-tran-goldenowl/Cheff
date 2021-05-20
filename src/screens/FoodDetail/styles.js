@@ -21,7 +21,7 @@ export default StyleSheet.create({
     fontSize: responsive({ f: 15 }),
   },
   imageFoodCover: {
-    height: responsive({ h: 120 }),
+    height: responsive({ h: 150 }),
     marginRight: responsive({ d: 20 }),
     borderRadius: 5,
   },
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     marginBottom: responsive({ d: 30 }),
     paddingBottom: responsive({ d: 40 }),
   },
-  likeSection:{
+  likeSection: {
     // marginLeft: responsive({ d: 30 }),
     borderBottomColor: 'rgb(217,217,217)',
     borderBottomWidth: 0.7,

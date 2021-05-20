@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
       firebase: {
         ordered: { Type_Food },
       },
-    }) => Type_Food || [],
+    }) => Type_Food?.sort((a, b) => a.value.index - b.value.index) || [],
   );
 
   const CustomHeader = () => (

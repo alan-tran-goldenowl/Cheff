@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import {
-  View, FlatList,
-} from 'react-native';
+import { View, FlatList } from 'react-native';
 import lodash from 'lodash';
 import { useSelector } from 'react-redux';
 
@@ -10,10 +8,15 @@ import SearchItem from './Item';
 import styles from './styles';
 
 const SearchMeal = ({ onCompleted, listSelected = [] }) => {
-  const listFood = useSelector(({ firebase: { ordered: { Food } } }) => Food);
+  const listFood = useSelector(
+    ({
+      firebase: {
+        ordered: { Food },
+      },
+    }) => Food,
+  );
 
   const [dataSearch, setDataSearch] = useState(listFood);
-
 
   const handleSearch = text => {
     if (text.trim() !== '') {
@@ -26,22 +29,25 @@ const SearchMeal = ({ onCompleted, listSelected = [] }) => {
     }
   };
 
-  const delayedQuery = useCallback(lodash.debounce(search => handleSearch(search), 300), [JSON.stringify(listFood)]);
+  const delayedQuery = useCallback(
+    lodash.debounce(search => handleSearch(search), 300),
+    [JSON.stringify(listFood)],
+  );
 
   const onChangeText = text => {
     delayedQuery(text);
   };
 
-  const addToList = key => {
+  const addToList = item => {
     let list = [...listSelected];
-    if (list.indexOf(key) !== -1) {
-      list = list.filter(item => item !== key);
+    if (list.find(listItem => listItem.key === item.key) !== undefined) {
+      list = list.filter(listItem => listItem.key !== item.key);
     } else {
-      list.push(key);
+      list.push(item);
     }
+
     onCompleted(list);
   };
-
 
   return (
     <View style={{ flex: 1, paddingBottom: 70 }}>
@@ -56,8 +62,11 @@ const SearchMeal = ({ onCompleted, listSelected = [] }) => {
           renderItem={({ item }) => (
             <SearchItem
               item={item.value}
-              onPressItem={() => addToList(item.key)}
-              isSelected={listSelected.indexOf(item.key) !== -1}
+              onPressItem={() => addToList(item)}
+              isSelected={
+                listSelected.find(foodItem => foodItem.key === item.key)
+                !== undefined
+              }
             />
           )}
           keyExtractor={item => String(item.key)}

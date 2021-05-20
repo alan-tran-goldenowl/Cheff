@@ -9,7 +9,7 @@ import Icon from '@expo/vector-icons/Ionicons';
 const ItemMeal = ({ onPressItem, item, isSelected }) => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.inner} onPress={onPressItem}>
-      <Image style={styles.image} resizeMode="cover" uri={item?.imageLink} />
+      <Image style={styles.image} resizeMode="cover" uri={item?.cover} />
       <Text style={styles.name}>{item?.name}</Text>
       <Icon
         name={isSelected ? 'remove-circle' : 'remove-circle-outline'}

@@ -14,7 +14,7 @@ import styles from './styles';
 const ListPlanItem = ({
   id,
   value: {
-    date, title, note, meal,
+    date, title, note, meal, idWhatToBuy,
   },
   goToMealPlan,
   deleteMealPlan,
@@ -23,7 +23,7 @@ const ListPlanItem = ({
   const onGoToMealPlan = () => goToMealPlan(id);
 
   const showAlertDelete = () => {
-    deleteMealPlan(id);
+    deleteMealPlan(id, idWhatToBuy);
   };
 
   const onEditMealPlan = () => {

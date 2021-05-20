@@ -8,11 +8,14 @@ import Icon from '@expo/vector-icons/Entypo';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { deletePlanToBuy } from 'services';
 import { useDispatch } from 'react-redux';
+import { FireBase } from 'constants';
 import styles from './styles';
 
 const ToDoItem = ({ item, onPress, navigation }) => {
   const bottomSheetRef = useRef();
   const dispatch = useDispatch();
+  const userFirebase = FireBase.auth().currentUser;
+
 
   const getProgress = () => {
     const lengthAll = item.todos.length;
@@ -33,7 +36,7 @@ const ToDoItem = ({ item, onPress, navigation }) => {
           text: 'Cancel',
           style: 'cancel',
         },
-        { text: 'OK', onPress: () => dispatch(deletePlanToBuy({ userId: item.userId, planId: item.id })) },
+        { text: 'OK', onPress: () => dispatch(deletePlanToBuy({ userId: userFirebase.uid, planId: item.id })) },
       ],
     );
   };

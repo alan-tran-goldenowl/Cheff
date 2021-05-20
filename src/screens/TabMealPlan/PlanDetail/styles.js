@@ -44,7 +44,7 @@ export default StyleSheet.create({
     borderTopColor: COLOR.BORDER_COLOR,
     borderBottomColor: COLOR.BORDER_COLOR,
     backgroundColor: COLOR.WHITE_COLOR,
-    marginTop: 50,
+    marginTop: 20,
   },
   deleteText: {
     textAlign: 'center',

@@ -1,20 +1,29 @@
 import React, { memo } from 'react';
 import {
-  View, Text, StyleSheet,
+  View, Text, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import { COLOR } from 'styles/theme';
 
 const Row = ({
-  title, rightComponent, customStyle, children,
+  title,
+  rightComponent,
+  customStyle,
+  children,
+  onPress,
+  customTitleStyle,
 }) => (
-  <View style={[styles.container, customStyle]}>
+  <TouchableOpacity
+    style={[styles.container, customStyle]}
+    onPress={onPress}
+    activeOpacity={1}
+  >
     <View style={styles.row}>
-      <Text>{title}</Text>
+      <Text style={customTitleStyle}>{title}</Text>
       {rightComponent ? rightComponent() : null}
     </View>
 
     {children}
-  </View>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({

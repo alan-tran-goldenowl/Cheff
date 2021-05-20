@@ -10,7 +10,7 @@ import { COLOR } from 'styles/theme';
 const ItemMeal = ({ item, onPressItem }) => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.content} onPress={onPressItem}>
-      <Image style={styles.image} resizeMode="cover" uri={item?.imageLink} />
+      <Image style={styles.image} resizeMode="cover" uri={item?.cover} />
       <Text style={styles.name}>{item?.name}</Text>
       <View style={styles.row}>
         <Text style={{ color: COLOR.BLUE_COLOR }}>View recipe</Text>

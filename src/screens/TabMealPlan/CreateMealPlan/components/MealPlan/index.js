@@ -22,17 +22,14 @@ const MealPlan = ({
 
   const [listSelected, setListSelected] = useState(foodList);
 
-  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (listSelected || []).map(item => ({ ...Food[item], key: item })));
+  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (listSelected || []).map(item => ({ ...Food[item.key], key: item.key })));
 
   const showModal = () => bottomSheetRef?.current?.open();
 
-  const addToList = key => {
+  const addToList = item => {
     let list = [...listSelected];
-    if (list.indexOf(key) !== -1) {
-      list = list.filter(item => item !== key);
-    } else {
-      list.push(key);
-    }
+    list = listSelected.filter(listItem => listItem.key !== item.key);
+
     setListSelected(list);
     onSelectFood(list);
   };
@@ -75,8 +72,8 @@ const MealPlan = ({
           renderItem={({ item }) => (
             <ItemMeal
               item={item}
-              onPressItem={() => addToList(item.key)}
-              isSelected={foodList.indexOf(item.key) !== -1}
+              onPressItem={() => addToList(item)}
+              isSelected={foodList.find(foodItem => foodItem.key === item.key) !== undefined}
             />
           )}
           keyExtractor={item => String(item.key)}

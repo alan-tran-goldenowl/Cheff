@@ -60,7 +60,7 @@ const FoodItem = ({
           <Image
             style={styles.imageFoodCover}
             resizeMode="cover"
-            uri={item.imageLink}
+            uri={item.cover}
           />
         </View>
         <View style={styles.infomationFood}>

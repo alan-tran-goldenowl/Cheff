@@ -2,7 +2,9 @@ import React, { useState, useEffect, memo } from 'react';
 import { View, ScrollView } from 'react-native';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import { addPlan, updatePlan } from 'services';
+import {
+  addPlan, updatePlan, addPlanTodo, updatePlanTodo,
+} from 'services';
 
 import { useFirebase } from 'react-redux-firebase';
 
@@ -13,23 +15,27 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Progress from './components/Progress';
 import StepOne from './components/StepOne';
 import StepTwo from './components/StepTwo';
+import StepThree from './components/StepThree';
 
 import styles from './styles';
 
 const STEP = {
   one: 1,
   two: 2,
+  three: 3,
 };
 
 const CreateMealPlan = ({ navigation }) => {
   const dispatch = useDispatch();
   const [plan, setPlan] = useState({
     title: '',
-    date: new Date(),
+    date: new Date().getTime(),
     food: [],
     meal: 'breakfast',
     note: '',
   });
+
+  const [planToBuy, setPlanToBuy] = useState([]);
 
   const [step, setStep] = useState(STEP.one);
 
@@ -46,11 +52,20 @@ const CreateMealPlan = ({ navigation }) => {
     }) => Meal_Plan[user.uid]?.[planId] || {},
   );
 
+  const oldPlanToBuy = useSelector(
+    ({
+      firebase: {
+        data: { Plan_To_do = {} },
+      },
+    }) => Plan_To_do[user.uid]?.[oldPlan?.idWhatToBuy] || {},
+  );
+
   const [error, setError] = useState({});
 
   useEffect(() => {
     if (planId) {
       setPlan(oldPlan);
+      setPlanToBuy(oldPlanToBuy.todos);
     }
   }, [planId]);
 
@@ -74,13 +89,28 @@ const CreateMealPlan = ({ navigation }) => {
       userId: user.uid,
     };
 
+    const dataWhatToBuy = {
+      title: plan.title,
+      notes: plan.note,
+      date: plan.date,
+      todos: planToBuy.map(item => ({ ...item, text: `${item.name}-${item.amount}-${item.unit}` })),
+    };
+
     if (planId) {
       dispatch(updatePlan({ data, userId: user.uid, planId })).then(() => {
+        dispatch(updatePlanTodo({ data: dataWhatToBuy, userId: user.uid, planId: plan.idWhatToBuy }));
         navigation.goBack();
       });
     } else {
-      dispatch(addPlan({ data, userId: user.uid })).then(() => {
-        navigation.goBack();
+      dispatch(addPlan({ data, userId: user.uid })).then(rs1 => {
+        const idPlan = rs1?.toString()?.split('/')?.pop();
+
+        dispatch(addPlanTodo({ data: dataWhatToBuy, userId: user.uid })).then(rs => {
+          const idWhatToBuy = rs?.toString()?.split('/')?.pop();
+
+          dispatch(updatePlan({ data: { ...data, idWhatToBuy }, userId: user.uid, planId: idPlan }));
+          navigation.goBack();
+        });
       });
     }
   };
@@ -106,8 +136,27 @@ const CreateMealPlan = ({ navigation }) => {
   };
 
   const onNext = () => {
-    if (step === STEP.two) {
+    if (step === STEP.three) {
       return onSubmit();
+    }
+
+    if (step === STEP.two) {
+      const newList = {};
+      plan.food.forEach(item => {
+        item?.value?.ingredients?.forEach(itemIngre => {
+          const key = itemIngre.name.toLowerCase().replaceAll(' ', '');
+          let { amount } = itemIngre;
+          if (newList[key]?.amount) {
+            amount += newList[key]?.amount;
+          }
+          newList[key] = {
+            id: key,
+            ...itemIngre,
+            amount,
+          };
+        });
+      });
+      setPlanToBuy(Object.values(newList));
     }
 
     setStep(step + 1);
@@ -139,7 +188,7 @@ const CreateMealPlan = ({ navigation }) => {
         title={planId ? 'Edit Plan' : 'Create a plan'}
       />
       <ScrollView style={styles.container}>
-        <Progress totalStep={2} currentStep={step} />
+        <Progress totalStep={3} currentStep={step} />
         <View style={{ height: 20 }} />
         <KeyboardAwareScrollView>
           <StepOne
@@ -153,6 +202,11 @@ const CreateMealPlan = ({ navigation }) => {
             onSelectDate={onSelectDate}
             onSelectFood={onSelectFood}
             onSelectType={onSelectType}
+          />
+          <StepThree
+            isVisible={step === STEP.three}
+            setPlanToBuy={setPlanToBuy}
+            planToBuy={planToBuy}
           />
         </KeyboardAwareScrollView>
       </ScrollView>

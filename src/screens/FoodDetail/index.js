@@ -95,7 +95,7 @@ const FoodDetail = ({ navigation }) => {
     navigation.dispatch(NavigationActions.back());
   };
 
-  const renderInstruction = () => foodValue.guidline?.map((item, index) => (
+  const renderInstruction = () => foodValue.guideline?.map((item, index) => (
     <Text key={index.toString()} style={styles.ingredientsText}>
       {`${index + 1}. ${item}`}
     </Text>
@@ -104,13 +104,21 @@ const FoodDetail = ({ navigation }) => {
   const renderIngredients = () => foodValue.ingredients?.map((item, index) => {
     const amountForOne = formatNumber(
       (item.amount / foodValue.serveForPeople) * serveForPeople,
-      2,
+      0,
     );
 
     return (
-      <Text key={index.toString()} style={styles.ingredientsText}>
-        {`${amountForOne}  ${item.name}`}
-      </Text>
+      <View key={index.toString()} style={{ flexDirection: 'row' }}>
+        <Text key={index.toString()} style={[styles.ingredientsText, { flex: 1, fontWeight: '500' }]}>
+          {`${item.name}`}
+        </Text>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Text key={index.toString()} style={styles.ingredientsText}>
+            {`${amountForOne}  ${item.unit}`}
+          </Text>
+        </View>
+      </View>
+
     );
   });
 
@@ -191,7 +199,7 @@ const FoodDetail = ({ navigation }) => {
                   source={images.ic_clock}
                 />
                 <Text style={styles.infoText}>
-                  {+foodValue.timeCook / 60}
+                  {+foodValue.timecook / 60}
                   {' '}
                   mins
                 </Text>
@@ -252,10 +260,8 @@ const FoodDetail = ({ navigation }) => {
             </CollapseView>
           </View>
           <View style={styles.instructionView}>
-            <CollapseView>
-              <Text style={styles.ingredientsTitle}>INSTRUCTIONS</Text>
-              {renderInstruction()}
-            </CollapseView>
+            <Text style={styles.ingredientsTitle}>INSTRUCTIONS</Text>
+            {renderInstruction()}
           </View>
         </View>
       </ScrollView>

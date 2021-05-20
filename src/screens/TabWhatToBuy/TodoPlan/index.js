@@ -21,8 +21,8 @@ const WhatToBuyScreen = () => {
         ordered: { Plan_To_do },
       },
     }) => {
-      const data = Plan_To_do[userFirebase.uid] || [];
-      const parseData = data.map(item => ({ ...item.value, id: item.key })) ?? [];
+      const data = Plan_To_do[userFirebase?.uid] || [];
+      const parseData = data?.map(item => ({ ...item.value, id: item.key })) ?? [];
 
       return parseData.reverse();
     },

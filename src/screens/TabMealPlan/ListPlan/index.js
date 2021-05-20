@@ -8,7 +8,7 @@ import moment from 'moment';
 
 import images from 'assets/images';
 import Header from 'components/Header';
-import { deletePlan } from 'services';
+import { deletePlan, deletePlanToBuy } from 'services';
 import styles from './styles';
 import ListPlanItem from './components/ListPlanItem';
 
@@ -27,7 +27,7 @@ const ListPlan = ({ navigation }) => {
 
   const goToMealPlan = id => navigation.navigate('PlanDetails', { id });
 
-  const deleteMealPlan = id => {
+  const deleteMealPlan = (id, idWhatToBuy) => {
     Alert.alert('Warning', 'Are you want to delete this meal plan ?', [
       {
         text: 'Cancel',
@@ -41,7 +41,12 @@ const ListPlan = ({ navigation }) => {
             callback: goBack,
             userId: user.uid,
           };
-          dispatch(deletePlan(params));
+          dispatch(deletePlan(params)).then(() => {
+            dispatch(deletePlanToBuy({
+              userId: user.uid,
+              planId: idWhatToBuy,
+            }));
+          });
           // goBack();
         },
       },

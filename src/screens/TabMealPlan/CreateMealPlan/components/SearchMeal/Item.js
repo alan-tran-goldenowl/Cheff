@@ -10,7 +10,7 @@ import { COLOR } from 'styles/theme';
 const SearchItem = props => (
   <View style={styles.containerSearch}>
     <TouchableOpacity style={styles.imageFoodSearch} onPress={props.onPressItem}>
-      <Image style={styles.imageFoodCoverSearch} resizeMode="cover" uri={props?.item?.imageLink} />
+      <Image style={styles.imageFoodCoverSearch} resizeMode="cover" uri={props?.item?.cover} />
       <Text style={styles.foodNameSearch}>{props?.item?.name}</Text>
       <Icon
         name={props.isSelected ? 'checkmark-circle' : 'ellipse-outline'}
