@@ -72,16 +72,6 @@ const SettingsScreen = ({ navigation }) => {
       </View>
       <View style={styles.subContent}>
         <ButtonSetting
-          image={images.ic_star}
-          onPress={() => {}}
-          text="Rate our app"
-        />
-        <ButtonSetting
-          image={images.ic_chat}
-          onPress={() => {}}
-          text="Send us feedback"
-        />
-        <ButtonSetting
           image={images.ic_privacy}
           onPress={() => {}}
           text="Privacy Policy"

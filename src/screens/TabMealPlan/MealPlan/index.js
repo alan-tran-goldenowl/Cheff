@@ -17,7 +17,7 @@ const MealPlan = ({ navigation }) => {
 
   const user = FireBase.auth().currentUser || {};
 
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user?.uid] || [])
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan = {} } } }) => (Meal_Plan[user?.uid] || [])
     .filter(
       item => moment(item.value.date).month() === currentMonth.month(),
     )); // filter by month

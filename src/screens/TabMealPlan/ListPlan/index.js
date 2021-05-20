@@ -19,7 +19,7 @@ const ListPlan = ({ navigation }) => {
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
   useFirebaseConnect(`Meal_Plan/${user.uid}`);
-  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan } } }) => (Meal_Plan[user.uid] || []).filter(
+  const mealPlan = useSelector(({ firebase: { ordered: { Meal_Plan = {} } } }) => (Meal_Plan[user.uid] || []).filter(
     item => moment(item.value.date).format('YYYY-MM-DD') === day,
   )).sort((a, b) => a.value.date - b.value.date); // filter and sort by date
 

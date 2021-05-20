@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { upperFirst } from 'lodash';
 import {
   Text, View, FlatList, TouchableOpacity, Alert,
 } from 'react-native';
@@ -33,7 +32,7 @@ const PlanDetails = ({ navigation }) => {
     }) => Meal_Plan[user.uid]?.[planId] || {},
   );
 
-  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (mealPlan?.food || []).map(item => ({ ...Food[item], key: item })));
+  const mealType = useSelector(({ firebase: { data: { Type_Food = {} } } }) => Type_Food[mealPlan?.meal]);
 
   const goBack = useCallback(() => navigation.goBack(), []);
 
@@ -62,7 +61,7 @@ const PlanDetails = ({ navigation }) => {
     () => ({
       title: mealPlan.title,
       date: moment(mealPlan.date).format('HH:MM / DD-MMM'),
-      meal: upperFirst(mealPlan.meal),
+      meal: mealType?.name,
       textFood: `${mealPlan?.food?.length} ${
         mealPlan?.food?.length > 1 ? 'dishes' : 'dish'
       }`,
@@ -147,10 +146,10 @@ const PlanDetails = ({ navigation }) => {
             )}
           >
             <FlatList
-              data={isShowFoods ? food : []}
+              data={isShowFoods ? mealPlan.food : []}
               renderItem={({ item }) => (
                 <ItemMeal
-                  item={item}
+                  item={item.value}
                   onPressItem={() => {
                     goToFoodDetail(item.key);
                   }}
@@ -169,6 +168,7 @@ const PlanDetails = ({ navigation }) => {
             title="Xem danh sách nguyên liệu"
             rightComponent={() => <Icon name="arrow-forward-sharp" size={20} />}
             customStyle={{ borderBottomWidth: 0, justifyContent: 'center' }}
+            customTitleStyle={{ fontWeight: '500' }}
           />
         </View>
       </View>

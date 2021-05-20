@@ -56,9 +56,7 @@ export default StyleSheet.create({
     marginLeft: responsive({ d: 20 }),
   },
   subContent: {
-    height: device.height / 3,
     marginHorizontal: responsive({ d: 20 }),
-    justifyContent: 'space-between',
 
   },
 });

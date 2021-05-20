@@ -23,6 +23,7 @@ const MealPlan = ({
   const [listSelected, setListSelected] = useState(foodList);
 
   const food = useSelector(({ firebase: { data: { Food = {} } } }) => (listSelected || []).map(item => ({ ...Food[item.key], key: item.key })));
+  const typeFood = useSelector(({ firebase: { ordered: { Type_Food = {} } } }) => Type_Food.map(item => ({ ...item, label: item.value.name, value: item.key })));
 
   const showModal = () => bottomSheetRef?.current?.open();
 
@@ -42,7 +43,7 @@ const MealPlan = ({
         <PickerSelect
           onValueChange={onSelectType}
           value={meal}
-          items={dataPickerMeal}
+          items={typeFood}
           containerStyle={styles.picker}
         />
       </ContainerInput>
