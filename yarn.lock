@@ -4661,6 +4661,11 @@ expo-app-loading@^1.0.1:
   dependencies:
     expo-splash-screen "0.8.1"
 
+expo-apple-authentication@~2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/expo-apple-authentication/-/expo-apple-authentication-2.2.2.tgz#26a6b1add075ba01289dc4b9f1718d693eda97cd"
+  integrity sha512-+bwAsZ6l9jmhasdowDPkfsqTSnBmOgjEpblLLgi2x8bOGPQ+BdVilk7+sH7KyHutTbl4lNIGGWhI+1LNgWfPIw==
+
 expo-application@~2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-2.4.1.tgz#f8eb4a3a05a0b8a8f38f2e981f587a815945b685"
@@ -8568,7 +8573,7 @@ prompts@^2.0.1, prompts@^2.2.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.7.x:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8773,6 +8778,13 @@ react-native-multiple-select@^0.5.5:
   integrity sha512-mkBqv6spOWrq3RBANnwfRHLqGITW99xpNZL07tMW4XXeEtOXSCgvjML+z0RIeOJKUUtbqCZA3cFigS5hSfCENQ==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-parsed-text@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.22.tgz#a23c756eaa5d6724296814755085127f9072e5f5"
+  integrity sha512-hfD83RDXZf9Fvth3DowR7j65fMnlqM9PpxZBGWkzVcUTFtqe6/yPcIoIAgrJbKn6YmtzkivmhWE2MCE4JKBXrQ==
+  dependencies:
+    prop-types "^15.7.x"
 
 react-native-picker-select@^7.0.0:
   version "7.0.0"

@@ -11,6 +11,8 @@ import * as Google from 'expo-google-app-auth';
 import Loading from 'components/Loading';
 import images from 'assets/images';
 import { FireBase, FbConfig, GgConfig } from 'constants';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import { responsive } from 'utils';
 import styles from './styles';
 
 const SignInScreen = ({ navigation }) => {
@@ -83,6 +85,40 @@ const SignInScreen = ({ navigation }) => {
     <ImageBackground style={styles.container} source={images.background}>
       <View style={styles.viewBtn}>
         {loading && <Loading />}
+        <AppleAuthentication.AppleAuthenticationButton
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+          buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+          cornerRadius={5}
+          style={{
+            height: responsive({ h: 40 }), marginVertical: 25, width: '90%', justifyContent: 'space-between',
+          }}
+          onPress={async () => {
+            setLoading(true);
+
+            try {
+              const credential = await AppleAuthentication.signInAsync({
+                requestedScopes: [
+                  AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                  AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                ],
+              });
+
+              console.log(credential);
+
+              // signed in
+            } catch (e) {
+              if (e.code === 'ERR_CANCELED') {
+                // handle that the user canceled the sign-in flow
+                console.log(e);
+              } else {
+                // handle other errors
+                console.log(e);
+              }
+            } finally {
+              setLoading(false);
+            }
+          }}
+        />
         {/* login via Google */}
         <TouchableOpacity
           disabled={loading}

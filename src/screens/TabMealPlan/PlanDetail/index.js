@@ -47,11 +47,11 @@ const PlanDetails = ({ navigation }) => {
         iconLeft={images.icon_back}
         customRight={() => (
           <TouchableOpacity onPress={goEdit} style={styles.editButton}>
-            <Text style={styles.editText}>Edit</Text>
+            <Text style={styles.editText}>Sửa</Text>
           </TouchableOpacity>
         )}
         onPressRight={goEdit}
-        title="Plan details"
+        title="Chi tiết"
       />
     ),
     [],
@@ -74,13 +74,13 @@ const PlanDetails = ({ navigation }) => {
   const toggleFood = () => setShowFood(!isShowFoods);
 
   const onDelete = () => {
-    Alert.alert('Waring', 'Do you want to delete it ? ', [
+    Alert.alert('Nhắc nhở', 'Bạn muốn thực sự muốn xóa ? ', [
       {
         text: 'Cancel',
-        style: 'cancel',
+        style: 'Bỏ',
       },
       {
-        text: 'OK',
+        text: 'Xóa',
         onPress: () => {
           const { idWhatToBuy } = mealPlan;
           dispatch(
@@ -174,7 +174,7 @@ const PlanDetails = ({ navigation }) => {
       </View>
 
       <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
-        <Text style={styles.deleteText}>Delete</Text>
+        <Text style={styles.deleteText}>Xóa</Text>
       </TouchableOpacity>
     </View>
   ) : null;

@@ -82,11 +82,11 @@ const TodoPlanDetail = memo(({ navigation }) => {
           <Text style={styles.status}>
             {getProgress().completed}
             {' '}
-            of
+            trong
             {' '}
             {getProgress().all}
             {' '}
-            completed
+            hoàn thành
           </Text>
           <Text style={styles.percent}>
             {getProgress().percent}
@@ -101,7 +101,7 @@ const TodoPlanDetail = memo(({ navigation }) => {
       </View>
       <KeyboardAwareScrollView>
         <View style={styles.containerInner}>
-          <Text style={styles.title}>To do list</Text>
+          <Text style={styles.title}>Danh sách</Text>
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
             data={listTodos}
@@ -118,7 +118,7 @@ const TodoPlanDetail = memo(({ navigation }) => {
       </KeyboardAwareScrollView>
       <Button
         buttonStyle={styles.btnCreate}
-        title="SUBMIT"
+        title="LƯU"
         onPress={onSubmit}
       />
     </View>

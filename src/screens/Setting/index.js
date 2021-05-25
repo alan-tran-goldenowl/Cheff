@@ -44,15 +44,15 @@ const SettingsScreen = ({ navigation }) => {
       />
       <View style={styles.preferences}>
         <Text style={styles.textSetting}>
-          Settings
+          Cài đặt
         </Text>
         <Text style={styles.textPreferences}>
-          Update your preferences
+          Bổ sung thông tin cần thiết
         </Text>
       </View>
       <View style={styles.accountView}>
         <Text style={styles.accountText}>
-          Account
+          Tài khoản
         </Text>
       </View>
       <Text style={styles.underLine} />
@@ -60,26 +60,26 @@ const SettingsScreen = ({ navigation }) => {
         <ButtonSetting
           image={images.ic_user}
           onPress={() => navigation.navigate('EditProfile')}
-          text="Edit Profile"
+          text="Chỉnh sửa hồ sơ "
         />
 
       </View>
       <Text style={styles.underLine} />
       <View style={styles.accountView}>
         <Text style={styles.otherText}>
-          Others
+          Các chức năng khác
         </Text>
       </View>
       <View style={styles.subContent}>
         <ButtonSetting
           image={images.ic_privacy}
-          onPress={() => {}}
-          text="Privacy Policy"
+          onPress={() => navigation.navigate('PrivacyAndPolicy')}
+          text="Chính sách"
         />
         <ButtonSetting
           image={images.icon_logout}
           onPress={handleLogOut}
-          text="Log out"
+          text="Đăng xuất"
         />
       </View>
     </ScrollView>

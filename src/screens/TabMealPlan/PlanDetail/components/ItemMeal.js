@@ -13,7 +13,7 @@ const ItemMeal = ({ item, onPressItem }) => (
       <Image style={styles.image} resizeMode="cover" uri={item?.cover} />
       <Text style={styles.name}>{item?.name}</Text>
       <View style={styles.row}>
-        <Text style={{ color: COLOR.BLUE_COLOR }}>View recipe</Text>
+        <Text style={{ color: COLOR.BLUE_COLOR }}>Xem chi tiết</Text>
         <Icon
           name="chevron-right"
           size={25}

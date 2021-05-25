@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
-  Platform
+  Platform,
 } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
 
@@ -18,7 +18,7 @@ import Switch from 'components/Switch';
 import { FireBase } from 'constants';
 import images from 'assets/images';
 
-import { uuid, validateEditProfile} from 'utils'
+import { uuid, validateEditProfile } from 'utils';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -29,24 +29,26 @@ import * as firebase from 'firebase';
 import styles from './styles';
 
 const EditProfile = ({ navigation }) => {
-  const [user, setUser] = useState({ email: '', photoURL: '', displayName: '', providerId: '' });
+  const [user, setUser] = useState({
+    email: '', photoURL: '', displayName: '', providerId: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
 
-  const userFirebase =  FireBase.auth().currentUser;
+  const userFirebase = FireBase.auth().currentUser;
   useEffect(() => {
     setUser({
       email: userFirebase.email,
       photoURL: userFirebase.photoURL,
       displayName: userFirebase.displayName,
       providerId: userFirebase.providerData[0].providerId,
-    })
+    });
 
     getPermissionAsync();
 
     BackHandler.addEventListener('hardwareBackPress', navigation.goBack);
     return () => BackHandler.removeEventListener('hardwareBackPress', navigation.goBack);
-  }, [])
+  }, []);
 
   const getPermissionAsync = async () => {
     if (Constants.platform.ios) {
@@ -57,37 +59,37 @@ const EditProfile = ({ navigation }) => {
     }
   };
 
-  const updateProfile = async() => {
-
-    const err = validateEditProfile(user)
-    if(Object.keys(err).length){
-      setError(err)
-      return
+  const updateProfile = async () => {
+    const err = validateEditProfile(user);
+    if (Object.keys(err).length) {
+      setError(err);
+      return;
     }
 
     setLoading(true);
 
-    let photoURL = user.photoURL
-    if(user.photoURL !== userFirebase.photoURL){
-      photoURL = await uploadImage(photoURL,uuid(user.displayName))
+    let { photoURL } = user;
+    if (user.photoURL !== userFirebase.photoURL) {
+      photoURL = await uploadImage(photoURL, uuid(user.displayName));
     }
     userFirebase.updateProfile({
       displayName: user.displayName,
       photoURL,
       email: user.email,
     }).then(res => Alert.alert(
-      'Update Profile',
-      'Profile updated!',
+      'Chỉnh sửa hồ sơ',
+      'Thành công!',
       [
-        { text: "OK", onPress: () => navigation.navigate('Settings') }
-      ]))
-    .catch(error => Alert.alert('Update Profile', 'Update profile failure!'))
-    .finally(() => setLoading(false));
-  }
+        { text: 'OK', onPress: () => navigation.navigate('Settings') },
+      ],
+    ))
+      .catch(error => Alert.alert('Chỉnh sửa hồ sơ', 'Thất bại!'))
+      .finally(() => setLoading(false));
+  };
 
   const handlePickAvatar = async () => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
@@ -95,11 +97,10 @@ const EditProfile = ({ navigation }) => {
       });
 
       if (!result.cancelled) {
-        setUser({...user, photoURL: result.uri })
+        setUser({ ...user, photoURL: result.uri });
       }
-
     } catch (err) {
-      alert(err)
+      alert(err);
     }
   };
 
@@ -107,98 +108,98 @@ const EditProfile = ({ navigation }) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
-    var ref = firebase.storage()
-                      .ref()
-                      .child(`images/avatars/${userFirebase.uid}/` + imageName);
-    await ref.put(blob).catch((error) => { throw error });
+    const ref = firebase.storage()
+      .ref()
+      .child(`images/avatars/${userFirebase.uid}/${imageName}`);
+    await ref.put(blob).catch(error => { throw error; });
 
-    const url = await ref.getDownloadURL().catch((error) => { throw error });
-    return url
-  }
+    const url = await ref.getDownloadURL().catch(error => { throw error; });
+    return url;
+  };
 
-  const handleChangeText = (name,value) => {
-    if(error[name]){
+  const handleChangeText = (name, value) => {
+    if (error[name]) {
       setError({
         ...error,
-        [name]:''
-      })
+        [name]: '',
+      });
     }
     setUser({
       ...user,
-      [name]:value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   return (
     <>
-    { loading && <Loading/> }
+      { loading && <Loading /> }
 
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-      style={{flex:1}}
-    >
-      <ScrollView style={{backgroundColor:'white'}}>
-        <TouchableOpacity style={styles.container} activeOpacity={1}>
-          <Header
-            rightText="Save"
-            title="Edit Profile"
-            onPressLeft={() => navigation.goBack()}
-            iconLeft={images.icon_back}
-            onPressRight={updateProfile}
-          />
-          {
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <ScrollView style={{ backgroundColor: 'white' }}>
+          <TouchableOpacity style={styles.container} activeOpacity={1}>
+            <Header
+              rightText="Lưu"
+              title="Chỉnh sửa hồ sơ"
+              onPressLeft={() => navigation.goBack()}
+              iconLeft={images.icon_back}
+              onPressRight={updateProfile}
+            />
+            {
             !!user.photoURL && (
             <View style={styles.viewImage}>
               <TouchableOpacity onPress={handlePickAvatar}>
                 <Image
                   style={styles.image}
-                  {...{uri:user.photoURL,preview:{}}}
+                  {...{ uri: user.photoURL, preview: {} }}
                 />
               </TouchableOpacity>
             </View>
             )
           }
-          <TouchableOpacity style={styles.btnChangeImage} onPress={handlePickAvatar}>
-            <Text style={styles.textChangeImage}>
-              Change image profile
-            </Text>
-          </TouchableOpacity>
-          <TextInput
-            title='Your full name'
-            placeholder="Enter your name"
-            value={user.displayName}
-            onChangeText={text => handleChangeText('displayName',text)}
-            icon={images.icon_pen}
-            error={error?.displayName}
-            containerStyles={styles.viewTextInput}
-          />
-          <TextInput
-            title='Your email address'
-            placeholder='Enter your email'
-            value={user.email}
-            containerStyles={styles.viewTextInput}
-          />
-          <View style={styles.viewTextInput}>
-            <Text style={styles.textLinkAcc}>
-              Link Account
-            </Text>
-          </View>
+            <TouchableOpacity style={styles.btnChangeImage} onPress={handlePickAvatar}>
+              <Text style={styles.textChangeImage}>
+                Thay đổi hình ảnh
+              </Text>
+            </TouchableOpacity>
+            <TextInput
+              title="Tên đầy đủ"
+              placeholder="Nhập tên"
+              value={user.displayName}
+              onChangeText={text => handleChangeText('displayName', text)}
+              icon={images.icon_pen}
+              error={error?.displayName}
+              containerStyles={styles.viewTextInput}
+            />
+            <TextInput
+              title="Email"
+              placeholder="Nhập email"
+              value={user.email}
+              containerStyles={styles.viewTextInput}
+            />
+            <View style={styles.viewTextInput}>
+              <Text style={styles.textLinkAcc}>
+                Liên kết tài khoản
+              </Text>
+            </View>
 
-          <Switch
-            image={images.ic_facebook}
-            title='Facebook'
-            valueSwitch={user.providerId === 'facebook.com'}
-          />
-          <Switch
-            image={images.ic_google}
-            title='Google'
-            valueSwitch={user.providerId === 'google.com'}
-          />
-        </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            <Switch
+              image={images.ic_facebook}
+              title="Facebook"
+              valueSwitch={user.providerId === 'facebook.com'}
+            />
+            <Switch
+              image={images.ic_google}
+              title="Google"
+              valueSwitch={user.providerId === 'google.com'}
+            />
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </>
   );
-}
+};
 
 export default EditProfile;

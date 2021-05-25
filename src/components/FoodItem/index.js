@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View, Text, TouchableOpacity, Image as RNImage,
 } from 'react-native';
-import moment from 'moment';
 import { Image } from 'react-native-expo-image-cache';
 import { likeFood } from 'services';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,7 +73,7 @@ const FoodItem = ({
                 source={images.ic_clock}
               />
               <Text style={styles.timeStamp}>
-                {moment(item.createdAt).fromNow()}
+                {`${item.timecook / 60} phút`}
               </Text>
             </View>
             <TouchableOpacity

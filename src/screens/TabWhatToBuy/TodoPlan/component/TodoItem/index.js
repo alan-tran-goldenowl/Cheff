@@ -29,14 +29,14 @@ const ToDoItem = ({ item, onPress, navigation }) => {
 
   const onDelete = () => {
     Alert.alert(
-      'Waring',
-      'Do you want to delete it ? ',
+      'Nhắc nhở',
+      'Bạn chắc chắn muốn xóa ? ',
       [
         {
-          text: 'Cancel',
+          text: 'Bỏ',
           style: 'cancel',
         },
-        { text: 'OK', onPress: () => dispatch(deletePlanToBuy({ userId: userFirebase.uid, planId: item.id })) },
+        { text: 'Xóa', onPress: () => dispatch(deletePlanToBuy({ userId: userFirebase.uid, planId: item.id })) },
       ],
     );
   };
@@ -67,11 +67,11 @@ const ToDoItem = ({ item, onPress, navigation }) => {
           <Text style={styles.status}>
             {getProgress().completed}
             {' '}
-            of
+            trong
             {' '}
             {getProgress().all}
             {' '}
-            completed
+            hoàn thành
           </Text>
           <Text style={styles.percent}>
             {getProgress().percent}
@@ -91,14 +91,14 @@ const ToDoItem = ({ item, onPress, navigation }) => {
         duration={250}
       >
         <View style={styles.listContainer}>
-          <Text style={styles.listTitle}>Create</Text>
+          <Text style={styles.listTitle}>Hành động</Text>
           <TouchableOpacity
             key="edit"
             style={styles.listButton}
             onPress={onEdit}
           >
             <Icon name="edit" style={styles.listIcon} />
-            <Text style={styles.listLabel}>Edit</Text>
+            <Text style={styles.listLabel}>Sửa</Text>
           </TouchableOpacity>
           <TouchableOpacity
             key="Delete"
@@ -106,7 +106,7 @@ const ToDoItem = ({ item, onPress, navigation }) => {
             onPress={onDelete}
           >
             <Icon name="trash" style={styles.listIcon} />
-            <Text style={styles.listLabel}>Delete</Text>
+            <Text style={styles.listLabel}>Xóa</Text>
           </TouchableOpacity>
           <TouchableOpacity
             key="Cancel"
@@ -114,7 +114,7 @@ const ToDoItem = ({ item, onPress, navigation }) => {
             onPress={() => bottomSheetRef?.current?.close()}
           >
             <Icon name="cross" style={styles.listIcon} />
-            <Text style={styles.listLabel}>Cancel</Text>
+            <Text style={styles.listLabel}>Bỏ qua</Text>
           </TouchableOpacity>
         </View>
       </RBSheet>

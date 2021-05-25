@@ -120,7 +120,7 @@ const StepThree = ({ isVisible, planToBuy, setPlanToBuy }) => {
                 color="blue"
                 style={{ marginRight: 5 }}
               />
-              <Text style={{ color: 'blue' }}>Add more</Text>
+              <Text style={{ color: 'blue' }}>Thêm</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>

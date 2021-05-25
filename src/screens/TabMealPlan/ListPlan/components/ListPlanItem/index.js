@@ -34,13 +34,13 @@ const ListPlanItem = ({
     <SwipeRow
       listAction={[
         {
-          text: 'Edit',
+          text: 'Sửa',
           color: '#C8C7CD',
           action: onEditMealPlan,
           x: 192,
         },
         {
-          text: 'Delete',
+          text: 'Xóa',
           color: '#dd2c00',
           action: showAlertDelete,
           x: 300,

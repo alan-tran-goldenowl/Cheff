@@ -31,7 +31,7 @@ const CreateMealPlan = ({ navigation }) => {
     title: '',
     date: new Date().getTime(),
     food: [],
-    meal: 'breakfast',
+    meal: 'buasang',
     note: '',
   });
 
@@ -185,7 +185,7 @@ const CreateMealPlan = ({ navigation }) => {
       <Header
         iconLeft={images.icon_back}
         onPressLeft={goBack}
-        title={planId ? 'Edit Plan' : 'Create a plan'}
+        title={planId ? 'Sửa  ' : 'Tạo mới'}
       />
       <ScrollView style={styles.container}>
         <Progress totalStep={3} currentStep={step} />
@@ -212,7 +212,7 @@ const CreateMealPlan = ({ navigation }) => {
       </ScrollView>
       <Button
         buttonStyle={styles.btnCreate}
-        title={step === STEP.two ? 'CONFIRM' : 'NEXT'}
+        title={step === STEP.three ? 'XÁC NHẬN' : 'TIẾP THEO'}
         disabled={disabledButton}
         onPress={onNext}
       />

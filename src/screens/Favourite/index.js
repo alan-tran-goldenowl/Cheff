@@ -52,7 +52,7 @@ const FavoriteScreen = ({ navigation }) => {
         onPressLeft={() => navigation.navigate('Settings')}
         // iconRight={images.ic_push_notification}
         // onPressRight={() => {}}
-        title="Favorites"
+        title="Yêu Thích"
       />
       <View style={styles.searchView}>
         <SearchViewCheff

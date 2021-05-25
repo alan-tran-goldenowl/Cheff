@@ -8,10 +8,10 @@ import { COLOR } from 'styles/theme';
 
 const StepOne = ({ plan, onChangeText, isVisible }) => (isVisible ? (
   <View style={styles.container}>
-    <Text style={styles.title}>A litter bit about your plan</Text>
+    <Text style={styles.title}>Thông tin giới thiệu</Text>
 
     <ContainerInput
-      label="Title plan"
+      label="Tiêu đề"
     >
       <TextInput
         multiline
@@ -23,7 +23,7 @@ const StepOne = ({ plan, onChangeText, isVisible }) => (isVisible ? (
     </ContainerInput>
 
     <ContainerInput
-      label="Note (optional)"
+      label="Ghi chú (không bắt buộc)"
     >
       <TextInput
         multiline

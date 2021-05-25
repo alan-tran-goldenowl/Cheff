@@ -57,9 +57,9 @@ const WhatToBuyScreen = () => {
           tabBarActiveTextColor="#000"
           tabBarUnderlineStyle={{ backgroundColor: '#000', height: 1 }}
         >
-          <TabView key={1} tabLabel="Today" list={getListToday()} />
-          <TabView key={2} tabLabel="This week" list={getListInWeek()} />
-          <TabView key={3} tabLabel="This month" list={getListInMonth()} />
+          <TabView key={1} tabLabel="Hôm nay" list={getListToday()} />
+          <TabView key={2} tabLabel="Trong tuần" list={getListInWeek()} />
+          <TabView key={3} tabLabel="Trong tháng" list={getListInMonth()} />
         </ScrollableView>
       </View>
     </SafeAreaView>

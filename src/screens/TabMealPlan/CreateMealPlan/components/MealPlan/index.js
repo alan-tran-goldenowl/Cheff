@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import {
   View, Text, StyleSheet, FlatList,
 } from 'react-native';
-import { responsive, dataPickerMeal, device } from 'utils';
+import { responsive, device } from 'utils';
 import { COLOR } from 'styles/theme';
 import ContainerInput from 'components/ContainerInput';
 import PickerSelect from 'components/PickerSelect';
@@ -23,7 +23,17 @@ const MealPlan = ({
   const [listSelected, setListSelected] = useState(foodList);
 
   const food = useSelector(({ firebase: { data: { Food = {} } } }) => (listSelected || []).map(item => ({ ...Food[item.key], key: item.key })));
-  const typeFood = useSelector(({ firebase: { ordered: { Type_Food = {} } } }) => Type_Food.map(item => ({ ...item, label: item.value.name, value: item.key })));
+  const typeFood = useSelector(
+    ({
+      firebase: {
+        ordered: { Type_Food = {} },
+      },
+    }) => Type_Food.map(item => ({
+      ...item,
+      label: item.value.name,
+      value: item.key,
+    })),
+  );
 
   const showModal = () => bottomSheetRef?.current?.open();
 
@@ -37,8 +47,8 @@ const MealPlan = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Meal Plan</Text>
-      <ContainerInput label="This meal for">
+      <Text style={styles.title}>Lịch nấu ăn</Text>
+      <ContainerInput label="Bữa ăn">
         {/* meal type picker */}
         <PickerSelect
           onValueChange={onSelectType}
@@ -48,7 +58,7 @@ const MealPlan = ({
         />
       </ContainerInput>
 
-      <ContainerInput label="Choose your dishes">
+      <ContainerInput label="Chọn món ăn">
         <TouchableOpacity
           onPress={showModal}
           style={[styles.picker, styles.rowBetweenCenter]}
@@ -62,7 +72,7 @@ const MealPlan = ({
                 color: COLOR.LIGHT_GRAY_COLOR,
               }}
             >
-              Select
+              Tra cứu
             </Text>
           </View>
 
@@ -74,7 +84,10 @@ const MealPlan = ({
             <ItemMeal
               item={item}
               onPressItem={() => addToList(item)}
-              isSelected={foodList.find(foodItem => foodItem.key === item.key) !== undefined}
+              isSelected={
+                foodList.find(foodItem => foodItem.key === item.key)
+                !== undefined
+              }
             />
           )}
           keyExtractor={item => String(item.key)}

@@ -28,12 +28,12 @@ const ListPlan = ({ navigation }) => {
   const goToMealPlan = id => navigation.navigate('PlanDetails', { id });
 
   const deleteMealPlan = (id, idWhatToBuy) => {
-    Alert.alert('Warning', 'Are you want to delete this meal plan ?', [
+    Alert.alert('Nhắc nhở', 'Bạn muốn xóa?', [
       {
-        text: 'Cancel',
+        text: 'Bỏ',
       },
       {
-        text: 'Delete',
+        text: 'Xóa',
         onPress: () => {
           // firebase.remove(`Meal_Plan/${user.uid}/${id}`);
           const params = {
@@ -65,7 +65,7 @@ const ListPlan = ({ navigation }) => {
 
       {moment(day).format('DD MMMM, YYYY')
       === moment().format('DD MMMM, YYYY') ? (
-        <Text style={styles.today}>Today</Text>
+        <Text style={styles.today}>Hôm nay</Text>
         ) : null}
     </View>
   );

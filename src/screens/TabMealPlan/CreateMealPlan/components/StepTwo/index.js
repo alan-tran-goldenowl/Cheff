@@ -28,7 +28,7 @@ const StepTwo = ({
 
   return isVisible ? (
     <View style={styles.container}>
-      <Text style={styles.title}>Setup time</Text>
+      <Text style={styles.title}>Cài đặt ngày giờ</Text>
       <View style={styles.spaceSmall} />
       <TouchableOpacity
         onPress={showHideModal}
@@ -41,7 +41,7 @@ const StepTwo = ({
           <Icon name="calendar" size={30} color={COLOR.WHITE_COLOR} />
           <View>
             <Text style={[styles.pickerTitle, styles.leftContent]}>
-              Picker date
+              Chọn ngày
             </Text>
             <Text style={[styles.pickerValue, styles.leftContent]}>
               {moment(plan.date).format('DD MMM YYYY')}
@@ -52,7 +52,7 @@ const StepTwo = ({
         <View style={[styles.row, styles.picker]}>
           <Icon name="clock-o" size={30} />
           <View>
-            <Text style={styles.pickerTitle}>Picker time</Text>
+            <Text style={styles.pickerTitle}>Chọn giờ</Text>
             <Text style={styles.pickerValue}>
               {moment(plan.date).format('hh:mm')}
             </Text>

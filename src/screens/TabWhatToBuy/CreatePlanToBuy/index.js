@@ -22,10 +22,7 @@ import Button from 'components/Button';
 import images from 'assets/images';
 
 import ContainerInput from 'components/ContainerInput';
-import {
-  isIOS,
-  uuid,
-} from 'utils';
+import { isIOS, uuid } from 'utils';
 
 import styles from './styles';
 
@@ -39,11 +36,10 @@ const CreatePlanToBuy = ({ navigation }) => {
   const dispatch = useDispatch();
   const [plan, setPlan] = useState({
     title: '',
-    date: (new Date()).getTime(),
+    date: new Date().getTime(),
     notes: '',
   });
   const { id: planId } = navigation.state.params || {};
-
 
   const firebase = useFirebase();
   const user = firebase.auth().currentUser;
@@ -55,7 +51,6 @@ const CreatePlanToBuy = ({ navigation }) => {
       },
     }) => Plan_To_do[user.uid]?.[planId] || {},
   );
-
 
   const [todoList, setTodoList] = useState([initDataTodo]);
 
@@ -92,7 +87,10 @@ const CreatePlanToBuy = ({ navigation }) => {
   const onSubmit = () => {
     const list = todoList.filter(item => item.text.length);
     if (list.length === 0) {
-      Alert.alert('Warning', 'You have to create at least one task that you want to do');
+      Alert.alert(
+        'Warning',
+        'You have to create at least one task that you want to do',
+      );
       return;
     }
     const err = onValidateInput();
@@ -123,7 +121,8 @@ const CreatePlanToBuy = ({ navigation }) => {
       {
         ...initDataTodo,
         id: uuid(todoList.length),
-      }]);
+      },
+    ]);
   };
 
   const onChangeTextTodo = _.debounce((id, text) => {
@@ -151,13 +150,12 @@ const CreatePlanToBuy = ({ navigation }) => {
     setTodoList(newList);
   };
 
-
   return (
     <View style={styles.main}>
       <Header
         iconLeft={images.icon_back}
         onPressLeft={() => navigation.goBack()}
-        title="Create a plan"
+        title="Tạo lịch"
       />
       <KeyboardAvoidingView
         style={styles.keyboard}
@@ -165,23 +163,17 @@ const CreatePlanToBuy = ({ navigation }) => {
         enabled={isIOS}
       >
         <ScrollView style={styles.container}>
-          <ContainerInput
-            label="Plan name"
-            error={error.title}
-          >
+          <ContainerInput label="Tên" error={error.title}>
             <TextInput
               multiline
               defaultValue={plan.title}
-
               style={styles.containerTitle}
               placeholder="Type something"
               onChangeText={text => onChangeText('title', text)}
             />
           </ContainerInput>
-          <ContainerInput label="Date">
-            <View
-              style={styles.containerTitle}
-            >
+          <ContainerInput label="Ngày thực hiện">
+            <View style={styles.containerTitle}>
               <DatePicker
                 onPress={() => setDatePickerVisible(true)}
                 value={moment(plan.date).format('DD MMMM, YYYY hh:mm')}
@@ -195,7 +187,7 @@ const CreatePlanToBuy = ({ navigation }) => {
             </View>
           </ContainerInput>
 
-          <ContainerInput label="Notes">
+          <ContainerInput label="Ghi chú">
             <TextInput
               multiline
               defaultValue={plan.notes}
@@ -206,38 +198,45 @@ const CreatePlanToBuy = ({ navigation }) => {
             />
           </ContainerInput>
 
-
           <View style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 14 }}>Todo List</Text>
-            <Text style={{ fontSize: 12 }}>You have to create at least one task that you want to do</Text>
+            <Text style={{ fontSize: 14 }}>Danh sách việc cần làm</Text>
+            <Text style={{ fontSize: 12 }}>
+              Bạn cần tạo ít nhất một công việc
+            </Text>
             <View style={styles.todo}>
-              {
-                todoList.map(e => (
-                  <View key={e.id} style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-                    <TextInput
-                      multiline
-                      defaultValue={e.text}
-                      onChangeText={text => onChangeTextTodo(e.id, text)}
-                      style={{ ...styles.containerTitle, flex: 3 }}
-                      placeholder="Type something ..."
+              {todoList.map(e => (
+                <View
+                  key={e.id}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 10,
+                  }}
+                >
+                  <TextInput
+                    multiline
+                    defaultValue={e.text}
+                    onChangeText={text => onChangeTextTodo(e.id, text)}
+                    style={{ ...styles.containerTitle, flex: 3 }}
+                    placeholder="Type something ..."
+                  />
+                  <TouchableOpacity onPress={() => onRemoveTodo(e.id)}>
+                    <Icon
+                      name="minus-circle"
+                      size={20}
+                      color="red"
+                      style={{ marginLeft: 15 }}
                     />
-                    <TouchableOpacity
-                      onPress={() => onRemoveTodo(e.id)}
-                    >
-                      <Icon
-                        name="minus-circle"
-                        size={20}
-                        color="red"
-                        style={{ marginLeft: 15 }}
-                      />
-                    </TouchableOpacity>
-
-                  </View>
-                ))
-              }
+                  </TouchableOpacity>
+                </View>
+              ))}
               <TouchableOpacity
                 onPress={addMore}
-                style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: 10,
+                }}
               >
                 <Icon
                   name="plus"
@@ -245,21 +244,14 @@ const CreatePlanToBuy = ({ navigation }) => {
                   color="blue"
                   style={{ marginRight: 5 }}
                 />
-                <Text style={{ color: 'blue' }}>
-                  Add more
-                </Text>
-
+                <Text style={{ color: 'blue' }}>Thêm</Text>
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <Button
-        buttonStyle={styles.btnCreate}
-        title={!planId ? 'CREATE A PLAN' : 'SAVE'}
-        onPress={onSubmit}
-      />
+      <Button buttonStyle={styles.btnCreate} title="LƯU" onPress={onSubmit} />
     </View>
   );
 };

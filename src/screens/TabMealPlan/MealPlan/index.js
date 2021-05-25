@@ -46,7 +46,7 @@ const MealPlan = ({ navigation }) => {
       onPressLeft={() => navigation.navigate('Settings')}
       iconRight={images.ic_plus}
       onPressRight={() => navigation.navigate('CreatePlan')}
-      title="Meal Plan"
+      title="Kế hoạch nấu ăn"
     />
   );
 
@@ -62,7 +62,7 @@ const MealPlan = ({ navigation }) => {
 
   const renderUpcomingPlan = () => (upcomingPlan.length ? (
     <View style={{ marginBottom: 150 }}>
-      <Text style={{ padding: 20 }}>Upcoming Plan</Text>
+      <Text style={{ padding: 20 }}>Kế hoạch sắp tới</Text>
       <FlatList
         data={upcomingPlan ?? []}
         renderItem={({ item }) => (

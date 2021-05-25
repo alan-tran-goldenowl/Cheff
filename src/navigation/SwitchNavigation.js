@@ -15,6 +15,7 @@ import TodoPlanDetail from 'screens/TabWhatToBuy/TodoPlanDetail';
 import CreatePlanToBuy from 'screens/TabWhatToBuy/CreatePlanToBuy';
 
 import AuthLoading from 'screens/AuthLoading';
+import PrivacyAndPolicy from 'screens/PrivacyAndPolicy';
 import Main from './MainTabNavigator';
 
 const AppStack = createStackNavigator(
@@ -30,6 +31,7 @@ const AppStack = createStackNavigator(
     PlanDetails,
     TodoPlanDetail,
     CreatePlanToBuy,
+    PrivacyAndPolicy,
   },
   {
     headerMode: 'none',

@@ -10,7 +10,7 @@ import ToDoItem from './component/TodoItem';
 const RenderItem = ({ list, navigation }) => {
   const renderEmptyScreen = () => (
     <View style={styles.containerEmpty}>
-      <Text style={styles.textEmpty}>Nothing!!!</Text>
+      <Text style={styles.textEmpty}>TRỐNG!!!</Text>
     </View>
   );
 
@@ -52,7 +52,7 @@ const RenderItem = ({ list, navigation }) => {
 
       <Button
         buttonStyle={styles.btnCreate}
-        title="ADD NEW"
+        title="TẠO MỚI"
         onPress={() => navigation.navigate('CreatePlanToBuy')}
       />
     </View>

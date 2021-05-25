@@ -19,7 +19,7 @@ const SearchiewCheff = props => (
         <TextInput
           underlineColorAndroid="transparent"
           autofocus={props.autofocus}
-          placeholder="Search your recipes..."
+          placeholder="Tìm kiếm món ăn..."
           style={styles.text}
           autoCorrect={false}
           {...props}
