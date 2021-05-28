@@ -1,20 +1,59 @@
 import React from 'react';
 import moment from 'moment';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 
-import CustomArrow from './CustomArrow';
 import styles from './styles';
+
+LocaleConfig.locales.vn = {
+  monthNames: [
+    'Tháng 1',
+    'Tháng 2',
+    'Tháng 3',
+    'Tháng 4',
+    'Tháng 5',
+    'Tháng 6',
+    'Tháng 7',
+    'Tháng 8',
+    'Tháng 9',
+    'Tháng 10',
+    'Tháng 11',
+    'Tháng 12',
+  ],
+  monthNamesShort: ['Tháng 1',
+    'Tháng 2',
+    'Tháng 3',
+    'Tháng 4',
+    'Tháng 5',
+    'Tháng 6',
+    'Tháng 7',
+    'Tháng 8',
+    'Tháng 9',
+    'Tháng 10',
+    'Tháng 11',
+    'Tháng 12'],
+
+  dayNames: [
+    'Chủ nhật',
+    'Thứ hai',
+    'Thứ ba',
+    'Thứ tư',
+    'Thứ năm',
+    'Thứ sáu',
+    'Thứ bảy',
+  ],
+  dayNamesShort: ['CN', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'],
+};
+LocaleConfig.defaultLocale = 'vn';
 
 const MyCalendar = ({
   moveToListPlan,
   mealPlan,
   onPressLeftCalendar,
   onPressRightCalendar,
-  currentMonth,
 }) => {
   const getMarkedDays = () => {
     const marked = {};
-    mealPlan.forEach((item) => {
+    mealPlan.forEach(item => {
       const day = moment(item.value.date).format('YYYY-MM-DD');
       marked[day] = {
         marked: true,
@@ -59,7 +98,7 @@ const MyCalendar = ({
 
   const markedDates = loadMarkedDates();
 
-  const onDayPress = (day) => {
+  const onDayPress = day => {
     const marked = getMarkedDays();
     if (marked[day.dateString]) {
       moveToListPlan(day.dateString);
@@ -73,15 +112,13 @@ const MyCalendar = ({
       theme={themeCalendar}
       monthFormat="MMMM, yyyy"
       markedDates={markedDates}
-      onDayPress={(day) => onDayPress(day)}
-      renderArrow={(direction) => (
-        <CustomArrow direction={direction} currentMonth={currentMonth} />
-      )}
-      onPressArrowLeft={(substractMonth) => {
+      onDayPress={day => onDayPress(day)}
+
+      onPressArrowLeft={substractMonth => {
         onPressArrowLeft();
         substractMonth();
       }}
-      onPressArrowRight={(addMonth) => {
+      onPressArrowRight={addMonth => {
         onPressArrowRight();
         addMonth();
       }}
