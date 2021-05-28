@@ -12,14 +12,18 @@ Prepare to start ios/android simulater
 Open browser ](http://localhost:19002)
 Choose run mode on menu bar
 
-## `yarn test`
 
-Run unit tests and snapshot tests **tests** folder
+# Update List Food
+Follow structure in google sheet
+Link : https://docs.google.com/spreadsheets/d/1-tJV2XsvvV64PM8bao2SeczeBqHKZFGn2-mRqD605DM/edit?userstoinvite=justin@goldenowl.asia&ts=60a1fefc#gid=0
+Gmail: mike.bui.goldenowl@gmail.com / Golden2021!
 
-# E2E Testing with [Detox](https://blog.expo.io/testing-expo-apps-with-detox-and-react-native-testing-library-7fbdbb82ac87)
+In google sheet, to update list foods, # Go to Extension -> App Script -> Run.
 
-1. Go to the [Expo Tools page](https://expo.io/tools#client) and click the “Download IPA” link.<br>
 
-2. Expand the downloaded archive and copy all files and folders in extracted folder into `e2e/bin/Exponent.app/`<br>
 
-3. Run `yarn e2e` // need to start metro tunnel first.
+
+# Key store build android
+Keystore password: db2d05d502e24051b3e0e18d1d3e4ee5
+Key alias:         QG1pa2VidWkvY2hlZmY=
+Key password:      f97660e02872439caf0ebe660f1ce22e
