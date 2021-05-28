@@ -16,7 +16,7 @@ Choose run mode on menu bar
 
 # Update List Food
 Follow structure in google sheet
-Link : https://docs.google.com/spreadsheets/d/1-tJV2XsvvV64PM8bao2SeczeBqHKZFGn2-mRqD605DM/edit?userstoinvite=justin@goldenowl.asia&ts=60a1fefc#gid=0
+Link : https://docs.google.com/spreadsheets/d/1-tJV2XsvvV64PM8bao2SeczeBqHKZFGn2-mRqD605DM/edit#gid=0
 
 In google sheet, to update list foods, # Go to Extension -> App Script -> Run.
 
