@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet, View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -29,18 +27,18 @@ export default class App extends React.Component {
     this.state = {
       isLoadingComplete: false,
     };
-    console.disableYellowBox = true;
   }
 
-  _loadResourcesAsync = async () => Promise.all([
-    Asset.loadAsync([images.robot_dev, images.robot_prod]),
-    Font.loadAsync({
-      ...Ionicons.font,
-      'space-mono': require('assets/fonts/SpaceMono-Regular.ttf'),
-    }),
-  ]);
+  _loadResourcesAsync = async () =>
+    Promise.all([
+      Asset.loadAsync([images.robot_dev, images.robot_prod]),
+      Font.loadAsync({
+        ...Ionicons.font,
+        'space-mono': require('assets/fonts/SpaceMono-Regular.ttf'),
+      }),
+    ]);
 
-  _handleLoadingError = error => {
+  _handleLoadingError = (error) => {
     console.warn(error);
   };
 
