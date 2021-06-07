@@ -1,5 +1,5 @@
 const Config = {
-  APP_ID: '3080639668723170',
+  APP_ID: '340689524238228',
   APP_NAME: 'Cheff',
 };
 
