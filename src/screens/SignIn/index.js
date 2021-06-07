@@ -31,28 +31,21 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const logInViaFacebook = async () => {
-    // TODO: failure with iOS
-    console.log(FbConfig.APP_ID);
-
+    setLoading(true);
     try {
-      setLoading(true);
-      await Facebook.initializeAsync(FbConfig.APP_ID);
+      await Facebook.initializeAsync({ appId: FbConfig.appId });
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['email'],
       });
-      if (type !== 'success') {
-        throw new Error('Sorry, unexpected error');
-      }
-      console.log('token', token);
-      // await FireBase.auth().setPersistence(FireBase.auth.Auth.Persistence.LOCAL);
-      const credential = FireBase.auth.FacebookAuthProvider.credential(token);
-      console.log('credential', credential);
-      handleLoginSuccess(credential);
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
 
-      // alert(`Login failed: ${err}`);
+      if (type === 'success') {
+        const credential = FireBase.auth.FacebookAuthProvider.credential(token);
+        handleLoginSuccess(credential);
+      }
+
+      return setLoading(false);
+    } catch ({ message }) {
+      setLoading(false);
     }
   };
 
