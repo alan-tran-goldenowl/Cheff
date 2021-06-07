@@ -18,16 +18,14 @@ import styles from './styles';
 const SignInScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleLoginSuccess = async credential => {
+  const handleLoginSuccess = async (credential) => {
     FireBase.auth()
       .signInWithCredential(credential)
-      .then(({ user }) => {
+      .then(() => {
         setLoading(false);
-        console.log(user);
         navigation.navigate('App');
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         setLoading(false);
       });
   };
@@ -60,24 +58,27 @@ const SignInScreen = ({ navigation }) => {
 
   const logInViaGoogle = async () => {
     setLoading(true);
-
     try {
       const { type, accessToken, idToken } = await Google.logInAsync({
-        iosClientId: GgConfig.IOS_CLIENT_ID,
+        androidStandaloneAppClientId: GgConfig.ANDROID_CLIENT_ID,
         androidClientId: GgConfig.ANDROID_CLIENT_ID,
+        iosStandaloneAppClientId: GgConfig.IOS_CLIENT_ID,
+        iosClientId: GgConfig.IOS_CLIENT_ID,
         scopes: ['profile', 'email'],
       });
+
       if (type !== 'success') {
-        throw new Error('Sorry, unexpected error');
+        return setLoading(false);
       }
+
       const credential = FireBase.auth.GoogleAuthProvider.credential(
         idToken,
         accessToken,
       );
-      console.log(credential);
       handleLoginSuccess(credential);
+      setLoading(false);
     } catch (err) {
-      console.log(err);
+      setLoading(false);
     }
   };
 
@@ -90,7 +91,10 @@ const SignInScreen = ({ navigation }) => {
           buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
           cornerRadius={5}
           style={{
-            height: responsive({ h: 40 }), marginVertical: 25, width: '90%', justifyContent: 'space-between',
+            height: responsive({ h: 40 }),
+            marginVertical: 25,
+            width: '90%',
+            justifyContent: 'space-between',
           }}
           onPress={async () => {
             setLoading(true);
@@ -123,8 +127,7 @@ const SignInScreen = ({ navigation }) => {
         <TouchableOpacity
           disabled={loading}
           onPress={logInViaGoogle}
-          style={styles.textSignInGG}
-        >
+          style={styles.textSignInGG}>
           <Image source={images.btn_gg} style={styles.image} />
           <Text style={styles.textGG}>Google</Text>
         </TouchableOpacity>
@@ -132,8 +135,7 @@ const SignInScreen = ({ navigation }) => {
         <TouchableOpacity
           disabled={loading}
           style={styles.textSignInFb}
-          onPress={logInViaFacebook}
-        >
+          onPress={logInViaFacebook}>
           <Image style={styles.image} source={images.btn_fb} />
           <Text style={styles.textFB}>Facebook</Text>
         </TouchableOpacity>

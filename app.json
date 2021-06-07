@@ -19,7 +19,6 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "ios.usesAppleSignIn": true,
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
@@ -34,7 +33,13 @@
     "android": {
       "package": "com.goldenowl.cheff",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 1
+      "versionCode": 4,
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyDL87okJJXr4w2o2hfhC1-Kz0--LB0v2Gg",
+          "certificateHash": "712799DBC893AE7C2AD91A8DEECA00173327778D"
+        }
+      }
     }
   }
 }
