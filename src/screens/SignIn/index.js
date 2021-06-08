@@ -31,21 +31,20 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const logInViaFacebook = async () => {
-    setLoading(true);
     try {
-      await Facebook.initializeAsync({ appId: FbConfig.appId });
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['email'],
+      await Facebook.initializeAsync({
+        appId: FbConfig.APP_ID,
       });
 
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile'],
+      });
       if (type === 'success') {
         const credential = FireBase.auth.FacebookAuthProvider.credential(token);
         handleLoginSuccess(credential);
       }
-
-      return setLoading(false);
-    } catch ({ message }) {
-      setLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
