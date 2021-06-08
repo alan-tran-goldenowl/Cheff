@@ -37,14 +37,14 @@ const SignInScreen = ({ navigation }) => {
       });
 
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
+        permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
         const credential = FireBase.auth.FacebookAuthProvider.credential(token);
         handleLoginSuccess(credential);
       }
     } catch (error) {
-      console.log(error);
+      setLoading(false);
     }
   };
 
