@@ -14,7 +14,7 @@ import EditProfile from 'screens/EditProfile'
 import PlanDetails from 'screens/TabMealPlan/PlanDetail'
 import TodoPlanDetail from 'screens/TabWhatToBuy/TodoPlanDetail'
 import CreatePlanToBuy from 'screens/TabWhatToBuy/CreatePlanToBuy'
-
+import CreatePlanV2 from 'screens/CreatePlan'
 import AuthLoading from 'screens/AuthLoading'
 import PrivacyAndPolicy from 'screens/PrivacyAndPolicy'
 import Main from './MainTabNavigator'
@@ -38,6 +38,9 @@ const AppStack = createStackNavigator(
     },
     [ROUTE_NAME.CreatePlan]: {
       screen: CreatePlan,
+    },
+    [ROUTE_NAME.CreatePlanV2]: {
+      screen: CreatePlanV2,
     },
     [ROUTE_NAME.FoodDetail]: {
       screen: FoodDetail,
