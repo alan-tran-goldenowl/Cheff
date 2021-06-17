@@ -186,7 +186,7 @@ const FoodDetail = ({ navigation }) => {
               <Text style={styles.likeNumber}>
                 {foodValue?.totalLikes || 0}
                 {' '}
-                Likes
+                Thích
               </Text>
             </TouchableOpacity>
           </View>
@@ -201,7 +201,7 @@ const FoodDetail = ({ navigation }) => {
                 <Text style={styles.infoText}>
                   {+foodValue.timecook / 60}
                   {' '}
-                  mins
+                  phút
                 </Text>
               </View>
               <View style={[styles.flexRowCenter, styles.marginLeftSmall]}>
@@ -210,7 +210,7 @@ const FoodDetail = ({ navigation }) => {
                   style={styles.iconInfo}
                   source={images.ic_ingredient}
                 />
-                <Text>{`${foodValue.ingredients?.length} ingredients`}</Text>
+                <Text>{`${foodValue.ingredients?.length} Nguyên liệu`}</Text>
               </View>
               <View style={[styles.flexRowCenter, styles.marginLeftSmall]}>
                 <RNImage
@@ -226,7 +226,7 @@ const FoodDetail = ({ navigation }) => {
 
           <View style={styles.ingredientsView}>
             <CollapseView>
-              <Text style={styles.ingredientsTitle}>INGREDIENTS</Text>
+              <Text style={styles.ingredientsTitle}>THÀNH PHẦN</Text>
               {renderIngredients()}
               <View style={styles.servingBox}>
                 <TouchableOpacity
@@ -240,11 +240,7 @@ const FoodDetail = ({ navigation }) => {
                   />
                 </TouchableOpacity>
                 <Text>
-                  {`${serveForPeople} ${appropriatePluralisation(
-                    serveForPeople,
-                    'serving',
-                    'servings',
-                  )}`}
+                  {`${serveForPeople} khẩu phần ăn`}
                 </Text>
                 <TouchableOpacity
                   onPress={handleAddServe}
@@ -260,7 +256,7 @@ const FoodDetail = ({ navigation }) => {
             </CollapseView>
           </View>
           <View style={styles.instructionView}>
-            <Text style={styles.ingredientsTitle}>INSTRUCTIONS</Text>
+            <Text style={styles.ingredientsTitle}>CÁCH LÀM</Text>
             {renderInstruction()}
           </View>
         </View>
