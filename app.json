@@ -33,7 +33,7 @@
     "android": {
       "package": "com.goldenowl.cheff",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 4,
+      "versionCode": 16,
       "config": {
         "googleSignIn": {
           "apiKey": "AIzaSyDL87okJJXr4w2o2hfhC1-Kz0--LB0v2Gg",
