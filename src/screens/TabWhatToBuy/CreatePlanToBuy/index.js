@@ -181,7 +181,7 @@ const CreatePlanToBuy = ({ navigation }) => {
                 onConfirm={handleDatePicked}
                 onCancel={() => setDatePickerVisible(false)}
                 mode="datetime"
-                date={plan.date}
+                date={new Date(plan.date)}
                 minimumDate={new Date()}
               />
             </View>
