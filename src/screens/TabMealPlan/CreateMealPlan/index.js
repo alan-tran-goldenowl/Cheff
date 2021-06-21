@@ -141,10 +141,11 @@ const CreateMealPlan = ({ navigation }) => {
     }
 
     if (step === STEP.two) {
+      // console.log("plan", plan);
       const newList = {};
       plan.food.forEach(item => {
         item?.value?.ingredients?.forEach(itemIngre => {
-          const key = itemIngre.name.toLowerCase().replaceAll(' ', '');
+          const key = itemIngre.name.toLowerCase().replace(/ /g, '');
           let { amount } = itemIngre;
           if (newList[key]?.amount) {
             amount += newList[key]?.amount;

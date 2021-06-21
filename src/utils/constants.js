@@ -9,7 +9,7 @@ export const ROUTE_NAME = {
   FoodDetail: 'FoodDetail',
   EditProfile: 'EditProfile',
   PlanDetails: 'PlanDetails',
-  TodoPlanDetail: 'TodoPlainDetail',
+  TodoPlanDetail: 'TodoPlanDetail',
   CreatePlanToBuy: 'CreatePlanToBuy',
   PrivacyAndPolicy: 'PrivacyAndPolicy',
 }
