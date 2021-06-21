@@ -88,8 +88,8 @@ const CreatePlanToBuy = ({ navigation }) => {
     const list = todoList.filter(item => item.text.length);
     if (list.length === 0) {
       Alert.alert(
-        'Warning',
-        'You have to create at least one task that you want to do',
+        'Cảnh báo',
+        'Bạn vui lòng tạo ít nhất một kế hoạch nấu ăn!',
       );
       return;
     }
@@ -168,7 +168,7 @@ const CreatePlanToBuy = ({ navigation }) => {
               multiline
               defaultValue={plan.title}
               style={styles.containerTitle}
-              placeholder="Type something"
+              placeholder="Nhập..."
               onChangeText={text => onChangeText('title', text)}
             />
           </ContainerInput>
@@ -176,7 +176,7 @@ const CreatePlanToBuy = ({ navigation }) => {
             <View style={styles.containerTitle}>
               <DatePicker
                 onPress={() => setDatePickerVisible(true)}
-                value={moment(plan.date).format('DD MMMM, YYYY hh:mm')}
+                value={moment(plan.date).format('DD/MM/YYYY, hh:mm')}
                 isVisible={isDatePickerVisible}
                 onConfirm={handleDatePicked}
                 onCancel={() => setDatePickerVisible(false)}
@@ -192,7 +192,7 @@ const CreatePlanToBuy = ({ navigation }) => {
               multiline
               defaultValue={plan.notes}
               style={{ ...styles.containerTitle, minHeight: 70 }}
-              placeholder="Notes"
+              placeholder="Ghi chú"
               onChangeText={text => onChangeText('notes', text)}
               error={error.notes}
             />
@@ -218,7 +218,7 @@ const CreatePlanToBuy = ({ navigation }) => {
                     defaultValue={e.text}
                     onChangeText={text => onChangeTextTodo(e.id, text)}
                     style={{ ...styles.containerTitle, flex: 3 }}
-                    placeholder="Type something ..."
+                    placeholder="Nhập..."
                   />
                   <TouchableOpacity onPress={() => onRemoveTodo(e.id)}>
                     <Icon

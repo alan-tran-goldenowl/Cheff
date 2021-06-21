@@ -18,7 +18,7 @@ const StepOne = ({ plan, onChangeText, isVisible }) => (isVisible ? (
         defaultValue={plan.title}
         onChangeText={text => onChangeText('title', text)}
         style={[styles.containerTitle, { minHeight: 50 }]}
-        placeholder="Type something"
+        placeholder="Nhập..."
       />
     </ContainerInput>
 
@@ -30,7 +30,7 @@ const StepOne = ({ plan, onChangeText, isVisible }) => (isVisible ? (
         defaultValue={plan.note}
         onChangeText={text => onChangeText('note', text)}
         style={[styles.containerTitle, { minHeight: 150 }]}
-        placeholder="Type something"
+        placeholder="Ghi chú"
       />
     </ContainerInput>
   </View>
