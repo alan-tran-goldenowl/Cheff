@@ -99,6 +99,8 @@ const SignInScreen = ({ navigation }) => {
                 ],
               });
 
+              console.log(credential);
+
               // signed in
             } catch (e) {
               if (e.code === 'ERR_CANCELED') {
