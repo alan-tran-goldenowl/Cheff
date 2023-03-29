@@ -1,16 +1,19 @@
 import React from 'react';
-import {
-  View, Text, TouchableOpacity, StyleSheet,
-} from 'react-native';
-import { Image } from 'react-native-expo-image-cache';
-import { responsive, device } from 'utils';
-import Icon from '@expo/vector-icons/Ionicons';
-import { COLOR } from 'styles/theme';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {responsive, device} from 'utils';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {COLOR} from 'styles/theme';
 
 const SearchItem = props => (
   <View style={styles.containerSearch}>
-    <TouchableOpacity style={styles.imageFoodSearch} onPress={props.onPressItem}>
-      <Image style={styles.imageFoodCoverSearch} resizeMode="cover" uri={props?.item?.cover} />
+    <TouchableOpacity
+      style={styles.imageFoodSearch}
+      onPress={props.onPressItem}>
+      <Image
+        style={styles.imageFoodCoverSearch}
+        resizeMode="cover"
+        source={{uri: props?.item?.cover}}
+      />
       <Text style={styles.foodNameSearch}>{props?.item?.name}</Text>
       <Icon
         name={props.isSelected ? 'checkmark-circle' : 'ellipse-outline'}
@@ -19,20 +22,19 @@ const SearchItem = props => (
         style={styles.icon}
       />
     </TouchableOpacity>
-    <View style={{ backgroundColor: '#dddddd', height: 1 }} />
-
+    <View style={{backgroundColor: '#dddddd', height: 1}} />
   </View>
 );
 
 const styles = StyleSheet.create({
   imageFoodCoverSearch: {
     width: device.width / 7,
-    height: responsive({ h: 40 }),
+    height: responsive({h: 40}),
     borderRadius: 5,
-    marginRight: responsive({ d: 20 }),
+    marginRight: responsive({d: 20}),
   },
   imageFoodSearch: {
-    paddingVertical: responsive({ d: 20 }),
+    paddingVertical: responsive({d: 20}),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -40,10 +42,10 @@ const styles = StyleSheet.create({
   containerSearch: {
     flex: 1,
     backgroundColor: 'white',
-    marginLeft: responsive({ d: 35 }),
+    marginLeft: responsive({d: 35}),
   },
   foodNameSearch: {
-    fontSize: responsive({ f: 17 }),
+    fontSize: responsive({f: 17}),
     fontWeight: '500',
     color: 'black',
     flex: 3,

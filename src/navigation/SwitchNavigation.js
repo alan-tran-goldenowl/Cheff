@@ -1,23 +1,23 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 
-import { createStackNavigator } from 'react-navigation-stack'
-import { ROUTE_NAME } from 'utils/constants'
+import {createStackNavigator} from 'react-navigation-stack';
+import {ROUTE_NAME} from 'utils/constants';
 
-import Links from 'screens/Links'
-import ListPlan from 'screens/TabMealPlan/ListPlan'
-import SignIn from 'screens/SignIn'
-import Search from 'screens/Search'
-import FoodDetail from 'screens/FoodDetail'
-import CreatePlan from 'screens/TabMealPlan/CreateMealPlan'
-import Settings from 'screens/Setting'
-import EditProfile from 'screens/EditProfile'
-import PlanDetails from 'screens/TabMealPlan/PlanDetail'
-import TodoPlanDetail from 'screens/TabWhatToBuy/TodoPlanDetail'
-import CreatePlanToBuy from 'screens/TabWhatToBuy/CreatePlanToBuy'
-import CreatePlanV2 from 'screens/CreatePlan'
-import AuthLoading from 'screens/AuthLoading'
-import PrivacyAndPolicy from 'screens/PrivacyAndPolicy'
-import Main from './MainTabNavigator'
+import Links from 'screens/Links';
+import ListPlan from 'screens/TabMealPlan/ListPlan';
+import SignIn from 'screens/SignIn';
+import Search from 'screens/Search';
+import FoodDetail from 'screens/FoodDetail';
+import CreatePlan from 'screens/TabMealPlan/CreateMealPlan';
+import Settings from 'screens/Setting';
+import EditProfile from 'screens/EditProfile';
+import PlanDetails from 'screens/TabMealPlan/PlanDetail';
+import TodoPlanDetail from 'screens/TabWhatToBuy/TodoPlanDetail';
+import CreatePlanToBuy from 'screens/TabWhatToBuy/CreatePlanToBuy';
+import CreatePlanV2 from 'screens/CreatePlan';
+import AuthLoading from 'screens/AuthLoading';
+import PrivacyAndPolicy from 'screens/PrivacyAndPolicy';
+import Main from './MainTabNavigator';
 
 const AppStack = createStackNavigator(
   {
@@ -64,17 +64,17 @@ const AppStack = createStackNavigator(
   {
     headerMode: 'none',
   },
-)
+);
 
 const AppSwitch = createSwitchNavigator(
   {
     AuthLoading,
     App: AppStack,
-    Auth: createStackNavigator({ SignIn }, { headerMode: 'none' }),
+    Auth: createStackNavigator({SignIn}, {headerMode: 'none'}),
   },
   {
     initialRouteName: 'AuthLoading',
   },
-)
+);
 
-export default createAppContainer(AppSwitch)
+export default createAppContainer(AppSwitch);

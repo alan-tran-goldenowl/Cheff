@@ -1,20 +1,19 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import {
-  Text, View, FlatList, TouchableOpacity, Alert,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
+import React, {useState, useMemo, useCallback} from 'react';
+import {Text, View, FlatList, TouchableOpacity, Alert} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {useFirebase, useFirebaseConnect} from 'react-redux-firebase';
 import moment from 'moment';
 import images from 'assets/images';
 import Header from 'components/Header';
-import Icon from '@expo/vector-icons/Ionicons';
-import { deletePlan, deletePlanToBuy } from 'services';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {deletePlan, deletePlanToBuy} from 'services';
 import styles from './styles';
 import Row from './components/Row';
 import ItemMeal from './components/ItemMeal';
 
-const PlanDetails = ({ navigation }) => {
-  const { id: planId } = navigation.state.params || {};
+const PlanDetails = ({navigation}) => {
+  const {id: planId} = navigation.state.params || {};
 
   const [isShowFoods, setShowFood] = useState(false);
 
@@ -27,17 +26,23 @@ const PlanDetails = ({ navigation }) => {
   const mealPlan = useSelector(
     ({
       firebase: {
-        data: { Meal_Plan = {} },
+        data: {Meal_Plan = {}},
       },
     }) => Meal_Plan[user.uid]?.[planId] || {},
   );
 
-  const mealType = useSelector(({ firebase: { data: { Type_Food = {} } } }) => Type_Food[mealPlan?.meal]);
+  const mealType = useSelector(
+    ({
+      firebase: {
+        data: {Type_Food = {}},
+      },
+    }) => Type_Food[mealPlan?.meal],
+  );
 
   const goBack = useCallback(() => navigation.goBack(), []);
 
   const goEdit = useCallback(() => {
-    navigation.navigate('CreatePlan', { id: planId });
+    navigation.navigate('CreatePlan', {id: planId});
   }, []);
 
   const renderHeader = useCallback(
@@ -82,7 +87,7 @@ const PlanDetails = ({ navigation }) => {
       {
         text: 'Xóa',
         onPress: () => {
-          const { idWhatToBuy } = mealPlan;
+          const {idWhatToBuy} = mealPlan;
           dispatch(
             deletePlan({
               userId: user.uid,
@@ -103,11 +108,11 @@ const PlanDetails = ({ navigation }) => {
   };
 
   const goToFoodDetail = foodId => {
-    navigation.navigate('FoodDetail', { key: foodId });
+    navigation.navigate('FoodDetail', {key: foodId});
   };
 
   const goToPlanToBuyDetail = () => {
-    navigation.navigate('TodoPlanDetail', { id: mealPlan.idWhatToBuy });
+    navigation.navigate('TodoPlanDetail', {id: mealPlan.idWhatToBuy});
   };
 
   return mealPlan ? (
@@ -134,20 +139,18 @@ const PlanDetails = ({ navigation }) => {
             title="Món ăn"
             rightComponent={() => (
               <TouchableOpacity
-                style={{ flexDirection: 'row' }}
-                onPress={toggleFood}
-              >
+                style={{flexDirection: 'row'}}
+                onPress={toggleFood}>
                 <Text style={styles.boldText}>{data.textFood}</Text>
                 <Icon
                   name={isShowFoods ? 'chevron-up' : 'chevron-down'}
                   size={20}
                 />
               </TouchableOpacity>
-            )}
-          >
+            )}>
             <FlatList
               data={isShowFoods ? mealPlan.food : []}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <ItemMeal
                   item={item.value}
                   onPressItem={() => {
@@ -167,8 +170,8 @@ const PlanDetails = ({ navigation }) => {
             onPress={goToPlanToBuyDetail}
             title="Xem danh sách nguyên liệu"
             rightComponent={() => <Icon name="arrow-forward-sharp" size={20} />}
-            customStyle={{ borderBottomWidth: 0, justifyContent: 'center' }}
-            customTitleStyle={{ fontWeight: '500' }}
+            customStyle={{borderBottomWidth: 0, justifyContent: 'center'}}
+            customTitleStyle={{fontWeight: '500'}}
           />
         </View>
       </View>

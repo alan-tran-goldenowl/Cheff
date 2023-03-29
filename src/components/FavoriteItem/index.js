@@ -1,32 +1,28 @@
 import React from 'react';
-import {
-  View, Text, TouchableOpacity, Image as RNImage,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Image as RNImage} from 'react-native';
 import moment from 'moment';
-import { Image } from 'react-native-expo-image-cache';
-import { likeFood } from 'services';
-import { useDispatch, useSelector } from 'react-redux';
-import { FireBase } from 'constants';
+import {likeFood} from 'services';
+import {useDispatch, useSelector} from 'react-redux';
+import {FireBase} from 'constants';
 import images from 'assets/images';
 
 import styles from './styles';
 
-const FoodItem = ({
-  item, keyFood, onPressItem, isLastItem,
-}) => {
+const FoodItem = ({item, keyFood, onPressItem, isLastItem}) => {
   const dispatch = useDispatch();
   const userFirebase = FireBase.auth().currentUser;
   const isLiked = useSelector(
     ({
       firebase: {
-        data: { Favourites },
+        data: {Favourites},
       },
     }) => {
-      const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
+      const listFavouritesOfUser =
+        (Favourites && Favourites[userFirebase.uid]) || {};
 
       return (
-        (listFavouritesOfUser && listFavouritesOfUser[keyFood]?.isLiked)
-        || false
+        (listFavouritesOfUser && listFavouritesOfUser[keyFood]?.isLiked) ||
+        false
       );
     },
   );
@@ -57,10 +53,10 @@ const FoodItem = ({
     <View style={styles.container}>
       <TouchableOpacity style={styles.itemFood} onPress={onPressItem}>
         <View style={styles.imageFood}>
-          <Image
+          <RNImage
             style={styles.imageFoodCover}
             resizeMode="cover"
-            uri={item.cover}
+            source={{uri: item.cover}}
           />
         </View>
         <View style={styles.infomationFood}>
@@ -79,8 +75,7 @@ const FoodItem = ({
             </View>
             <TouchableOpacity
               style={styles.likeContainer}
-              onPress={onPressLikeUnLike}
-            >
+              onPress={onPressLikeUnLike}>
               <Text style={styles.like}>{item?.totalLikes || 0}</Text>
               <RNImage
                 style={styles.icon}

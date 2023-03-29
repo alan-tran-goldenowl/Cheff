@@ -1,38 +1,45 @@
-import React, { useState, useRef } from 'react';
-import {
-  View, Text, StyleSheet, FlatList,
-} from 'react-native';
-import { responsive, device } from 'utils';
-import { COLOR } from 'styles/theme';
+import React, {useState, useRef} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {responsive, device} from 'utils';
+import {COLOR} from 'styles/theme';
 import ContainerInput from 'components/ContainerInput';
 import PickerSelect from 'components/PickerSelect';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from '@expo/vector-icons/Ionicons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import SearchComponent from '../SearchMeal';
 import ItemMeal from './ItemMeal';
 
 const MealPlan = ({
   onSelectType,
   onSelectFood,
-  plan: { food: foodList, meal },
+  plan: {food: foodList, meal},
 }) => {
   const bottomSheetRef = useRef();
 
   const [listSelected, setListSelected] = useState(foodList);
 
-  const food = useSelector(({ firebase: { data: { Food = {} } } }) => (listSelected || []).map(item => ({ ...Food[item.key], key: item.key })));
+  const food = useSelector(
+    ({
+      firebase: {
+        data: {Food = {}},
+      },
+    }) =>
+      (listSelected || []).map(item => ({...Food[item.key], key: item.key})),
+  );
   const typeFood = useSelector(
     ({
       firebase: {
-        ordered: { Type_Food = {} },
+        ordered: {Type_Food = {}},
       },
-    }) => Type_Food.map(item => ({
-      ...item,
-      label: item.value.name,
-      value: item.key,
-    })),
+    }) =>
+      Type_Food.map(item => ({
+        ...item,
+        label: item.value.name,
+        value: item.key,
+      })),
   );
 
   const showModal = () => bottomSheetRef?.current?.open();
@@ -61,8 +68,7 @@ const MealPlan = ({
       <ContainerInput label="Chọn món ăn">
         <TouchableOpacity
           onPress={showModal}
-          style={[styles.picker, styles.rowBetweenCenter]}
-        >
+          style={[styles.picker, styles.rowBetweenCenter]}>
           <View style={styles.rowBetweenCenter}>
             <Icon size={25} name="search" color={COLOR.LIGHT_GRAY_COLOR} />
             <Text
@@ -70,8 +76,7 @@ const MealPlan = ({
                 marginLeft: 20,
                 fontSize: 16,
                 color: COLOR.LIGHT_GRAY_COLOR,
-              }}
-            >
+              }}>
               Tra cứu
             </Text>
           </View>
@@ -80,13 +85,13 @@ const MealPlan = ({
         </TouchableOpacity>
         <FlatList
           data={food}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <ItemMeal
               item={item}
               onPressItem={() => addToList(item)}
               isSelected={
-                foodList.find(foodItem => foodItem.key === item.key)
-                !== undefined
+                foodList.find(foodItem => foodItem.key === item.key) !==
+                undefined
               }
             />
           )}
@@ -102,8 +107,7 @@ const MealPlan = ({
         closeOnPressMask
         closeOnDragDown
         keyboardAvoidingViewEnabled={false}
-        onClose={() => onSelectFood(listSelected)}
-      >
+        onClose={() => onSelectFood(listSelected)}>
         <SearchComponent
           onCompleted={value => setListSelected(value)}
           listSelected={listSelected}
@@ -117,13 +121,13 @@ const styles = StyleSheet.create({
   containerTitle: {
     borderWidth: 0.2,
     borderColor: COLOR.BORDER_COLOR,
-    paddingVertical: responsive({ d: 10 }),
-    paddingHorizontal: responsive({ d: 10 }),
+    paddingVertical: responsive({d: 10}),
+    paddingHorizontal: responsive({d: 10}),
     borderRadius: 3,
     fontSize: 14,
   },
   title: {
-    fontSize: responsive({ f: 18 }),
+    fontSize: responsive({f: 18}),
     fontWeight: '700',
   },
   row: {
@@ -138,8 +142,8 @@ const styles = StyleSheet.create({
   picker: {
     borderWidth: 0.2,
     borderColor: COLOR.BORDER_COLOR,
-    paddingVertical: responsive({ d: 15 }),
-    paddingHorizontal: responsive({ d: 20 }),
+    paddingVertical: responsive({d: 15}),
+    paddingHorizontal: responsive({d: 20}),
     borderRadius: 5,
   },
   rowBetweenCenter: {

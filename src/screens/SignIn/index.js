@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -6,19 +6,19 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import * as Facebook from 'expo-facebook';
-import * as Google from 'expo-google-app-auth';
+// import * as Facebook from 'expo-facebook';
+// import * as Google from 'expo-google-app-auth';
 import Loading from 'components/Loading';
 import images from 'assets/images';
-import { FireBase, FbConfig, GgConfig } from 'constants';
-import * as AppleAuthentication from 'expo-apple-authentication';
-import { responsive } from 'utils';
+// import * as AppleAuthentication from 'expo-apple-authentication';
+import {responsive} from 'utils';
+import {FireBase, FbConfig, GgConfig} from '../../constants';
 import styles from './styles';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
-  const handleLoginSuccess = async (credential) => {
+  const handleLoginSuccess = async credential => {
     FireBase.auth()
       .signInWithCredential(credential)
       .then(() => {
@@ -31,59 +31,59 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const logInViaFacebook = async () => {
-    try {
-      await Facebook.initializeAsync({
-        appId: FbConfig.APP_ID,
-      });
-
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile', 'email'],
-      });
-      if (type === 'success') {
-        const credential = FireBase.auth.FacebookAuthProvider.credential(token);
-        handleLoginSuccess(credential);
-      }
-    } catch (error) {
-      setLoading(false);
-    }
+    // try {
+    //   await Facebook.initializeAsync({
+    //     appId: FbConfig.APP_ID,
+    //   });
+    //   const {type, token} = await Facebook.logInWithReadPermissionsAsync({
+    //     permissions: ['public_profile', 'email'],
+    //   });
+    //   if (type === 'success') {
+    //     const credential = FireBase.auth.FacebookAuthProvider.credential(token);
+    //     handleLoginSuccess(credential);
+    //   }
+    // } catch (error) {
+    //   setLoading(false);
+    // }
   };
 
   const logInViaGoogle = async () => {
-    setLoading(true);
-    try {
-      const { type, accessToken, idToken } = await Google.logInAsync({
-        androidStandaloneAppClientId: GgConfig.ANDROID_CLIENT_ID,
-        androidClientId: GgConfig.ANDROID_CLIENT_ID,
-        iosStandaloneAppClientId: GgConfig.IOS_CLIENT_ID,
-        iosClientId: GgConfig.IOS_CLIENT_ID,
-        scopes: ['profile', 'email'],
-      });
+    FireBase.auth().signInAnonymously();
+    // setLoading(true)
+    // try {
+    //   const { type, accessToken, idToken } = await Google.logInAsync({
+    //     androidStandaloneAppClientId: GgConfig.ANDROID_CLIENT_ID,
+    //     androidClientId: GgConfig.ANDROID_CLIENT_ID,
+    //     iosStandaloneAppClientId: GgConfig.IOS_CLIENT_ID,
+    //     iosClientId: GgConfig.IOS_CLIENT_ID,
+    //     scopes: ['profile', 'email'],
+    //   })
 
-      if (type !== 'success') {
-        return setLoading(false);
-      }
+    //   if (type !== 'success') {
+    //     return setLoading(false)
+    //   }
 
-      const credential = FireBase.auth.GoogleAuthProvider.credential(
-        idToken,
-        accessToken,
-      );
-      handleLoginSuccess(credential);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
+    //   const credential = FireBase.auth.GoogleAuthProvider.credential(
+    //     idToken,
+    //     accessToken,
+    //   )
+    //   handleLoginSuccess(credential)
+    //   setLoading(false)
+    // } catch (err) {
+    //   setLoading(false)
+    // }
   };
 
   return (
     <ImageBackground style={styles.container} source={images.background}>
       <View style={styles.viewBtn}>
         {loading && <Loading />}
-        <AppleAuthentication.AppleAuthenticationButton
+        {/* <AppleAuthentication.AppleAuthenticationButton
           buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
           buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
           cornerRadius={5}
           style={{
-            height: responsive({ h: 40 }),
+            height: responsive({h: 40}),
             marginVertical: 25,
             width: '90%',
             justifyContent: 'space-between',
@@ -98,8 +98,9 @@ const SignInScreen = ({ navigation }) => {
                   AppleAuthentication.AppleAuthenticationScope.EMAIL,
                 ],
               });
-
-              console.log(credential);
+              FireBase.auth().signInAnonymously();
+              // handleLoginSuccess(credential)
+              navigation.navigate('App');
 
               // signed in
             } catch (e) {
@@ -114,7 +115,7 @@ const SignInScreen = ({ navigation }) => {
               setLoading(false);
             }
           }}
-        />
+        /> */}
         {/* login via Google */}
         <TouchableOpacity
           disabled={loading}

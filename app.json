@@ -1,45 +1,4 @@
 {
-  "expo": {
-    "name": "cheff",
-    "description": "A very interesting project.",
-    "slug": "cheff",
-    "privacy": "public",
-    "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "facebookScheme": "fb3080639668723170",
-    "facebookAppId": "3080639668723170",
-    "facebookDisplayName": "Cheff",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.goldenowl.cheff",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.720924385775-q5f2dcmf0q1v6qied2igtmqcu0id95pr"
-        }
-      },
-      "googleServicesFile": "./GoogleService-Info.plist"
-    },
-    "android": {
-      "package": "com.goldenowl.cheff",
-      "googleServicesFile": "./google-services.json",
-      "versionCode": 16,
-      "config": {
-        "googleSignIn": {
-          "apiKey": "AIzaSyDL87okJJXr4w2o2hfhC1-Kz0--LB0v2Gg",
-          "certificateHash": "712799DBC893AE7C2AD91A8DEECA00173327778D"
-        }
-      }
-    }
-  }
+  "name": "Cheff",
+  "displayName": "Cheff"
 }

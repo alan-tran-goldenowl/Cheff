@@ -1,19 +1,21 @@
 import React from 'react';
-import {
-  View, Text, TouchableOpacity, StyleSheet,
-} from 'react-native';
-import { Image } from 'react-native-expo-image-cache';
-import { responsive, device } from 'utils';
-import Icon from '@expo/vector-icons/Entypo';
-import { COLOR } from 'styles/theme';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {responsive, device} from 'utils';
+import Icon from 'react-native-vector-icons/Entypo';
 
-const ItemMeal = ({ item, onPressItem }) => (
+import {COLOR} from 'styles/theme';
+
+const ItemMeal = ({item, onPressItem}) => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.content} onPress={onPressItem}>
-      <Image style={styles.image} resizeMode="cover" uri={item?.cover} />
+      <Image
+        style={styles.image}
+        resizeMode="cover"
+        source={{uri: item?.cover}}
+      />
       <Text style={styles.name}>{item?.name}</Text>
       <View style={styles.row}>
-        <Text style={{ color: COLOR.BLUE_COLOR }}>Xem chi tiết</Text>
+        <Text style={{color: COLOR.BLUE_COLOR}}>Xem chi tiết</Text>
         <Icon
           name="chevron-right"
           size={25}
@@ -21,9 +23,7 @@ const ItemMeal = ({ item, onPressItem }) => (
           style={styles.icon}
         />
       </View>
-
     </TouchableOpacity>
-
   </View>
 );
 
@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
     width: device.width / 8,
     height: device.width / 8,
     borderRadius: 5,
-    marginRight: responsive({ d: 20 }),
+    marginRight: responsive({d: 20}),
   },
   content: {
-    paddingVertical: responsive({ d: 20 }),
+    paddingVertical: responsive({d: 20}),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   name: {
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({f: 15}),
     fontWeight: '500',
     flex: 3,
   },

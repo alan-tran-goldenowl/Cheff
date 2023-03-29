@@ -1,14 +1,10 @@
-module.exports = function (api) {
-  api.cache(true);
-  return {
-    presets: ['babel-preset-expo'],
-    env: {
-      development: {
-        plugins: ['@babel/plugin-transform-react-jsx-source'],
-      },
-    },
-    plugins: [
-      ['module-resolver', {
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: [
+    'react-native-reanimated/plugin',
+    [
+      'module-resolver',
+      {
         root: ['./src'],
         alias: {
           constants: './src/constants/',
@@ -23,7 +19,7 @@ module.exports = function (api) {
           store: './src/stores',
           styles: './src/styles',
         },
-      }],
+      },
     ],
-  };
+  ],
 };

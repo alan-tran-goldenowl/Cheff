@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, Image } from 'react-native';
-import { useSelector } from 'react-redux';
-import { useFirebaseConnect } from 'react-redux-firebase';
+import {View, Image} from 'react-native';
+import {useSelector} from 'react-redux';
+import {useFirebaseConnect} from 'react-redux-firebase';
 
 import SearchViewCheff from 'components/SearchViewCheff';
 import HomeTab from 'components/HomeTab/HomeTab';
 import Header from 'components/Header';
 import images from 'assets/images';
-import { FireBase } from 'constants';
+import {FireBase} from 'constants';
 import styles from './styles';
+import 'firebase/compat/database';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({navigation}) => {
   const user = FireBase.auth().currentUser || {};
 
   useFirebaseConnect([
@@ -24,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
   const typeFood = useSelector(
     ({
       firebase: {
-        ordered: { Type_Food },
+        ordered: {Type_Food},
       },
     }) => Type_Food?.sort((a, b) => a.value.index - b.value.index) || [],
   );

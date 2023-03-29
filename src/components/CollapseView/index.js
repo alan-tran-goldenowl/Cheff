@@ -1,6 +1,4 @@
-import React, {
-  memo, useState, useRef,
-} from 'react';
+import React, {memo, useState, useRef} from 'react';
 import {
   View,
   Image,
@@ -8,23 +6,18 @@ import {
   LayoutAnimation,
   TouchableOpacity,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+
+import {LinearGradient} from 'react-native-linear-gradient';
 import images from 'assets/images';
-import { isIOS } from 'utils';
+import {isIOS} from 'utils';
 
 import styles from './styles';
 
-if (
-  !isIOS
-    && UIManager.setLayoutAnimationEnabledExperimental
-) {
+if (!isIOS && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-
-const CollapseView = ({
-  onExpand, onCollapse, children,
-}) => {
+const CollapseView = ({onExpand, onCollapse, children}) => {
   const viewRef = useRef(null);
 
   const [height, setHeight] = useState(0);
@@ -58,12 +51,11 @@ const CollapseView = ({
         ref={viewRef}
         style={styles.container}
         onLayout={event => {
-          const { height: heightView } = event.nativeEvent.layout;
+          const {height: heightView} = event.nativeEvent.layout;
           if (height === 0) {
             setHeight(heightView);
           }
-        }}
-      >
+        }}>
         {children}
         {isCollapse && (
           <LinearGradient
@@ -76,16 +68,11 @@ const CollapseView = ({
         style={styles.iconView}
         onPress={() => {
           isCollapse ? expand() : collapse();
-        }}
-      >
+        }}>
         <Image
           style={styles.iconUpDown}
           resizeMode="contain"
-          source={
-            isCollapse
-              ? images.ic_pulldown
-              : images.ic_pullup
-        }
+          source={isCollapse ? images.ic_pulldown : images.ic_pullup}
         />
       </TouchableOpacity>
     </>

@@ -1,10 +1,9 @@
-import React, { memo, useState } from 'react';
-import {
-  View, Text, StyleSheet, TouchableOpacity,
-} from 'react-native';
-import { responsive } from 'utils';
-import { COLOR } from 'styles/theme';
-import Icon from '@expo/vector-icons/FontAwesome';
+import React, {memo, useState} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {responsive} from 'utils';
+import {COLOR} from 'styles/theme';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import MealPlan from '../MealPlan';
@@ -34,9 +33,12 @@ const StepTwo = ({
         onPress={showHideModal}
         style={[
           styles.row,
-          { borderWidth: 0.2, borderColor: COLOR.BORDER_COLOR, overflow: 'hidden' },
-        ]}
-      >
+          {
+            borderWidth: 0.2,
+            borderColor: COLOR.BORDER_COLOR,
+            overflow: 'hidden',
+          },
+        ]}>
         <View style={[styles.row, styles.picker, styles.left]}>
           <Icon name="calendar" size={30} color={COLOR.WHITE_COLOR} />
           <View>
@@ -83,13 +85,13 @@ const styles = StyleSheet.create({
   containerTitle: {
     borderWidth: 0.2,
     borderColor: COLOR.BORDER_COLOR,
-    paddingVertical: responsive({ d: 10 }),
-    paddingHorizontal: responsive({ d: 10 }),
+    paddingVertical: responsive({d: 10}),
+    paddingHorizontal: responsive({d: 10}),
     borderRadius: 3,
     fontSize: 14,
   },
   title: {
-    fontSize: responsive({ f: 18 }),
+    fontSize: responsive({f: 18}),
     fontWeight: '700',
   },
   row: {
@@ -100,8 +102,8 @@ const styles = StyleSheet.create({
   picker: {
     flex: 3,
     justifyContent: 'space-around',
-    paddingVertical: responsive({ d: 40 }),
-    paddingHorizontal: responsive({ d: 10 }),
+    paddingVertical: responsive({d: 40}),
+    paddingHorizontal: responsive({d: 10}),
     borderRadius: 5,
     alignItems: 'center',
   },

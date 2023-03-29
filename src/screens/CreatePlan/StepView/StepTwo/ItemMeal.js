@@ -1,17 +1,25 @@
-import React from 'react'
-import {
-  Text, TouchableOpacity, StyleSheet, Image,
-} from 'react-native'
-import Icon from '@expo/vector-icons/Ionicons'
-import { COLOR } from 'styles/theme'
+import React from 'react';
+import {Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const ItemMeal = ({ onPressItem, item, isSelected }) => (
+import {COLOR} from 'styles/theme';
+
+const ItemMeal = ({onPressItem, item, isSelected}) => (
   <TouchableOpacity style={styles.inner} onPress={onPressItem}>
-    <Image style={styles.image} resizeMode="cover" source={item.cover ? { uri: item.cover } : require('assets/icons/logo.png')} />
+    <Image
+      style={styles.image}
+      resizeMode="cover"
+      source={item.cover ? {uri: item.cover} : require('assets/icons/logo.png')}
+    />
     <Text style={styles.name}>{item?.name}</Text>
-    <Icon name={isSelected ? 'remove-circle' : 'remove-circle-outline'} size={25} color="red" style={styles.icon} />
+    <Icon
+      name={isSelected ? 'remove-circle' : 'remove-circle-outline'}
+      size={25}
+      color="red"
+      style={styles.icon}
+    />
   </TouchableOpacity>
-)
+);
 
 const styles = StyleSheet.create({
   image: {
@@ -37,6 +45,6 @@ const styles = StyleSheet.create({
   icon: {
     marginHorizontal: 20,
   },
-})
+});
 
-export default ItemMeal
+export default ItemMeal;

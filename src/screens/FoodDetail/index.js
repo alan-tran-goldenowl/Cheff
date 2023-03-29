@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { Image } from 'react-native-expo-image-cache';
-import { NavigationActions } from 'react-navigation';
+import {NavigationActions} from 'react-navigation';
 
 import Header from 'components/Header';
 import {
@@ -18,14 +17,14 @@ import {
   appropriatePluralisation,
 } from 'utils';
 import CollapseView from 'components/CollapseView';
-import { useSelector, useDispatch } from 'react-redux';
-import { isEmpty } from 'react-redux-firebase';
-import { FireBase, ActivityConstant } from 'constants';
-import { likeFood, addNewActivity } from 'services';
+import {useSelector, useDispatch} from 'react-redux';
+import {isEmpty} from 'react-redux-firebase';
+import {FireBase, ActivityConstant} from 'constants';
+import {likeFood, addNewActivity} from 'services';
 import images from 'assets/images';
 import styles from './styles';
 
-const FoodDetail = ({ navigation }) => {
+const FoodDetail = ({navigation}) => {
   const userFirebase = FireBase.auth().currentUser;
 
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ const FoodDetail = ({ navigation }) => {
   const foodValue = useSelector(
     ({
       firebase: {
-        ordered: { Food },
+        ordered: {Food},
       },
     }) => {
       const list = (Food || []).filter(item => item?.key === foodKey);
@@ -47,10 +46,11 @@ const FoodDetail = ({ navigation }) => {
   const isLiked = useSelector(
     ({
       firebase: {
-        data: { Favourites },
+        data: {Favourites},
       },
     }) => {
-      const listFavouritesOfUser = (Favourites && Favourites[userFirebase.uid]) || {};
+      const listFavouritesOfUser =
+        (Favourites && Favourites[userFirebase.uid]) || {};
 
       return listFavouritesOfUser && listFavouritesOfUser[foodKey]?.isLiked;
     },
@@ -95,32 +95,35 @@ const FoodDetail = ({ navigation }) => {
     navigation.dispatch(NavigationActions.back());
   };
 
-  const renderInstruction = () => foodValue.guideline?.map((item, index) => (
-    <Text key={index.toString()} style={styles.ingredientsText}>
-      {`${index + 1}. ${item}`}
-    </Text>
-  ));
+  const renderInstruction = () =>
+    foodValue.guideline?.map((item, index) => (
+      <Text key={index.toString()} style={styles.ingredientsText}>
+        {`${index + 1}. ${item}`}
+      </Text>
+    ));
 
-  const renderIngredients = () => foodValue.ingredients?.map((item, index) => {
-    const amountForOne = formatNumber(
-      (item.amount / foodValue.serveForPeople) * serveForPeople,
-      0,
-    );
+  const renderIngredients = () =>
+    foodValue.ingredients?.map((item, index) => {
+      const amountForOne = formatNumber(
+        (item.amount / foodValue.serveForPeople) * serveForPeople,
+        0,
+      );
 
-    return (
-      <View key={index.toString()} style={{ flexDirection: 'row' }}>
-        <Text key={index.toString()} style={[styles.ingredientsText, { flex: 1, fontWeight: '500' }]}>
-          {`${item.name}`}
-        </Text>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <Text key={index.toString()} style={styles.ingredientsText}>
-            {`${amountForOne}  ${item.unit}`}
+      return (
+        <View key={index.toString()} style={{flexDirection: 'row'}}>
+          <Text
+            key={index.toString()}
+            style={[styles.ingredientsText, {flex: 1, fontWeight: '500'}]}>
+            {`${item.name}`}
           </Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Text key={index.toString()} style={styles.ingredientsText}>
+              {`${amountForOne}  ${item.unit}`}
+            </Text>
+          </View>
         </View>
-      </View>
-
-    );
-  });
+      );
+    });
 
   const renderTags = () => (
     <View style={styles.rowWrap}>
@@ -156,15 +159,15 @@ const FoodDetail = ({ navigation }) => {
     <View style={styles.container}>
       {renderHeader()}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ paddingBottom: responsive({ d: 70 }) }}>
+        <View style={{paddingBottom: responsive({d: 70})}}>
           <View style={styles.nameView}>
             <Text style={styles.nameText}>{foodValue.name}</Text>
           </View>
           <Carousel
             data={foodValue.images}
-            renderItem={({ item }) => (
-              <Image
-                uri={item}
+            renderItem={({item}) => (
+              <RNImage
+                source={{uri: item}}
                 resizeMode="cover"
                 style={styles.imageFoodCover}
               />
@@ -173,10 +176,10 @@ const FoodDetail = ({ navigation }) => {
             inactiveSlideOpacity={1}
             sliderWidth={device.width}
             removeClippedSubviews={false}
-            itemWidth={device.width - responsive({ d: 60 })}
+            itemWidth={device.width - responsive({d: 60})}
           />
 
-          <View style={{ ...styles.likeSection, flexDirection: 'row' }}>
+          <View style={{...styles.likeSection, flexDirection: 'row'}}>
             <TouchableOpacity style={styles.likeView} onPress={handleLike}>
               <RNImage
                 resizeMode="center"
@@ -184,9 +187,7 @@ const FoodDetail = ({ navigation }) => {
                 source={isLiked ? images.ic_love : images.ic_nonlove}
               />
               <Text style={styles.likeNumber}>
-                {foodValue?.totalLikes || 0}
-                {' '}
-                Thích
+                {foodValue?.totalLikes || 0} Thích
               </Text>
             </TouchableOpacity>
           </View>
@@ -199,9 +200,7 @@ const FoodDetail = ({ navigation }) => {
                   source={images.ic_clock}
                 />
                 <Text style={styles.infoText}>
-                  {+foodValue.timecook / 60}
-                  {' '}
-                  phút
+                  {+foodValue.timecook / 60} phút
                 </Text>
               </View>
               <View style={[styles.flexRowCenter, styles.marginLeftSmall]}>
@@ -231,21 +230,17 @@ const FoodDetail = ({ navigation }) => {
               <View style={styles.servingBox}>
                 <TouchableOpacity
                   onPress={handleSubtractServe}
-                  style={styles.buttonServing}
-                >
+                  style={styles.buttonServing}>
                   <RNImage
                     resizeMode="center"
                     style={styles.iconServing}
                     source={images.ic_minus}
                   />
                 </TouchableOpacity>
-                <Text>
-                  {`${serveForPeople} khẩu phần ăn`}
-                </Text>
+                <Text>{`${serveForPeople} khẩu phần ăn`}</Text>
                 <TouchableOpacity
                   onPress={handleAddServe}
-                  style={{ ...styles.buttonServing, alignItems: 'flex-end' }}
-                >
+                  style={{...styles.buttonServing, alignItems: 'flex-end'}}>
                   <RNImage
                     resizeMode="center"
                     style={styles.iconServing}

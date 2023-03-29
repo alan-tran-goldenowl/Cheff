@@ -1,15 +1,16 @@
 import React from 'react';
-import {
-  View, Text, TouchableOpacity, StyleSheet,
-} from 'react-native';
-import { Image } from 'react-native-expo-image-cache';
-import { responsive, device } from 'utils';
-import Icon from '@expo/vector-icons/Ionicons';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {responsive, device} from 'utils';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const ItemMeal = ({ onPressItem, item, isSelected }) => (
+const ItemMeal = ({onPressItem, item, isSelected}) => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.inner} onPress={onPressItem}>
-      <Image style={styles.image} resizeMode="cover" uri={item?.cover} />
+      <Image
+        style={styles.image}
+        resizeMode="cover"
+        source={{uri: item?.cover}}
+      />
       <Text style={styles.name}>{item?.name}</Text>
       <Icon
         name={isSelected ? 'remove-circle' : 'remove-circle-outline'}
@@ -25,12 +26,12 @@ const ItemMeal = ({ onPressItem, item, isSelected }) => (
 const styles = StyleSheet.create({
   image: {
     width: device.width / 7,
-    height: responsive({ h: 30 }),
+    height: responsive({h: 30}),
     borderRadius: 5,
-    marginRight: responsive({ d: 20 }),
+    marginRight: responsive({d: 20}),
   },
   inner: {
-    paddingVertical: responsive({ d: 20 }),
+    paddingVertical: responsive({d: 20}),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginLeft: responsive({ d: 35 }),
+    marginLeft: responsive({d: 35}),
   },
   name: {
-    fontSize: responsive({ f: 15 }),
+    fontSize: responsive({f: 15}),
     fontWeight: '500',
     color: 'black',
     flex: 3,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   icon: {
     marginHorizontal: 20,
   },
-  line: { backgroundColor: '#dddddd', height: 1 },
+  line: {backgroundColor: '#dddddd', height: 1},
 });
 
 export default ItemMeal;

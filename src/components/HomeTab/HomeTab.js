@@ -1,11 +1,13 @@
 import React from 'react';
 import lodash from 'lodash';
-import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {
+  ScrollableTabBar,
+} from 'react-native-scrollable-tab-view';
 
-import { responsive } from 'utils';
+import {responsive} from 'utils';
 import Tab from './Tab';
 
-const HomeTab = ({ tab, navigation }) => (
+const HomeTab = ({tab, navigation}) => (
   <ScrollableTabView
     initialPage={0}
     renderTabBar={tabBarProps => (
@@ -20,14 +22,13 @@ const HomeTab = ({ tab, navigation }) => (
     tabBarBackgroundColor="transparent"
     tabBarActiveTextColor="#000"
     tabBarInactiveTextColor="#666"
-    tabBarTextStyle={{ fontSize: responsive({ f: 14 }) }}
+    tabBarTextStyle={{fontSize: responsive({f: 14})}}
     tabBarUnderlineStyle={{
       backgroundColor: '#ff2d65',
-      width: responsive({ h: 28 }),
-      marginLeft: responsive({ d: 35 }),
+      width: responsive({h: 28}),
+      marginLeft: responsive({d: 35}),
       height: 2,
-    }}
-  >
+    }}>
     {tab.map(item => (
       <Tab
         key={item.key}

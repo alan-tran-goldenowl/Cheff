@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  Image, StyleSheet,
-  // , Platform
-} from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {Image, StyleSheet, Platform} from 'react-native';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
-import HomeScreen from 'screens/Home';
+import HomeScreen from '../screens/Home';
 import FavouriteScreen from 'screens/Favourite';
 import MealPlanScreen from 'screens/TabMealPlan/MealPlan';
 import TodoPlan from 'screens/TabWhatToBuy/TodoPlan';
@@ -23,7 +20,7 @@ export default createBottomTabNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Image
             style={styles.icon}
             resizeMode="center"
@@ -39,7 +36,7 @@ export default createBottomTabNavigator(
     Favourite: {
       screen: FavouriteScreen,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Image
             style={styles.icon}
             resizeMode="center"
@@ -55,7 +52,7 @@ export default createBottomTabNavigator(
     MealPlan: {
       screen: MealPlanScreen,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Image
             style={styles.icon}
             resizeMode="center"
@@ -71,7 +68,7 @@ export default createBottomTabNavigator(
     Activity: {
       screen: TodoPlan,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Image
             style={styles.icon}
             resizeMode="cover"
@@ -91,9 +88,10 @@ export default createBottomTabNavigator(
       style: {
         // alignItems: 'center',
         // minHeight: Platform.OS === 'ios' ? 25 : 45,
-        // height: Platform.OS === 'ios' ? 25 : 'auto',
-        // minHeight: Platform.OS !== 'ios' ? 25 : 0,
-        // paddingBottom: 0,
+        height: 10,
+        // height: Platform.OS !== 'ios' ? 25 : 0,
+        paddingBottom: 0,
+        marginBottom: 0,
       },
     },
   },

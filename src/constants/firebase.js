@@ -1,14 +1,15 @@
-import * as Firebase from 'firebase';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
 const config = {
-  apiKey: 'AIzaSyCHCLOZB3G5xMpZv0JqF5LoA4wJQ7bLIos',
-  authDomain: 'cheff-app-mobile-4e38e.firebaseapp.com',
-  databaseURL: 'https://cheff-app-mobile-4e38e.firebaseio.com',
-  projectId: 'cheff-app-mobile-4e38e',
-  storageBucket: 'cheff-app-mobile-4e38e.appspot.com',
-  messagingSenderId: '720924385775',
-  appId: '1:720924385775:web:840092e40f80281b98d61a',
+  apiKey: 'AIzaSyDV9PMygW-ANSe1ZAm9XHirnKiX2rh7VlA',
+  authDomain: 'cheff-eca26.firebaseapp.com',
+  databaseURL: 'https://cheff-eca26-default-rtdb.firebaseio.com',
+  projectId: 'cheff-eca26',
+  storageBucket: 'cheff-eca26.appspot.com',
+  messagingSenderId: '979466185896',
+  appId: '1:979466185896:web:bf3a06a1afce4e5fb6e69d',
 };
 
-Firebase.initializeApp(config);
-export default Firebase;
+firebase.initializeApp(config);
+export default firebase;

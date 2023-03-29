@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import Icon from '@expo/vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 
@@ -25,15 +21,9 @@ const CustomDatePicker = ({
 }) => (
   <View style={containerStyle}>
     {title ? <Text style={styles.title}>{title}</Text> : null}
-    <TouchableOpacity
-      onPress={onPress}
-      style={styles.date}
-    >
+    <TouchableOpacity onPress={onPress} style={styles.date}>
       <Text style={styles.value}>{value}</Text>
-      <Icon
-        name={icon ?? 'calendar'}
-        size={20}
-      />
+      <Icon name={icon ?? 'calendar'} size={20} />
     </TouchableOpacity>
     <DateTimePicker
       display="spinner"
@@ -45,7 +35,7 @@ const CustomDatePicker = ({
       date={date}
       minimumDate={minimumDate}
     />
-    {!!error && <Text style={styles.errorText}>{error}</Text> }
+    {!!error && <Text style={styles.errorText}>{error}</Text>}
   </View>
 );
 
